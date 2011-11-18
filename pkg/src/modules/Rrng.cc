@@ -44,7 +44,7 @@
 static void init(){
 	static bool initRNG = true;
 	if( initRNG ){
-		printf("Init RNG Seed\n");
+		//printf("Init RNG Seed\n");
 		do_setseed(0, NULL, NULL);
 		initRNG = false;
 	}
