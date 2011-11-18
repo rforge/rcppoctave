@@ -1,0 +1,27 @@
+\docType{package}
+\name{RcppOctave}
+\alias{RcppOctave}
+\alias{RcppOctave-package}
+\title{Interfacing R with Octave}
+\description{
+  Interfacing R with Octave.
+}
+\details{
+  \tabular{ll}{ Package: \tab RcppOctave\cr Type: \tab
+  Package\cr Version: \tab 1.0\cr Date: \tab 2011-11-01\cr
+  License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr }
+}
+\examples{
+\dontrun{.CallOctave('help', 'help')}
+}
+\author{
+  Renaud Gaujoux \email{renaud@cbio.uct.ac.za}
+
+  Maintainer: Renaud Gaujoux \email{renaud@cbio.uct.ac.za}
+}
+\seealso{
+  See \code{\link{.CallOctave}}, \code{\link{o_source}},
+  \code{\link{o_help}}
+}
+\keyword{package}
+
