@@ -28,9 +28,17 @@
   implementation, extracted from R-2.14.0.
 }
 \examples{
+# Perform stochastic computations is R
+set.seed(12345)
+runif(5)
+runif(5)
+\dontshow{ rr <- runif(10) }
+
+# Reproduce in Octave
 o_set.seed(12345)
-o_runif(5)
-o_runif(5)
+o_runif(1, 5)
+o_runif(1, 5)
+\dontshow{ stopifnot( identical(rr, o_runif(1, 10)) ) }
 
 o_set.seed(12345)
 o_runif(5)

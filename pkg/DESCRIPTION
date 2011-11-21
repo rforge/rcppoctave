@@ -23,6 +23,7 @@ Suggests:
     devtools
 LinkingTo: Rcpp
 Collate:
+    'utils.R'
     'package.R'
     'interface.R'
     'Octave-class.R'
