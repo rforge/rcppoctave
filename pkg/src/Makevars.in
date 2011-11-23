@@ -1,6 +1,8 @@
 ## Use the R_HOME indirection to support installations of multiple R version
-OCTINCLUDEDIR=`octave-config -p OCTINCLUDEDIR`
-OCTLIBDIR=`octave-config -p OCTLIBDIR`
+
+# set by configure
+OCTINCLUDEDIR=@OCTINCLUDEDIR@
+OCTLIBDIR=@OCTLIBDIR@
 
 OCT_MODULES_PATH="$(R_PACKAGE_DIR)/modules"
 
@@ -9,13 +11,14 @@ PKG_CPPFLAGS = `"$(R_HOME)/bin${R_ARCH_BIN}/Rscript" -e "Rcpp:::CxxFlags()"` -I"
 
 .PHONY: all OctaveModule
 
-all: OctaveModule
+all: OctaveModule	
 
 OctaveModule:
 	cd modules; \
 	make; \
 	mkdir -p $(OCT_MODULES_PATH); \
-	cp -f PKG_ADD Rrng.oct utils.oct $(OCT_MODULES_PATH);
+	echo "Moving Octave modules to '$(OCT_MODULES_PATH)'"; \
+	cp -f PKG_ADD *.oct $(OCT_MODULES_PATH);
 
 clean:
 	rm *.o;
