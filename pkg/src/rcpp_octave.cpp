@@ -30,7 +30,6 @@
 #include <octave/input.h>
 
 #include <octave/pt-all.h>
-#include <iostream>
 #include <octave/symtab.h>
 #include <octave/parse.h>
 #include <octave/unwind-prot.h>
@@ -43,6 +42,7 @@
 #include <octave/str-vec.h>
 
 // STD includes
+#include <iostream>
 #include <string.h>
 using namespace std;
 

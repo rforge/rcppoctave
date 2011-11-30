@@ -64,9 +64,11 @@ compile_src <- function(pkg, load=TRUE){
 	# Compile code in /src
 	srcdir <- file.path(p$path, 'src')
 	if( file.exists(srcdir) ){
+		cat("# DEVMODE: Compiling src/ ... ")		
 		setwd(srcdir)
 		Sys.setenv(R_PACKAGE_DIR=packagePath())
 		R.SHLIB(pkg, " *.cpp ")
+		cat("OK\n")
 		if( load )
 			load_c(pkg)
 	}
@@ -136,10 +138,11 @@ OctaveConfig <- function(name, ...){
 			conf <- list(lib=oconfig('OCTLIBDIR')
 						, include=oconfig('OCTINCLUDEDIR')
 				)
-			assign('.OctaveConfig', conf, packageEnv())
 			
 			# add a configuration variable for the module path
-			.OctaveConfig$modules <<- file.path(packagePath(), 'modules')
+			conf$modules <- file.path(packagePath(), 'modules')
+			
+			assign('.OctaveConfig', conf, packageEnv())
 		}
 				
 		return(.OctaveConfig)

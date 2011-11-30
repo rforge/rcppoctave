@@ -13,7 +13,7 @@
 #include <octave/parse.h>
 #include <octave/ov-base.h>
 #include <octave/ov-scalar.h>
-#include "ov-struct.h"
+#include <octave/ov-struct.h>
 
 // declaring the specialization
 namespace Rcpp {
