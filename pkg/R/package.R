@@ -86,14 +86,46 @@ compile_src <- function(pkg, load=TRUE){
 #' @keywords internal
 packageEnv <- function(){ parent.env(environment()) }
 
+#' \code{getLoadingNamespace} returns information about the loading namespace.
+#' It is a wrapper to \code{\link{loadingNamespaceInfo}}, that does not throw 
+#' an error.
+#' 
+#' @param env logical that indicates that the namespace's environment (i.e. the 
+#' namespace itself) should be returned.
+#' @param info logical that indicate that the complete information list should 
+#' be returned
+#' 
+#' @return the name of the loading namespace if \code{env} and \code{info} are 
+#' \code{FALSE}, an environment if \code{env=TRUE}, a list with elements 
+#' \code{pkgname} and \code{libname} if \code{info=TRUE}. 
+#' 
+#' @rdname devutils
+#' 
+getLoadingNamespace <- function(env=FALSE, info=FALSE){
+	is.loading <- try(nsInfo <- loadingNamespaceInfo(), silent=TRUE)
+	if( !is(is.loading, 'try-error') ){
+		if( env ) asNamespace(as.name(nsInfo$pkgname))
+		else if( info ) nsInfo 
+		else nsInfo$pkgname
+	}
+	else NULL
+}
+
 #' \code{packageName} returns the current package's name.
 #' 
 #' @rdname devutils
 #' @return a character string
 packageName <- function(){
-	if( exists('.packageName', packageEnv()) && .packageName != 'datasets') 
-		.packageName
-	else{# dev mode
+	# try to find the name from the package's environment (namespace) 
+	if( exists('.packageName', packageEnv()) && .packageName != 'datasets' ){
+		if( .packageName != '' )
+			return(.packageName)
+	}
+	# get the info from the loadingNamespace
+	info <- getLoadingNamespace(info=TRUE)
+	if( !is.null(info) ) # check whether we are loading the namespace 
+		info$pkgname
+	else{# we are in dev mode: use devtools
 		p <- as.package(.LOCAL_PKG_NAME)
 		p$package
 	}
@@ -106,11 +138,23 @@ packageName <- function(){
 #' @rdname devutils
 #' @return a character string
 packagePath <- function(){
-	if( exists('.packageName', packageEnv()) && .packageName != 'datasets') 
-		system.file(package=.packageName)
-	else{# dev mode
+	
+	# try to find the path from the package's environment (namespace)
+	if( exists('.packageName', packageEnv()) && .packageName != 'datasets' ){
+		# get the path from installation
+		path <- system.file(package=.packageName)
+		# somehow this fails when loading an installed package but is works 
+		# when loading a package during the post-install check
+		if( path != '' ) return(path)
+	}
+	# get the info from the loadingNamespace
+	info <- getLoadingNamespace(info=TRUE)
+	if( !is.null(info) ) # check whether we are loading the namespace 
+		file.path(info$libname, info$pkgname)
+	else{# we are in dev mode: use devtools
+		library(devtools)
 		p <- as.package(.LOCAL_PKG_NAME)
-		p$path
+		return(p$path)
 	}
 }
 
