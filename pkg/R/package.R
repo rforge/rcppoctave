@@ -196,14 +196,34 @@ OctaveConfig <- function(name, ...){
 	file.path(settings, ...)
 }
 
+# Load/Unload Octave Libraries
+.OctaveLibs <- function(unload=FALSE){
+		
+	dyn.fun <- 
+	if( !unload ){ # LOAD		
+		function(x, dlls){
+			if( !x %in%  dlls )
+				dyn.load(OctaveConfig('lib', paste(x, .Platform$dynlib.ext, sep='')))
+		}
+	}else{ #UNLOAD
+		function(x, dlls){
+			if( x %in%  dlls )
+				dyn.unload(OctaveConfig('lib', paste(x, .Platform$dynlib.ext, sep='')))
+		}		
+	}
+
+	# load/unload required Octave libraries
+	octlibs <- c('liboctave', 'liboctinterp')
+	sapply(octlibs, dyn.fun, names(base::getLoadedDLLs()))
+}
+
 .onLoad <- function(libname, pkgname){
 	
 	# load Octave configuration
 	OctaveConfig()
 	
 	# load required Octave libraries
-	dyn.load(OctaveConfig('lib', 'liboctave.so'))
-	dyn.load(OctaveConfig('lib', 'liboctinterp.so'))
+	.OctaveLibs()
 	
 	# load compiled library normally or in devmode
 	if( !missing(libname) ) library.dynam(.LOCAL_PKG_NAME, pkgname, libname)
@@ -223,6 +243,9 @@ OctaveConfig <- function(name, ...){
 		if( !missing(libpath) )	library.dynam.unload(.LOCAL_PKG_NAME, libpath)
 		else dyn.unload(dlls[[.LOCAL_PKG_NAME]][['path']])
 	}
+	
+	# unload required Octave libraries 
+	.OctaveLibs(unload=TRUE)
 }
 
 roctave <- function(end=TRUE, load=TRUE){
