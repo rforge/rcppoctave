@@ -25,6 +25,13 @@ if test "${OCTAVE_CONFIG}" != ""; then
     AC_MSG_RESULT([using Octave include directory ${OCTINCLUDEDIR}])	
     OCTLIBDIR=`${OCTAVE_CONFIG} -p OCTLIBDIR`
     AC_MSG_RESULT([using Octave library directory ${OCTLIBDIR}])
+    
+    # check Octave version to know whether one should infer output names:
+    # it works for Octave >= 3.4.0
+    OCTVERSION=`${OCTAVE_CONFIG} -p VERSION`
+    OCT_POST_3_4_0=m4_version_compare([OCTVERSION], [3.4.0])    
+    AC_MSG_RESULT([will infer Octave functions' output names ${OCT_POST_3_4_0}])
+    
 else
     AC_MSG_ERROR([octave-config not found, is Octave installed?])
 fi
@@ -32,5 +39,6 @@ fi
 # Now substitute these variables in src/Makevars.in to create src/Makevars
 AC_SUBST(OCTINCLUDEDIR)
 AC_SUBST(OCTLIBDIR)
+AC_SUBST(OCT_POST_3_4_0)
 
 AC_OUTPUT(src/Makevars)

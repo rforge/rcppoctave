@@ -20,7 +20,10 @@
 #' @title Interfacing R with Octave
 #' @keywords package
 #' @examples
-#' \dontrun{.CallOctave('help', 'help')}
+#' 
+#' .CallOctave('svd', matrix(1:9, 3))}
+#' o_help('svd')
+#' 
 #' @seealso See \code{\link{.CallOctave}}, \code{\link{o_source}}, \code{\link{o_help}}
 NULL
 

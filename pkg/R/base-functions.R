@@ -136,7 +136,7 @@ o_help <- function(NAME, character.only = FALSE, show = TRUE, rd = FALSE){
 		stop("Argument `NAME` must be a single symbol or character string")
 		
 	# get the help page from Octave
-	hlp <- .CallOctave('help', NAME)
+	hlp <- .Call('oct_help', NAME)
 	#print(hlp)
 	
 	if( rd ){

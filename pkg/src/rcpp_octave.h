@@ -15,6 +15,9 @@
 #include <octave/ov-scalar.h>
 #include <octave/ov-struct.h>
 
+// define which class to use for Octave maps
+#define OCTAVE_MAP Octave_map
+
 // declaring the specialization
 namespace Rcpp {
 	template <> SEXP wrap( const octave_value& );
@@ -68,5 +71,10 @@ RcppExport SEXP octave_start(SEXP verbose);
  * Terminate an Octave session from R.
  */
 RcppExport SEXP octave_end();
+
+/**
+ * Returns the help string from an Octave object.
+ */
+RcppExport SEXP oct_help(SEXP name);
 
 #endif

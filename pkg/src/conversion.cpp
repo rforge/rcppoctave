@@ -125,20 +125,26 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 
 		if ( val.is_string() ){
 
-			VERBOSE_LOG("(charMatrix) -> CharacterVector");
-			const string_vector s(val.cellstr_value());
+			VERBOSE_LOG("(CellStr) -> CharacterVector");
+			//const string_vector s(val.cellstr_value()); // works >= 3.4.3
+			const Cell& s = val.cellstr_value();
 			int n = s.length();
 			if( n == 0 )
 				return CharacterVector(val.string_value());
 
 			// character vector
-			CharacterVector res(n);
-			for(int i = n-1; i>=0; --i)
-				res[i] = s(i);
-
-			VERBOSE_LOG("[%i]\n", res.length());
+			SEXP res = wrap(s);
+			VERBOSE_LOG("[%i]\n", length(res));
 			return res;
 
+		}else if ( val.is_char_matrix() ){
+			VERBOSE_LOG("(charMatrix) -> CharacterVector");
+			charMatrix m = val.char_matrix_value();
+			int n = m.rows();
+			CharacterVector res(n);
+			for(int i=0; i<n; ++i)
+				res[i] = m.row_as_string(i);
+			return res;
 		}
 		else if ( val.is_bool_type() ){
 
@@ -204,8 +210,8 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 
 		VERBOSE_LOG("(map) -> ");
 
-		octave_map m = val.map_value();
-		const string_vector& keys = m.fieldnames();
+		OCTAVE_MAP m = val.map_value();
+		const string_vector& keys = m.keys();
 		int n = keys.length();
 		Rcpp::List res;
 		if (keys.length () == 0){
@@ -232,7 +238,7 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 			return res;
 		}
 
-	} else if( val.is_cs_list() ){
+	} else if( val.is_cs_list() || val.is_list() ){
 
 		VERBOSE_LOG("(cs_list) => List\n");
 		return wrap<octave_value_list>(val.list_value());
@@ -404,15 +410,15 @@ template <> octave_value Rcpp::as( SEXP x ){
 			VERBOSE_LOG("(List) -> octave_value_list\n");
 			return octave_value(as<octave_value_list>(x));
 
-		}else{ // store as an octave_map
-			VERBOSE_LOG("(NamedList[%i]) -> octave_map:\n", length(x));
+		}else{ // store as an Octave map
+			VERBOSE_LOG("(NamedList[%i]) -> Octave map:\n", length(x));
 			const CharacterVector names(rnames);
 			const Rcpp::List xl(x);
 			int n = xl.length();
 			if( n != na )
 				AS_ERROR("Inconsistent names and list lengths.")
 
-			octave_map m(dim_vector(na, 1));
+			OCTAVE_MAP m(dim_vector(na, 1));
 			int nempty = 0;
 			for (int i=0; i<n; ++i){
 				const string s(names[i]);
@@ -420,7 +426,7 @@ template <> octave_value Rcpp::as( SEXP x ){
 				if( s[0] == '\0' && ++nempty > 1 ){
 					AS_ERROR("Only one empty name is allowed in lists.")
 				}
-				m.setfield(s, as<octave_value>(xl[i]));
+				m.assign(s, as<octave_value>(xl[i]));
 			}
 			return octave_value(m);
 		}
@@ -440,7 +446,7 @@ template <> octave_value_list Rcpp::as( SEXP x ){
 		error(R_PACKAGE_NAME"::as<octave_value_list> - Invalid argument: VECSXP expected");
 
 	int n = length(x);
-	octave_value_list res(n);
+	octave_value_list res;
 	const Rcpp::List xl(x);
 	for(int i=0; i<n; ++i)
 		res(i) = as<octave_value>(xl[i]);

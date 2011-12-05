@@ -555,6 +555,7 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+OCT_POST_3_4_0
 OCTLIBDIR
 OCTINCLUDEDIR
 OCTAVE_CONFIG
@@ -2545,11 +2546,20 @@ $as_echo "using Octave include directory ${OCTINCLUDEDIR}" >&6; }
     OCTLIBDIR=`${OCTAVE_CONFIG} -p OCTLIBDIR`
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: using Octave library directory ${OCTLIBDIR}" >&5
 $as_echo "using Octave library directory ${OCTLIBDIR}" >&6; }
+
+    # check Octave version to know whether one should infer output names:
+    # it works for Octave >= 3.4.0
+    OCTVERSION=`${OCTAVE_CONFIG} -p VERSION`
+    OCT_POST_3_4_0=-1
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: will infer output names ${OCT_POST_3_4_0}" >&5
+$as_echo "will infer output names ${OCT_POST_3_4_0}" >&6; }
+
 else
     as_fn_error $? "octave-config not found, is Octave installed?" "$LINENO" 5
 fi
 
 # Now substitute these variables in src/Makevars.in to create src/Makevars
+
 
 
 

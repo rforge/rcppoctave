@@ -43,8 +43,12 @@
 
 // STD includes
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
+
+#ifndef OCT_POST_3_4_0
+#define OCT_POST_3_4_0 -1
+#endif
 
 static bool OCTAVE_INITIALIZED = false;
 
@@ -140,6 +144,9 @@ void R_unload_RcppOctave(DllInfo *info)
 /**
  * Recover from an exception.
  * It restores some Octave static variables into a no-error state.
+ *
+ * @note OCTAVE_API_VERSION_NUMBER is 47 for 3.4.0 but 45 for 3.4.2
+ * see: http://octave.1599824.n4.nabble.com/API-version-going-backwards-td3722496.html
  */
 extern void recover_from_exception(void)
 {
@@ -156,11 +163,9 @@ extern void recover_from_exception(void)
   octave_interrupt_immediately = 0;
   octave_interrupt_state = 0;
   octave_signal_caught = 0;
-#if OCTAVE_API_VERSION_NUMBER >= 37
   octave_exception_state = octave_no_exception;
-#else
-  octave_allocation_error = 0;
-#endif
+  // prior to 3.2.0
+  // octave_allocation_error = 0;
   octave_restore_signal_mask ();
   octave_catch_interrupts ();
 }
@@ -186,7 +191,7 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 
 	// unlist result if requested
 	if( do_unlist ){
-		if( out.is_cs_list() ){ // unnamed list
+		if( out.is_cs_list() || out.is_list() ){ // unnamed list
 
 			octave_value_list ol = out.list_value();
 			if ( ol.length() == 1){
@@ -196,9 +201,9 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 
 		}else if( out.is_map() ){ // named list
 
-			octave_map m = out.map_value();
+			OCTAVE_MAP m = out.map_value();
 			if (m.nfields() == 1){
-				const string_vector& keys = m.fieldnames();
+				const string_vector& keys = m.keys();
 				VERBOSE_LOG("octave_feval - Unlisting named output '%s'\n", keys[0].c_str());
 				return Rcpp::wrap(m.contents(keys[0])(0));
 			}
@@ -218,8 +223,16 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 	END_RCPP
 }
 
+/**
+ * Extract output names from an Octave function.
+ *
+ * This works only for functions defined in m-files, and in Octave >= 3.4.0.
+ */
 int getOutnames(const string& fname, std::vector<string>& onames){
 
+#if OCT_POST_3_4_0 < 0
+	return -1;
+#else
 	// Lookup this name in the symbol tables
 	octave_value fdef = symbol_table::find(fname);
 	onames.clear();
@@ -266,6 +279,7 @@ int getOutnames(const string& fname, std::vector<string>& onames){
 	VERBOSE_LOG("\n");
 
 	return nres;
+#endif
 }
 
 octave_value octave_feval(const string& fname, const octave_value_list& args, int nres, const std::vector<string>* output_names) {
@@ -297,11 +311,6 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 
 	try {
 
-#if OCTAVE_API_VERSION_NUMBER >= 37
-#else
-		symbol_table* old_symb_tab=curr_sym_tab;
-		curr_sym_tab = top_level_sym_tab;
-#endif
 		reset_error_handler();
 
 		// extract the output names
@@ -349,14 +358,14 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 
 				VERBOSE_LOG("octave_feval - Set output name(s):");
 				// add output names
-				octave_map m(dim_vector(n, 1));
+				OCTAVE_MAP m(dim_vector(n, 1));
 				for (int i=0; i<n; ++i){
 					const string& s = onames[i];
 					VERBOSE_LOG(" '%s'", s.c_str());
 					if( s[0] == '\0' ){
 						error(R_PACKAGE_NAME"octave_feval - empty output name.");
 					}
-					m.setfield(s, out(i));
+					m.assign(s, out(i));
 				}
 				VERBOSE_LOG("\n");
 				return octave_value(m);
@@ -365,11 +374,6 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 			VERBOSE_LOG("ERROR\n");
 			VERBOSE_LOG(R_PACKAGE_NAME" - error in Octave function `%s`.\n", fname.c_str());
 		}
-
-#if OCTAVE_API_VERSION_NUMBER >= 37
-#else
-		curr_sym_tab = old_symb_tab;
-#endif
 
 	} catch	(octave_interrupt_exception){
 		Rprintf(R_PACKAGE_NAME" - Caught Octave exception: interrupt\n");
@@ -395,6 +399,67 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 	error(err.str().c_str());
 
 	return octave_value_list();
+}
+
+/**
+ * Output redirection class
+ */
+class Redirect{
+
+public:
+
+//	struct nullstream : ofstream {
+//		nullstream() : ofstream( MSWIN_ALT("/dev/null", "NUL") ) { }
+//	};
+
+private:
+
+	/** NULL stream to sink output */
+//	nullstream _nulldev;
+
+	/** backup stream of standard cout to restore stream when finished */
+	streambuf* _cout_bkp;
+
+public:
+
+	Redirect(ostream& out){
+		// save output buffer of the stream
+		_cout_bkp = cout.rdbuf();
+		// redirect std ouput into the logfile
+		cout.rdbuf(out.rdbuf());
+	}
+//	Redirect(streambuf* out=NULL){
+//		// save output buffer of the stream
+//		_cout_bkp = cout.rdbuf();
+//		// redirect std ouput into the logfile
+//		cout.rdbuf(out == NULL ? _nulldev.rdbuf() : out);
+//	}
+	virtual ~Redirect(){
+		// restore old output buffer
+		cout.rdbuf(_cout_bkp);
+	}
+};
+
+/** Returns the help string from an Octave object. */
+SEXP oct_help(SEXP name){
+	using namespace Rcpp;
+
+	BEGIN_RCPP
+	// load name into a list
+	List args(1);
+	args[0] = name;
+
+#if OCT_POST_3_4_0 < 0 // prior to 3.4.0: help directly prints out the documentation
+	// redirect std::out
+	ostringstream res;
+	Redirect red(res);
+	octave_value ores = octave_feval(wrap("help"), wrap(args), wrap(0));
+	return( wrap(res.str()) );
+#else
+	return( octave_feval(wrap("help"), wrap(args), wrap(1)) );
+#endif
+
+	END_RCPP
 }
 
 #if 0
