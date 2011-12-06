@@ -5,7 +5,7 @@
   Adds a directory at the beginning of Octave search path.
 }
 \usage{
-  o_addpath(DIR1, ..., OPTION = 0L)
+  o_addpath(DIR1, ..., OPTION = "-begin")
 }
 \arguments{
   \item{DIR1}{path specification to add to Octave search
