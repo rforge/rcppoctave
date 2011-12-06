@@ -66,7 +66,7 @@ o_source <- function(file){
 #' # change the .oct file
 #' 
 #' 
-o_addpath <- function(DIR1, ..., OPTION=0L){
+o_addpath <- function(DIR1, ..., OPTION='-begin'){
 	invisible(.CallOctave('addpath', DIR1, ..., OPTION))
 }
 
@@ -136,7 +136,7 @@ o_help <- function(NAME, character.only = FALSE, show = TRUE, rd = FALSE){
 		stop("Argument `NAME` must be a single symbol or character string")
 		
 	# get the help page from Octave
-	hlp <- .Call('oct_help', NAME)
+	hlp <- .Call('oct_help', NAME, PACKAGE='RcppOctave')
 	#print(hlp)
 	
 	if( rd ){
