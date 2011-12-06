@@ -12,7 +12,8 @@
   License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr }
 }
 \examples{
-\dontrun{.CallOctave('help', 'help')}
+.CallOctave('svd', matrix(1:9, 3))
+o_help('svd')
 }
 \author{
   Renaud Gaujoux \email{renaud@cbio.uct.ac.za}
