@@ -9,10 +9,12 @@
 ## Copyright (C) 2011 Renaud Gaujoux
 
 # The version set here will propagate to other files from here
-AC_INIT([RcppOctave], 0.4)
+AC_INIT([RcppOctave], 0.6.1)
 
 # Checks for common programs using default macros
 AC_PROG_CC
+AC_PROG_CXX
+AC_LANG(C++)
 
 ## Use octave-config to find arguments for compiler and linker flags
 ##
@@ -21,16 +23,24 @@ AC_PATH_PROG([OCTAVE_CONFIG], [octave-config])
 ## If octave-config was found, let's use it
 if test "${OCTAVE_CONFIG}" != ""; then	
     # Use gsl-config for header and linker arguments
+    AC_MSG_CHECKING([Octave include directory])
     OCTINCLUDEDIR=`${OCTAVE_CONFIG} -p OCTINCLUDEDIR`
-    AC_MSG_RESULT([using Octave include directory ${OCTINCLUDEDIR}])	
-    OCTLIBDIR=`${OCTAVE_CONFIG} -p OCTLIBDIR`
-    AC_MSG_RESULT([using Octave library directory ${OCTLIBDIR}])
+    AC_MSG_RESULT([${OCTINCLUDEDIR}])
     
+    AC_MSG_CHECKING([Octave library directory])
+    OCTLIBDIR=`${OCTAVE_CONFIG} -p OCTLIBDIR`
+    AC_MSG_RESULT([${OCTLIBDIR}])
+        
     # check Octave version to know whether one should infer output names:
-    # it works for Octave >= 3.4.0
+    # it works for Octave >= 3.4.3
+    AC_MSG_CHECKING([Octave version])
     OCTVERSION=`${OCTAVE_CONFIG} -p VERSION`
-    OCT_POST_3_4_0=m4_version_compare([OCTVERSION], [3.4.0])    
-    AC_MSG_RESULT([will infer Octave functions' output names ${OCT_POST_3_4_0}])
+    AC_MSG_RESULT([${OCTVERSION}])
+    
+    CMPV="3.4.3"
+    AC_MSG_CHECKING([whether to infer output names for Octave function (>= ${CMPV})])
+    AS_VERSION_COMPARE(${OCTVERSION}, ${CMPV}, [OCT_POST_3_4_0=-1], [OCT_POST_3_4_0=0], [OCT_POST_3_4_0=1])    
+    AS_IF([test "${OCT_POST_3_4_0}" != "-1"], AC_MSG_RESULT([yes]), AC_MSG_RESULT([no]))
     
 else
     AC_MSG_ERROR([octave-config not found, is Octave installed?])

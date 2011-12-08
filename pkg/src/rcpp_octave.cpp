@@ -46,10 +46,6 @@
 #include <string>
 using namespace std;
 
-#ifndef OCT_POST_3_4_0
-#define OCT_POST_3_4_0 -1
-#endif
-
 static bool OCTAVE_INITIALIZED = false;
 
 /**
@@ -191,7 +187,7 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 
 	// unlist result if requested
 	if( do_unlist ){
-		if( out.is_cs_list() || out.is_list() ){ // unnamed list
+		if( out.is_cs_list() PRE_3_4_0(|| out.is_list()) ){ // unnamed list
 
 			octave_value_list ol = out.list_value();
 			if ( ol.length() == 1){

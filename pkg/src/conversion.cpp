@@ -238,7 +238,7 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 			return res;
 		}
 
-	} else if( val.is_cs_list() || val.is_list() ){
+	} else if( val.is_cs_list() PRE_3_4_0(|| val.is_list()) ){
 
 		VERBOSE_LOG("(cs_list) => List\n");
 		return wrap<octave_value_list>(val.list_value());

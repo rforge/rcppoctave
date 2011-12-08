@@ -15,6 +15,18 @@
 #include <octave/ov-scalar.h>
 #include <octave/ov-struct.h>
 
+#ifndef OCT_POST_3_4_0
+#define OCT_POST_3_4_0 -1
+#endif
+
+#if OCT_POST_3_4_0 < 0
+#define PRE_3_4_0(x) x
+#define POST_3_4_0(x)
+#else
+#define PRE_3_4_0(x)
+#define POST_3_4_0(x) x
+#endif
+
 // define which class to use for Octave maps
 #define OCTAVE_MAP Octave_map
 
