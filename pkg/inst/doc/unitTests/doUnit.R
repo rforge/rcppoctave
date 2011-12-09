@@ -1,4 +1,5 @@
 
+#' Unit Test Vignette Functions
 doUnit <- function(pkg, file){
 	
 	# generate the vignette for unit test on exit 
@@ -35,7 +36,7 @@ doUnit <- function(pkg, file){
 	}
 }
 
-
+#' Writes the vignette that contains the results of the unit tests.
 writeUnitVignette <- function(pkg, file){
 	
 	Rnw.template <- 
@@ -69,6 +70,7 @@ authors <- packageDescription(pkg)$Author
 
 \\end{document}
 "
+	# load the results of the unit tests
 	results <- file.path('unitTests-results', paste(pkg, '-unitTests.txt', sep=''))
 	results <- 
 	if( file.exists( results ) ){
@@ -77,8 +79,13 @@ authors <- packageDescription(pkg)$Author
 		'unit test results not available'
 	}
 	
+	# substitute template variables
 	contents <- Rnw.template
+	# package name
 	contents <-	gsub("@pkg@", paste("'", pkg, "'", sep=''), contents)
+	# unit test results
 	contents <-	gsub("@results@", results, contents)
+	
+	# write into the file
 	writeLines(contents, file)
 }
