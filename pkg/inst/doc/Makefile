@@ -133,13 +133,10 @@ ifneq ("$(wildcard unitTests)","")
 	# Generating vignette for unit tests: $@
 	# Using R_LIBS: $(R_LIBS)
 	rm -fr unitTests-results/*
-	$(RSCRIPT) --vanilla unitTests/$(R_PACKAGE)-unitTests.R
-	$(RPROG) CMD Sweave unitTests/$(R_PACKAGE)-unitTests.Rnw
+	$(RSCRIPT) --vanilla -e "source('unitTests/$(R_PACKAGE)-unitTests.R'); doUnit('$(R_PACKAGE)', '$(R_PACKAGE)-unitTests.Rnw');"
+	$(RPROG) CMD Sweave $(R_PACKAGE)-unitTests.Rnw
 	$(RSCRIPT) --vanilla -e "tools::texi2dvi( '$(R_PACKAGE)-unitTests.tex', pdf = TRUE, clean = TRUE )"
 	rm -fr $(R_PACKAGE)-unitTests.tex
-	# Create fake unit test vignette file ./$(R_PACKAGE)-unitTests.Rnw 	
-	@echo "\\documentclass[10pt]{article}\n%\\VignetteIndexEntry{$(VIGNETTE_BASENAME)}\n\
-\usepackage{url}\n\usepackage[colorlinks]{hyperref}\n\n\\\\begin{document}\n\end{document}\n" > $(VIGNETTE_BASENAME).Rnw 
 endif
 
 #	$(eval VIGNETTE_BASENAME := $(shell basename $< .Rnw))
