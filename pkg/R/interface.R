@@ -104,7 +104,7 @@ omodules <- function(verbose=getOption('verbose')){
 	
 	path <- OctaveConfig('modules')
 	if( verbose )
-		message("Loading Octave modules for ", .LOCAL_PKG_NAME
+		message("Loading Octave modules for ", packageName()
 				, " from '", path, "'");
 	o_addpath(path)
 }
