@@ -127,13 +127,13 @@ endif
 	$(RSCRIPT) --vanilla -e "require(highlight); driver <- HighlightWeaveLatex(boxes = TRUE); Sweave( '$<', driver = driver ); "
 
 ifneq ("$(wildcard unitTests)","")
-%-unitTests.pdf: unitTests/%-unitTests.R
+%-unitTests.pdf: unitTests/doUnit.R
 	$(do_install)
 	$(eval VIGNETTE_BASENAME := $(shell basename $@ .pdf))
 	# Generating vignette for unit tests: $@
 	# Using R_LIBS: $(R_LIBS)
 	rm -fr unitTests-results/*
-	$(RSCRIPT) --vanilla -e "source('unitTests/$(R_PACKAGE)-unitTests.R'); doUnit('$(R_PACKAGE)', '$(R_PACKAGE)-unitTests.Rnw');"
+	$(RSCRIPT) --vanilla -e "source('unitTests/doUnit.R'); doUnit('$(R_PACKAGE)', '$(R_PACKAGE)-unitTests.Rnw');"
 	$(RPROG) CMD Sweave $(R_PACKAGE)-unitTests.Rnw
 	$(RSCRIPT) --vanilla -e "tools::texi2dvi( '$(R_PACKAGE)-unitTests.tex', pdf = TRUE, clean = TRUE )"
 	rm -fr $(R_PACKAGE)-unitTests.tex
