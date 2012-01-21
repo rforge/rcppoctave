@@ -11,7 +11,7 @@
 ## alpha/beta/rc releases). The 'tilde' bug will go away as it
 ## reportedly has been squashed upstream but I am still bitten by it
 ## on Ubuntu so for now Dirk will insist on pdflatex and this helps.
-AUTHOR_USER=renaud
+AUTHOR_USER=renaudsdd
 R_PACKAGE=RcppOctave
 
 ##---------------------------------------------------------------------
@@ -46,9 +46,9 @@ endif
 ifdef NOT_CHECKING
 define do_install
 	# Installing the package in temporary library directory $(TMP_INSTALL_DIR)
-	-$(RPROG) CMD INSTALL -l "$(TMP_INSTALL_DIR)" ../../.
+	-$(RPROG) CMD INSTALL -l "$(TMP_INSTALL_DIR)" ../. >> Rinstall.log 2>> Rinstall.err
 	@if test ! -d "$(TMP_INSTALL_DIR)/$(R_PACKAGE)"; then \
-	echo "ERROR: Temporary installation failed."; \
+	echo "ERROR: Temporary installation failed: see Rinstall.log"; \
 	echo "# Removing temporary library directory $(TMP_INSTALL_DIR)"; \
 	rm -rf $(TMP_INSTALL_DIR); \
 	exit 1; else \
@@ -61,8 +61,18 @@ define do_install
 endef	
 endif
 
+ifdef LOCAL_MODE
+define update_inst_doc
+	# Updating PDF files in inst/doc
+	cp -f *.pdf ../inst/doc
+endef
+else
+define update_inst_doc
+endef	
+endif
+
 all: init $(PDF_OBJS) do_clean
-	@echo "# All vignettes are uptodate"
+	@echo "# All vignettes in 'vignettes' are up to date"
 
 init:
 	# Generating vignettes for package $(R_PACKAGE)
@@ -74,10 +84,10 @@ else
 endif
 
 clean:
-	rm -fr *.tex *.bbl *.blg *.aux *.out *.log 
+	rm -f *.tex *.bbl *.blg *.aux *.out *.log *.err
 
 clean-all: clean
-	rm -fr *.pdf *.Rnw unitTests-results
+	rm -fr *.pdf ../inst/doc/*.pdf *.Rnw unitTests-results
 
 setvars:
 ifeq (${R_HOME},)
@@ -87,6 +97,7 @@ RPROG=	$(R_HOME)/bin/R
 RSCRIPT=$(R_HOME)/bin/Rscript
 
 do_clean:
+	# Removing temporary install directory '$(TMP_INSTALL_DIR)'
 	@-rm -rf $(TMP_INSTALL_DIR);
 
 # Generate .pdf from .tex
@@ -94,21 +105,16 @@ do_clean:
 	$(eval VIGNETTE_BASENAME := $(shell basename $@ .pdf))
 	# Generating pdf $@ from $<
 ifdef LOCAL_MODE
-	pdflatex $(VIGNETTE_BASENAME)
+	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
 else
 	$(RSCRIPT) -e "tools::texi2dvi( '$(VIGNETTE_BASENAME).tex', pdf = TRUE, clean = FALSE )"
 endif
 	-bibtex $(VIGNETTE_BASENAME)
 ifdef LOCAL_MODE
-	pdflatex $(VIGNETTE_BASENAME)
-	pdflatex $(VIGNETTE_BASENAME)
+	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
+	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
 else
 	$(RSCRIPT) -e "tools::texi2dvi( '$(VIGNETTE_BASENAME).tex', pdf = TRUE, clean = TRUE )"
-	# copy generated pdf file into package check directory so that it
-	# is not lost after all the hard generation work!
-	# R CMD check re-builds the vignette in <CHECKDIR>/vign_test/<PKG>/inst/doc
-	# so we copy the pdf up 4 levels into <CHECKDIR>
-	cp $(VIGNETTE_BASENAME).pdf ../../../../
 endif
 	# Create fake vignette file ./$(VIGNETTE_BASENAME).Rnw
 	@echo "\\documentclass[10pt]{article}\n%\\VignetteIndexEntry{$(VIGNETTE_BASENAME)}\n\
@@ -117,6 +123,8 @@ endif
 	rm -fr $(VIGNETTE_BASENAME).toc $(VIGNETTE_BASENAME).log \
 	$(VIGNETTE_BASENAME).bbl $(VIGNETTE_BASENAME).blg \
 	$(VIGNETTE_BASENAME).aux $(VIGNETTE_BASENAME).out
+
+	$(update_inst_doc)
 
 # Generate a .tex file for a single vignette: generate from the 
 # actual .Rnw file, stored in the subdirectory 'vignettes'
@@ -132,11 +140,19 @@ ifneq ("$(wildcard unitTests)","")
 	$(eval VIGNETTE_BASENAME := $(shell basename $@ .pdf))
 	# Generating vignette for unit tests: $@
 	# Using R_LIBS: $(R_LIBS)
+	# Cleanup unit test result directory and sweave source
+	if -e $(R_PACKAGE)-unitTests.Rnw; then rm $(R_PACKAGE)-unitTests.Rnw; fi
 	rm -fr unitTests-results/*
-	$(RSCRIPT) --vanilla -e "source('unitTests/doUnit.R'); doUnit('$(R_PACKAGE)', '$(R_PACKAGE)-unitTests.Rnw');"
+	# Run unit test file: 'unitTests/doUnit.R'
+	$(RSCRIPT) --vanilla -e "source('unitTests/doUnit.R'); doUnit('$(R_PACKAGE)', '$(R_PACKAGE)-unitTests.Rnw');" >> unitTests.log
+	# Sweave generated file: $(R_PACKAGE)-unitTests.Rnw
 	$(RPROG) CMD Sweave $(R_PACKAGE)-unitTests.Rnw
+	# Run texi2dvi on $(R_PACKAGE)-unitTests.tex
 	$(RSCRIPT) --vanilla -e "tools::texi2dvi( '$(R_PACKAGE)-unitTests.tex', pdf = TRUE, clean = TRUE )"
+	# Cleanup latex file $(R_PACKAGE)-unitTests.tex
 	rm -fr $(R_PACKAGE)-unitTests.tex
+	
+	$(update_inst_doc)
 endif
 
 #	$(eval VIGNETTE_BASENAME := $(shell basename $< .Rnw))
