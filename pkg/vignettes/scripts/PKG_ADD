@@ -1,4 +1,0 @@
-autoload('fun1', 'example.m');
-autoload('fun2', 'example.m');
-autoload('fun_noargout', 'example.m');
-autoload('fun_varargout', 'example.m');
