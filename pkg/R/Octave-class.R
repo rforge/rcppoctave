@@ -14,34 +14,36 @@
 #' @keywords internal
 setClass("Octave", contains='character')
 
-#' @importMethodsFrom methods show
-setGeneric('show', package='methods')
-
-#' @rdname Octave-class
-#' @export
-setMethod('show', 'Octave',
-	function(object){
-		cat("<Octave Interface>\n")
-		cat("Use `$<name>` to call Octave function or get variable <name>.\n")
-		cat("Use `$<name>` <- to set the value of the Octave variable <name>.\n")
-	}
-)
-
 #' Direct Interface to Octave 
 #' 
-#' \code{.O} in an instance of class \code{Octave} that allows for direct access
-#' to Octave functions and variables.
+#' \code{RcppOctave} provides a simple interface to Octave via the  
+#' object \code{.O}, an instance of class \code{Octave}, that allows for direct access
+#' to Octave functions and variables using calls such as: \code{.O$svd(matrix(1:9,3))}.
 #' 
-#'  
+#' 
 #' @rdname OctaveInterface
+#' @format \code{.O} is an object of class \code{\linkS4class{Octave}}.
 #' @export
 #' @examples
-#' 
+#' .O
 #' .O$help()
 #' .O$a <- 10
 #' .O$a
 #' 
 .O <- new("Octave")
+
+#' @rdname OctaveInterface
+#' @export
+setMethod('show', 'Octave',
+		function(object){
+			cat("<Octave Interface>\n")
+			cat("Use `$<name>` to call Octave function or get variable <name>.\n")
+			cat("Use `$<name>` <- to set the value of the Octave variable <name>.\n")
+		}
+)
+
+#' @importMethodsFrom methods show
+setGeneric('show', package='methods')
 
 setGeneric('.DollarNames', package='utils')
 

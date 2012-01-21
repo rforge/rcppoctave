@@ -1,12 +1,6 @@
 \name{o_identity}
 \alias{o_identity}
 \title{Octave Identity Function}
-\description{
-  This function calls the Octave function provided by the
-  module shipped with RcppOctave. It Returns its arguments
-  unchanged, and is mainly used to test and check the
-  effect of object conversions between R and Octave.
-}
 \usage{
   o_identity(...)
 }
@@ -16,6 +10,12 @@
 \value{
   its argument -- list -- after its conversion from R to
   Octave and from Octave to R.
+}
+\description{
+  This function calls the Octave function provided by the
+  module shipped with RcppOctave. It Returns its arguments
+  unchanged, and is mainly used to test and check the
+  effect of object conversions between R and Octave.
 }
 \examples{
 o_identity(1L)

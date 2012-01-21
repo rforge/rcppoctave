@@ -1,10 +1,6 @@
 \name{o_who}
 \alias{o_who}
 \title{Listing Octave Variables}
-\description{
-  Lists currently defined variables in Octave global
-  context.
-}
 \usage{
   o_who(..., options)
 }
@@ -18,8 +14,16 @@
 \value{
   None
 }
+\description{
+  Lists currently defined variables in Octave global
+  context.
+}
 \section{Octave Documentation for \emph{who}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(who,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 \dontshow{ o_clear() }

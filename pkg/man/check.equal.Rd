@@ -1,10 +1,6 @@
 \name{check.equal}
 \alias{check.equal}
 \title{Compare Lists or Environments}
-\description{
-  This function compares two lists or environments. It is
-  useful for comparing results obtained in R and Octave.
-}
 \usage{
   check.equal(x, y, msg)
 }
@@ -23,6 +19,10 @@
   \item the result of the comparison of the elements in
   \code{x} and the corresponding element in \code{y} -- if
   present. }
+}
+\description{
+  This function compares two lists or environments. It is
+  useful for comparing results obtained in R and Octave.
 }
 \examples{
 X <- matrix(1:64, 8)

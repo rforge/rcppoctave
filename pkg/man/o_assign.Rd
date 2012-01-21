@@ -3,16 +3,6 @@
 \alias{o_assignin}
 \alias{o_get}
 \title{Assign/Get Octave Variables}
-\description{
-  \code{o_assign} assigns a variable in Octave.
-  \code{o_assignin} is an alias for \code{o_assign}.
-
-  \code{o_get} fetches Octave variables/functions and
-  possibly rename them on the fly with the provided
-  argument names when present. Functions are returned as
-  objects of class \code{\linkS4class{OctaveFunction}},
-  that can be called subsequently (see the examples).
-}
 \usage{
   o_assign(...)
 
@@ -49,6 +39,16 @@
   not re-named -- variable/object is requested then only
   its value is returned.
 }
+\description{
+  \code{o_assign} assigns a variable in Octave.
+  \code{o_assignin} is an alias for \code{o_assign}.
+
+  \code{o_get} fetches Octave variables/functions and
+  possibly rename them on the fly with the provided
+  argument names when present. Functions are returned as
+  objects of class \code{\linkS4class{OctaveFunction}},
+  that can be called subsequently (see the examples).
+}
 \details{
   \code{o_assign} assigns the variables using the
   arguments' names if present. Variables can also be
@@ -65,6 +65,10 @@
 }
 \section{Octave Documentation for \emph{assignin}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(assignin,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 \dontshow{o_clear()}

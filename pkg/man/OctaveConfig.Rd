@@ -1,9 +1,6 @@
 \name{OctaveConfig}
 \alias{OctaveConfig}
 \title{Cached RcppOctave Configuration Paths}
-\description{
-  Cached RcppOctave Configuration Paths
-}
 \usage{
   OctaveConfig(name, ...)
 }
@@ -17,6 +14,9 @@
 \value{
   a list (if \code{name is missing}) or a single character
   string.
+}
+\description{
+  Cached RcppOctave Configuration Paths
 }
 \examples{
 OctaveConfig()

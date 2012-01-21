@@ -1,10 +1,6 @@
 \name{o_runif}
 \alias{o_runif}
 \title{Drawing from R Uniform Distribution in Octave}
-\description{
-  This function calls the Octave port of the R functions
-  \code{\link{runif}}-like functions.
-}
 \usage{
   o_runif(n, p = n)
 }
@@ -16,8 +12,16 @@
 \value{
   a numeric vector or a matrix
 }
+\description{
+  This function calls the Octave port of the R functions
+  \code{\link{runif}}-like functions.
+}
 \section{Octave Documentation for \emph{runif}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(runif,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # Draw random uniform values (in vector form)

@@ -1,9 +1,6 @@
 \name{o_addpath}
 \alias{o_addpath}
 \title{Manipulating Octave Search Path}
-\description{
-  Adds a directory at the beginning of Octave search path.
-}
 \usage{
   o_addpath(DIR1, ..., OPTION = "-begin")
 }
@@ -20,6 +17,9 @@
 \value{
   returns invisibly the old value of search path.
 }
+\description{
+  Adds a directory at the beginning of Octave search path.
+}
 \details{
   The .oct files present in directories from the search
   path are looked up when an object or function is
@@ -29,6 +29,10 @@
 }
 \section{Octave Documentation for \emph{addpath}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(addpath,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # call an undefined function

@@ -1,9 +1,6 @@
 \name{o_rgamma}
 \alias{o_rgamma}
 \title{Drawing from R Gamma Distribution in Octave}
-\description{
-  Drawing from R Gamma Distribution in Octave
-}
 \usage{
   o_rgamma(n, p = n, shape = 1, scale = 1)
 }
@@ -16,8 +13,15 @@
 
   \item{p}{number of output columns (default to \code{n})}
 }
+\description{
+  Drawing from R Gamma Distribution in Octave
+}
 \section{Octave Documentation for \emph{rgamma}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rgamma,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # Draw random gamma values (in vector form)

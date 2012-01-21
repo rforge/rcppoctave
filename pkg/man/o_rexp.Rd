@@ -1,9 +1,6 @@
 \name{o_rexp}
 \alias{o_rexp}
 \title{Drawing from R Exponential Distribution in Octave}
-\description{
-  Drawing from R Exponential Distribution in Octave
-}
 \usage{
   o_rexp(n, p = n)
 }
@@ -12,8 +9,15 @@
 
   \item{p}{number of output columns (default to \code{n})}
 }
+\description{
+  Drawing from R Exponential Distribution in Octave
+}
 \section{Octave Documentation for \emph{rexp}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rexp,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # Draw random exponential values (in vector form)

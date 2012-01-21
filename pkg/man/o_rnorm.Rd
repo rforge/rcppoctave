@@ -1,9 +1,6 @@
 \name{o_rnorm}
 \alias{o_rnorm}
 \title{Drawing from R Normal Distribution in Octave}
-\description{
-  Drawing from R Normal Distribution in Octave
-}
 \usage{
   o_rnorm(n, p = n)
 }
@@ -12,8 +9,15 @@
 
   \item{p}{number of output columns (default to \code{n})}
 }
+\description{
+  Drawing from R Normal Distribution in Octave
+}
 \section{Octave Documentation for \emph{rnorm}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rnorm,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # Draw random normal values (in vector form)

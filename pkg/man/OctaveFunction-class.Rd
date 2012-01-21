@@ -1,19 +1,19 @@
-\name{OctaveFunction}
+\name{OctaveFunction-class}
 \alias{OctaveFunction}
 \alias{OctaveFunction-class}
 \title{Wrapper Class for Octave Functions}
+\usage{
+  OctaveFunction(name)
+}
+\arguments{
+  \item{name}{the name of an Octave function.}
+}
 \description{
   Wrapper Class for Octave Functions
 
   The function \code{OctaveFunction} is a
   constructor/factory method for \code{OctaveFunction}
   objects.
-}
-\usage{
-  OctaveFunction(name)
-}
-\arguments{
-  \item{name}{the name of an Octave function.}
 }
 \examples{
 osvd <- OctaveFunction('svd')

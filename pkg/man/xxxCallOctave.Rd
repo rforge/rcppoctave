@@ -1,13 +1,9 @@
 \name{.CallOctave}
 \alias{.CallOctave}
 \title{Calling an Octave Function}
-\description{
-  \code{.CallOctave} calls an Octave function and returns
-  its value.
-}
 \usage{
   .CallOctave(fname, ..., argout = -1,
-  unlist = !is.character(argout))
+    unlist = !is.character(argout))
 }
 \arguments{
   \item{fname}{an Octave function name. The function must
@@ -36,6 +32,10 @@
 \value{
   the value returned by the Octave function -- converted
   into standard R objects.
+}
+\description{
+  \code{.CallOctave} calls an Octave function and returns
+  its value.
 }
 \examples{
 # data matrix

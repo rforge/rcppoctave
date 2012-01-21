@@ -2,12 +2,6 @@
 \alias{o_Random.seed}
 \alias{o_set.seed}
 \title{Seed R RNG in Octave}
-\description{
-  This function seeds the Octave port of R random number
-  generators.
-
-  Get RNG in Octave
-}
 \usage{
   o_set.seed(seed)
 
@@ -20,6 +14,12 @@
   None
 
   None
+}
+\description{
+  This function seeds the Octave port of R random number
+  generators.
+
+  Get RNG in Octave
 }
 \details{
   The RNGs are provided by the Octave module

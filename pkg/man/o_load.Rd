@@ -1,9 +1,6 @@
 \name{o_load}
 \alias{o_load}
 \title{Loading Variables into Octave}
-\description{
-  Loads variables from a file, a list or an environment.
-}
 \usage{
   o_load(from, ..., options)
 }
@@ -16,8 +13,15 @@
   \item{options}{argument passed to the Octave function
   \code{load}. See section \emph{Octave Documentation}.}
 }
+\description{
+  Loads variables from a file, a list or an environment.
+}
 \section{Octave Documentation for \emph{load}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(load,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # Loading from a MATLAB/Octave file

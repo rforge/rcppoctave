@@ -1,9 +1,6 @@
 \name{compile_src}
 \alias{compile_src}
 \title{Compile Source Files from a Development Package}
-\description{
-  Compile Source Files from a Development Package
-}
 \usage{
   compile_src(pkg, load = TRUE)
 }
@@ -16,6 +13,9 @@
 }
 \value{
   None
+}
+\description{
+  Compile Source Files from a Development Package
 }
 \keyword{internal}
 

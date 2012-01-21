@@ -4,23 +4,6 @@
 \alias{packageName}
 \alias{packagePath}
 \title{Internal Utilities for Package Development}
-\description{
-  \code{packageEnv} returns the package's environment,
-  which is its namespace in the case of an installed
-  package, or its devtools environment.
-
-  \code{getLoadingNamespace} returns information about the
-  loading namespace. It is a wrapper to
-  \code{\link{loadingNamespaceInfo}}, that does not throw
-  an error.
-
-  \code{packageName} returns the current package's name.
-
-  \code{packagePath} returns the current package's root
-  directory, which is its installation/loading directory in
-  the case of an installed package, or its source directory
-  served by devtools.
-}
 \usage{
   packageEnv()
 
@@ -49,6 +32,23 @@
   a character string
 
   a character string
+}
+\description{
+  \code{packageEnv} returns the package's environment,
+  which is its namespace in the case of an installed
+  package, or its devtools environment.
+
+  \code{getLoadingNamespace} returns information about the
+  loading namespace. It is a wrapper to
+  \code{\link{loadingNamespaceInfo}}, that does not throw
+  an error.
+
+  \code{packageName} returns the current package's name.
+
+  \code{packagePath} returns the current package's root
+  directory, which is its installation/loading directory in
+  the case of an installed package, or its source directory
+  served by devtools.
 }
 \keyword{internal}
 

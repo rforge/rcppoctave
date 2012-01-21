@@ -1,11 +1,6 @@
 \name{o_eval}
 \alias{o_eval}
 \title{Evaluate an Octave Expression}
-\description{
-  Evaluates an Octave expression in the current embedded
-  Octave session. The variables assigned in the expression
-  are available for subsequent \code{o_eval} calls.
-}
 \usage{
   o_eval(..., CATCH, unlist = TRUE)
 }
@@ -24,8 +19,17 @@
 \value{
   the result of the evaluation
 }
+\description{
+  Evaluates an Octave expression in the current embedded
+  Octave session. The variables assigned in the expression
+  are available for subsequent \code{o_eval} calls.
+}
 \section{Octave Documentation for \emph{evalin}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(evalin,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 # assign some variable

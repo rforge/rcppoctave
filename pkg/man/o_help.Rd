@@ -2,21 +2,9 @@
 \alias{o_doc}
 \alias{o_help}
 \title{Accessing Octave Help and Documentation Pages}
-\description{
-  \code{o_help} retrieves the Octave help page associated
-  with a given symbol. By default the page is printed out,
-  but may also be silently retrieved or formatted for
-  direct inclusion in R documentation files (i.e. Rd
-  files).
-
-  \code{o_doc} displays documentation for the function
-  FUNCTION_NAME directly from an on-line version of the
-  printed manual, using the GNU Info browser. Type `q` to
-  quit the browser.
-}
 \usage{
   o_help(NAME, character.only = FALSE, show = TRUE,
-  rd = FALSE)
+    rd = FALSE)
 
   o_doc(FUNCTION_NAME)
 }
@@ -51,12 +39,32 @@
   \code{show=TRUE}), but it invisibly returns the help page
   as a single character string.
 }
+\description{
+  \code{o_help} retrieves the Octave help page associated
+  with a given symbol. By default the page is printed out,
+  but may also be silently retrieved or formatted for
+  direct inclusion in R documentation files (i.e. Rd
+  files).
+
+  \code{o_doc} displays documentation for the function
+  FUNCTION_NAME directly from an on-line version of the
+  printed manual, using the GNU Info browser. Type `q` to
+  quit the browser.
+}
 \section{Octave Documentation for \emph{help}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(help,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 
 \section{Octave Documentation for \emph{doc}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(doc,rd=TRUE)}
+
+  \emph{[Generated from
+  Octave-\Sexpr{RcppOctave::o_version()} on
+  \Sexpr{Sys.time()}]}
 }
 \examples{
 o_help(print)
