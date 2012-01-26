@@ -22,9 +22,8 @@ R.SHLIB <- function(libname, ...){
 #' @keywords internal
 compile_src <- function(pkg, load=TRUE){
 	
-	if( !missing(pkg) ){
-		library(devtools)
-		p <- as.package(pkg)
+	if( !missing(pkg) ){		
+		p <- devtools::as.package(pkg)
 		path <- p$path
 	}else{
 		pkg <- packageName()
@@ -43,7 +42,7 @@ compile_src <- function(pkg, load=TRUE){
 		R.SHLIB(pkg, " *.cpp ")
 		cat("OK\n")
 		if( load )
-			load_c(pkg)
+			devtools::load_c(pkg)
 	}
 }
 
@@ -96,8 +95,8 @@ packageName <- function(){
 	info <- getLoadingNamespace(info=TRUE)
 	if( !is.null(info) ) # check whether we are loading the namespace 
 		info$pkgname
-	else{# we are in dev mode: use devtools
-		p <- as.package(.LOCAL_PKG_NAME)
+	else{# we are in dev mode: use devtools		
+		p <- devtools::as.package(.LOCAL_PKG_NAME)
 		p$package
 	}
 }
@@ -123,8 +122,7 @@ packagePath <- function(){
 	if( !is.null(info) ) # check whether we are loading the namespace 
 		file.path(info$libname, info$pkgname)
 	else{# we are in dev mode: use devtools
-		library(devtools)
-		p <- as.package(.LOCAL_PKG_NAME)
+		p <- devtools::as.package(.LOCAL_PKG_NAME)
 		return(p$path)
 	}
 }
@@ -132,7 +130,7 @@ packagePath <- function(){
 roctave <- function(end=TRUE, load=TRUE){
 	
 	if( load )
-		load_all(.LOCAL_PKG_NAME)
+		devtools::load_all(.LOCAL_PKG_NAME)
 	if( end ) 
 		oend()
 	

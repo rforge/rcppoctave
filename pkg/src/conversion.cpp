@@ -13,7 +13,7 @@ extern bool RCPP_OCTAVE_VERBOSE;
 		, val.is_int32_type(), val.is_int64_type() \
 		, val.is_integer_type());
 
-#define WRAP_ERROR(err) RcppOctave_error("as", err)
+#define WRAP_ERROR(err) RcppOctave_error("as", err);
 
 /**
 * Converts an Octave Array into an R matrix or vector.
@@ -63,6 +63,36 @@ inline SEXP wrap(const Array<double>& x){
 }
 
 /**
+ * Converts an Octave numeric NDArray into a double R array.
+ *
+ * Currently only 3D arrays are supported.
+ */
+inline SEXP wrap(const NDArray& x){
+	VERBOSE_LOG("(NDArray) -> Array");
+	if( x.ndims() > 3 ){
+		std::ostringstream err;
+		err << "Could not convert NDArray[" << x.ndims() << "]: only up to 3 dimensions are supported";
+		WRAP_ERROR(err.str().c_str());
+	}
+
+	// copy values from the outer to inner dimensions
+	int n = x.dim1();
+	int p = x.dim2();
+	int q = x.dim3();
+	Rcpp::NumericVector res( Rcpp::Dimension(n, p, q) );
+	Rcpp::NumericVector::iterator z = res.begin();
+	for(int k=0; k<q; k++){
+		for(int j=0; j<p; j++){
+			for(int i=0; i<n; i++){
+				*z = x.elem(i,j,k);
+				z++;
+			}
+		}
+	}
+	return res;
+}
+
+/**
  * Converts a Cell object (i.e. Array<octave_value>) into an R list
  */
 SEXP wrap(const Cell& x, bool simplify = true){
@@ -86,6 +116,7 @@ SEXP wrap(const Cell& x, bool simplify = true){
 	bool single_unit_type = n > 0;
 
 	// wrap each element into a list
+	if( n > 0 ) VERBOSE_LOG("[ ");
 	Rcpp::List res(n);
 	for(int i=0; i<n; i++){
 		const octave_value& ov = x(i);
@@ -94,6 +125,7 @@ SEXP wrap(const Cell& x, bool simplify = true){
 		single_unit_type = single_unit_type && length(v) == 1 && !strcmp(elem_type, ov.type_name().c_str());
 		res[i] = v;
 	}
+	if( n > 0 ) VERBOSE_LOG(" ]");
 
 	// if a single unit type was detected, then unlist the result
 	if( single_unit_type ){
@@ -123,7 +155,11 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 
 	}else if (val.is_matrix_type()) {// matrix value: row vectors are converted into R vectors
 
-		if ( val.is_string() ){
+		// check if multidimensional array
+		if( val.ndims() > 2 ){
+			VERBOSE_LOG("(NDArray) -> Array");
+			return ::wrap(val.array_value());
+		}else if ( val.is_string() ){
 
 			VERBOSE_LOG("(CellStr) -> CharacterVector");
 			//const string_vector s(val.cellstr_value()); // works >= 3.4.3
@@ -156,9 +192,7 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 			return ::wrap(static_cast<oct_intArray>(val.int32_array_value()));
 
 		}else if( val.is_real_type() ){
-
 			return ::wrap(val.matrix_value());
-
 		}else{
 
 			std::ostringstream err;
@@ -290,7 +324,7 @@ template <int RTYPE, typename T> void as_OctaveMatrix(const Rcpp::Matrix<RTYPE>&
 
 }
 
-#define AS_ERROR(err) RcppOctave_error("as", err)
+#define AS_ERROR(err) RcppOctave_error("as", err);
 
 /**
  * Converts an R object into an Octave array.

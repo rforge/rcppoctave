@@ -11,7 +11,7 @@
 ## alpha/beta/rc releases). The 'tilde' bug will go away as it
 ## reportedly has been squashed upstream but I am still bitten by it
 ## on Ubuntu so for now Dirk will insist on pdflatex and this helps.
-AUTHOR_USER=renaudsdd
+AUTHOR_USER=renaud
 R_PACKAGE=RcppOctave
 
 ##---------------------------------------------------------------------

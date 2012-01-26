@@ -48,7 +48,13 @@ namespace Rcpp {
 #endif
 
 #define VERBOSE_LOG if( RCPP_OCTAVE_VERBOSE ) Rprintf
-#define RcppOctave_error(funame, err) error(R_PACKAGE_NAME"::"funame" - "err);
+
+#define RcppOctave_error(funame, err) \
+	{\
+	std::ostringstream s;\
+	s << R_PACKAGE_NAME << "::" << funame << " - " << err;\
+	error(s.str().c_str());\
+	}
 
 /**
  * Toggle verbosity for RcppOctave calls.
