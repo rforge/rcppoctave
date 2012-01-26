@@ -71,7 +71,7 @@ inline SEXP wrap(const NDArray& x){
 	VERBOSE_LOG("(NDArray) -> Array");
 	if( x.ndims() > 3 ){
 		std::ostringstream err;
-		err << "Could not convert NDArray[" << x.ndims() << "]: only up to 3 dimensions are supported";
+		err << "<NDArray> - Could not convert NDArray[" << x.ndims() << "]: only up to 3 dimensions are supported";
 		WRAP_ERROR(err.str().c_str());
 	}
 
@@ -122,7 +122,7 @@ SEXP wrap(const Cell& x, bool simplify = true){
 		const octave_value& ov = x(i);
 		SEXP v = Rcpp::wrap(ov);
 		// track element type
-		single_unit_type = single_unit_type && length(v) == 1 && !strcmp(elem_type, ov.type_name().c_str());
+		single_unit_type = single_unit_type && Rf_length(v) == 1 && !strcmp(elem_type, ov.type_name().c_str());
 		res[i] = v;
 	}
 	if( n > 0 ) VERBOSE_LOG(" ]");
@@ -170,7 +170,7 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 
 			// character vector
 			SEXP res = wrap(s);
-			VERBOSE_LOG("[%i]\n", length(res));
+			VERBOSE_LOG("[%i]\n", Rf_length(res));
 			return res;
 
 		}else if ( val.is_char_matrix() ){
@@ -196,9 +196,8 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 		}else{
 
 			std::ostringstream err;
-			err << R_PACKAGE_NAME"::wrap - Octave matrix type `"
-					<< val.type_name().c_str() << "` not supported.";
-			error(err.str().c_str());
+			err << " - Octave matrix type `" << val.type_name().c_str() << "` not supported.";
+			WRAP_ERROR(err.str().c_str());
 
 		}
 
@@ -232,9 +231,8 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 		}else{
 
 			std::ostringstream err;
-			err << R_PACKAGE_NAME"::wrap - Octave scalar type `"
-				<< val.type_name().c_str() << "` not supported.";
-			error(err.str().c_str());
+			err << " - Octave scalar type `" << val.type_name().c_str() << "` not supported.";
+			WRAP_ERROR(err.str().c_str());
 
 		}
 
@@ -259,7 +257,7 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 				VERBOSE_LOG("$'%s'\t: ", k.c_str());
 				if( k[0] == '\0' ){
 					if( ++nempty > 1 )
-						WRAP_ERROR("More than one empty name in Octave map");
+						WRAP_ERROR("<NamedList> - More than one empty name in Octave map");
 				}
 				const Cell& cell = m.contents(k);
 				if( cell.length() == 0 ){
@@ -284,9 +282,8 @@ template <> SEXP Rcpp::wrap( const octave_value& val){
 	} else{
 
 		std::ostringstream err;
-		err << R_PACKAGE_NAME"::wrap - Octave type `"
-			<< val.type_name().c_str() << "` is not supported.";
-		error(err.str().c_str());
+		err << " - Octave type `" << val.type_name().c_str() << "` is not supported.";
+		WRAP_ERROR(err.str().c_str());
 	}
 
 	return R_NilValue;
@@ -353,14 +350,14 @@ static octave_value as_OctaveMatrix( SEXP x ){
 		octave_value val(res);
 		return octave_value(res);
 	}else if( TYPEOF(x) == STRSXP ){
-		AS_ERROR("Character matrices are not supported");
+		AS_ERROR(" - Character matrices are not supported");
 		charMatrix res;
 		return octave_value(res);
 	}
 	else{
 		std::ostringstream err;
-		err << R_PACKAGE_NAME"::as - R matrix type `" << TYPEOF(x) << "` is not supported.";
-		error(err.str().c_str());
+		err << " - R matrix type `" << TYPEOF(x) << "` is not supported.";
+		AS_ERROR(err.str().c_str());
 	}
 
 	return octave_value();
@@ -397,34 +394,34 @@ template <> octave_value Rcpp::as( SEXP x ){
 	SEXP dim = GET_DIM(x);
 
 	// conversion into an OctaveMatrix
-	if( length(dim) == 2 )
+	if( Rf_length(dim) == 2 )
 		return as_OctaveMatrix(x);
 
-	if( isNull(x) ){ // NULL -> empty matrix
+	if( Rf_isNull(x) ){ // NULL -> empty matrix
 		VERBOSE_LOG("(NULL)\n");
 		return  octave_null_matrix::instance;
 	}else if (TYPEOF(x) == REALSXP) {
-		VERBOSE_LOG("(NumericVector[%i])\n", length(x));
+		VERBOSE_LOG("(NumericVector[%i])\n", Rf_length(x));
 		::Matrix res;
 		as_OctaveVector(NumericVector(x), res);
 		return res;
 	} else if (TYPEOF(x) == INTSXP) {
-		VERBOSE_LOG("(IntegerVector[%i])\n", length(x));
+		VERBOSE_LOG("(IntegerVector[%i])\n", Rf_length(x));
 		int32NDArray res;
 		as_OctaveVector(IntegerVector(x), res);
 		return res;
 	} else if (TYPEOF(x) == LGLSXP) {
-		VERBOSE_LOG("(LogicalVector[%i])\n", length(x));
+		VERBOSE_LOG("(LogicalVector[%i])\n", Rf_length(x));
 		boolMatrix res;
 		as_OctaveVector(LogicalVector(x), res);
 		return res;
 	} else if (TYPEOF(x) == STRSXP) {
-		int n = length(x);
+		int n = Rf_length(x);
 		if (n == 1){
 			VERBOSE_LOG("(String[%i])\n", as<string>(x).length());
 			return octave_value(as<string>(x));
 		}else {
-			VERBOSE_LOG("(CharacterVector[%i])\n", length(x));
+			VERBOSE_LOG("(CharacterVector[%i])\n", Rf_length(x));
 			const CharacterVector vx(x);
 			Cell v = Cell(dim_vector(1, vx.length()));
 			for (int i=n-1; i>=0; --i) {
@@ -437,7 +434,7 @@ template <> octave_value Rcpp::as( SEXP x ){
 
 		// load the list's names
 		SEXP rnames = GET_NAMES(x);
-		int na = length(rnames);
+		int na = Rf_length(rnames);
 
 		if ( na == 0) {
 
@@ -445,12 +442,12 @@ template <> octave_value Rcpp::as( SEXP x ){
 			return octave_value(as<octave_value_list>(x));
 
 		}else{ // store as an Octave map
-			VERBOSE_LOG("(NamedList[%i]) -> Octave map:\n", length(x));
+			VERBOSE_LOG("(NamedList[%i]) -> Octave map:\n", Rf_length(x));
 			const CharacterVector names(rnames);
 			const Rcpp::List xl(x);
 			int n = xl.length();
 			if( n != na )
-				AS_ERROR("Inconsistent names and list lengths.")
+				AS_ERROR(" - Inconsistent names and list lengths.")
 
 			OCTAVE_MAP m(dim_vector(na, 1));
 			int nempty = 0;
@@ -458,7 +455,7 @@ template <> octave_value Rcpp::as( SEXP x ){
 				const string s(names[i]);
 				VERBOSE_LOG("$'%s'\t: ", s.c_str());
 				if( s[0] == '\0' && ++nempty > 1 ){
-					AS_ERROR("Only one empty name is allowed in lists.")
+					AS_ERROR(" - Only one empty name is allowed in lists.")
 				}
 				m.assign(s, as<octave_value>(xl[i]));
 			}
@@ -467,8 +464,8 @@ template <> octave_value Rcpp::as( SEXP x ){
 	}
 	else{
 		std::ostringstream err;
-		err << R_PACKAGE_NAME"::as - R type `" << TYPEOF(x) << "` is not supported.";
-		error(err.str().c_str());
+		err << " - R type `" << TYPEOF(x) << "` is not supported.";
+		AS_ERROR(err.str().c_str());
 	}
 
 	return octave_value();
@@ -477,9 +474,9 @@ template <> octave_value Rcpp::as( SEXP x ){
 template <> octave_value_list Rcpp::as( SEXP x ){
 
 	if( TYPEOF(x) != VECSXP )
-		error(R_PACKAGE_NAME"::as<octave_value_list> - Invalid argument: VECSXP expected");
+		AS_ERROR("<octave_value_list> - Invalid argument: VECSXP expected");
 
-	int n = length(x);
+	int n = Rf_length(x);
 	octave_value_list res;
 	const Rcpp::List xl(x);
 	for(int i=0; i<n; ++i)

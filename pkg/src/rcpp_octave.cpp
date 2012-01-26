@@ -116,7 +116,7 @@ bool octave_session(bool start=true){
 
 SEXP octave_start(SEXP verbose){
 
-	if( !isNull(verbose) )
+	if( !Rf_isNull(verbose) )
 		RCPP_OCTAVE_VERBOSE = Rcpp::as<bool>(verbose);
 	return Rcpp::wrap(octave_session(true));
 }
@@ -172,7 +172,7 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 	using namespace Rcpp;
 	BEGIN_RCPP
 
-	bool do_unlist = isNull(unlist) ? true : as<bool>(unlist);
+	bool do_unlist = Rf_isNull(unlist) ? true : as<bool>(unlist);
 
 	octave_value out;
 	if( TYPEOF(output) == STRSXP ){

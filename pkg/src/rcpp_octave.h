@@ -1,11 +1,10 @@
 #ifndef _RcppOctave_RCPP_OCTAVE_H
 #define _RcppOctave_RCPP_OCTAVE_H
 
-#include <R.h>
-#include <Rdefines.h>
-#include <R_ext/Visibility.h>
-
 #include <RcppCommon.h>
+
+#include <Rdefines.h>
+#define getAttrib Rf_getAttrib
 
 //// Octave libraries
 #include <octave/oct.h>
@@ -53,7 +52,7 @@ namespace Rcpp {
 	{\
 	std::ostringstream s;\
 	s << R_PACKAGE_NAME << "::" << funame << " - " << err;\
-	error(s.str().c_str());\
+	Rf_error(s.str().c_str());\
 	}
 
 /**
