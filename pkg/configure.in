@@ -51,4 +51,7 @@ AC_SUBST(OCTINCLUDEDIR)
 AC_SUBST(OCTLIBDIR)
 AC_SUBST(OCT_POST_3_4_0)
 
+# Configure libRrng
+#AC_CONFIG_SUBDIRS([src/modules])
+
 AC_OUTPUT(src/Makevars)

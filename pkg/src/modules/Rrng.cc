@@ -37,9 +37,8 @@
 // STD includes
 #include <limits.h>
 
+// libRrng
 #include "libRrng.h"
-
-#define qnorm qnorm5
 
 static void init(){
 	static bool initRNG = true;
@@ -69,6 +68,27 @@ Sets the seed for the current RNG.\n")
 
   return retval;
 }
+
+//DEFUN_DLD (setRandomSeed, args, nargout,
+// "setseed(n)\n\n\
+//Sets the seed for the current RNG.\n")
+//{
+//  init();
+//  octave_value_list retval;	// list of return values
+//
+//  int nargs = args.length ();	// number of arguments supplied
+//
+//  if (nargs != 1) {		// if wrong arguments, show message
+//    usage("Wrong number of argument: expecting a single integer value.\nTry 'help setseed' for info");
+//    return retval;		// and return empty
+//  }
+//
+//  int n = args(0).length();
+//  int* seed = args(0).int32_array_value();
+//  set_Random_seed(seed, n);
+//
+//  return retval;
+//}
 
 DEFUN_DLD (getseed, args, nargout,
  "s = getseed()\n\n\

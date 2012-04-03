@@ -1,6 +1,6 @@
 /*
- * This file contains the portions of R source code related to the default
- * random number generator (Mersenne-Twitter).
+ * This file contains the portions of R source code related random number generators
+ * extracted from RNG.c.
  *
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -21,19 +21,42 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <math.h>
-#include <limits.h>
-
+// libRrng headers
+#include "config.h"
 #include "libRrng.h"
+
+struct rseed{
+	int nseed;
+	int* data;
+};
+static int _Random_seed_DATA[MAX_SEED_LENGTH+1];
+static rseed _Random_seed = {-1, _Random_seed_DATA};
+
+void set_Random_seed(const int* data, int n){
+	_Random_seed.nseed = n;
+	for(int i=0; i<=n; ++i)
+		_Random_seed.data[i] = data[i];
+	GetRNGstate();
+}
+
+void get_Random_seed(int* data, int n){
+	PutRNGstate();
+	n = _Random_seed.nseed;
+	for(int i=0; i<=n; ++i)
+		data[i] = _Random_seed.data[i];
+}
+
+/*------ .Internal interface ------------------------*/
+#define asInteger(x) x
+#define isNull(x) (x==NULL)
+#define R_NilValue NULL
+
 
 /* Normal generator is not actually set here but in nmath/snorm.c */
 #define RNG_DEFAULT MERSENNE_TWISTER
 #define N01_DEFAULT INVERSION
 
-
+//libRrng_COMMENT_START
 //#include <R_ext/Rdynload.h>
 //
 //static DL_FUNC User_unif_fun, User_unif_nseed,
@@ -43,22 +66,23 @@
 //UnifInitFun User_unif_init = NULL; /* some picky compilers */
 //
 //DL_FUNC  User_norm_fun = NULL; /* also in ../nmath/snorm.c */
-//
-//
+//libRrng_COMMENT_END
+
 static RNGtype RNG_kind = RNG_DEFAULT;
-//extern N01type N01_kind; /* from ../nmath/snorm.c */
-static N01type N01_kind = INVERSION;
-//
+extern N01type N01_kind; /* from ../nmath/snorm.c */
+
+//libRrng_COMMENT_START
 ///* typedef unsigned int Int32; in Random.h */
 //
 ///* .Random.seed == (RNGkind, i_seed[0],i_seed[1],..,i_seed[n_seed-1])
 // * or           == (RNGkind) or missing  [--> Randomize]
 // */
-//
+//libRrng_COMMENT_END
+
 typedef struct {
     RNGtype kind;
     N01type Nkind;
-    char *name; /* print name */
+    const char *name; /* print name */
     int n_seed; /* length of seed vector */
     Int32 *i_seed;
 } RNGTAB;
@@ -91,7 +115,9 @@ RNGTAB RNG_Table[] =
 static void Randomize(RNGtype kind);
 static double MT_genrand(void);
 static Int32 KT_next(void);
+//libRrng_COMMENT_START
 //static void RNG_Init_R_KT(Int32);
+//libRrng_COMMENT_END
 static void RNG_Init_KT2(Int32);
 #define KT_pos (RNG_Table[KNUTH_TAOCP].i_seed[100])
 
@@ -134,12 +160,16 @@ double unif_rand(void)
     case MERSENNE_TWISTER:
 	return fixup(MT_genrand());
 
+//libRrng_COMMENT_START
 //    case KNUTH_TAOCP:
+//libRrng_COMMENT_END
     case KNUTH_TAOCP2:
 	return fixup(KT_next() * KT);
 
+//libRrng_COMMENT_START
 //    case USER_UNIF:
 //	return *((double *) User_unif_fun());
+//libRrng_COMMENT_END
 
     case LECUYER_CMRG:
     {
@@ -226,7 +256,9 @@ static void FixupSeeds(RNGtype RNG_kind, int initial)
 	if(!notallzero) Randomize(RNG_kind);
 	break;
 
+//libRrng_COMMENT_START
 //    case KNUTH_TAOCP:
+//libRrng_COMMENT_END
     case KNUTH_TAOCP2:
 	if(KT_pos <= 0) KT_pos = 100;
 	/* check for all zeroes */
@@ -237,8 +269,10 @@ static void FixupSeeds(RNGtype RNG_kind, int initial)
 	    }
 	if(!notallzero) Randomize(RNG_kind);
 	break;
+//libRrng_COMMENT_START
 //    case USER_UNIF:
 //	break;
+//libRrng_COMMENT_END
     case LECUYER_CMRG:
 	/* first set: not all zero, in [0, m1)
 	   second set: not all zero, in [0, m2) */
@@ -264,8 +298,7 @@ static void FixupSeeds(RNGtype RNG_kind, int initial)
     }
 }
 
-//extern double BM_norm_keep; /* ../nmath/snorm.c */
-static double BM_norm_keep = 0.0;
+extern double BM_norm_keep; /* ../nmath/snorm.c */
 
 static void RNG_Init(RNGtype kind, Int32 seed)
 {
@@ -288,9 +321,11 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	}
 	FixupSeeds(kind, 1);
 	break;
+//libRrng_COMMENT_START
 //    case KNUTH_TAOCP:
 //	RNG_Init_R_KT(seed);
 //	break;
+//libRrng_COMMENT_END
     case KNUTH_TAOCP2:
 	RNG_Init_KT2(seed);
 	break;
@@ -301,6 +336,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	    RNG_Table[kind].i_seed[j] = seed;
 	}
 	break;
+//libRrng_COMMENT_START
 //    case USER_UNIF:
 //	User_unif_fun = R_FindSymbol("user_unif_rand", "", NULL);
 //	if (!User_unif_fun) error(_("'user_unif_rand' not in load table"));
@@ -323,6 +359,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 //	    RNG_Table[kind].i_seed = (Int32 *) User_unif_seedloc();
 //	}
 //	break;
+//libRrng_COMMENT_END
     default:
 	error(_("RNG_Init: unimplemented RNG kind %d"), kind);
     }
@@ -336,101 +373,108 @@ static void Randomize(RNGtype kind)
     RNG_Init(kind, TimeToSeed());
 }
 
-//static void GetRNGkind(SEXP seeds)
-//{
-//    /* Load RNG_kind, N01_kind from .Random.seed if present */
-//    int tmp, *is;
-//    RNGtype newRNG; N01type newN01;
-//
-//    if (isNull(seeds))
-//	seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
+static void GetRNGkind(rseed* seeds)
+{
+    /* Load RNG_kind, N01_kind from .Random.seed if present */
+    int tmp, *is;
+    RNGtype newRNG; N01type newN01;
+
+    if (isNull(seeds))
+    	seeds = &_Random_seed; // get static value
 //    if (seeds == R_UnboundValue) return;
+    if (seeds->nseed == -1) return; // not initialised yet?
 //    if (!isInteger(seeds)) {
 //	if (seeds == R_MissingArg) /* How can this happen? */
 //	    error(_(".Random.seed is a missing argument with no default"));
 //	error(_(".Random.seed is not an integer vector but of type '%s'"),
 //		type2char(TYPEOF(seeds)));
 //    }
-//    is = INTEGER(seeds);
-//    tmp = is[0];
+    is = seeds->data;
+    tmp = is[0];
 //    if (tmp == NA_INTEGER)
 //	error(_(".Random.seed[1] is not a valid integer"));
-//    newRNG = (RNGtype) (tmp % 100);
-//    newN01 = (N01type) (tmp / 100);
-//    if (newN01 < 0 || newN01 > KINDERMAN_RAMAGE)
-//	error(_(".Random.seed[0] is not a valid Normal type"));
-//    switch(newRNG) {
-//    case WICHMANN_HILL:
-//    case MARSAGLIA_MULTICARRY:
-//    case SUPER_DUPER:
-//    case MERSENNE_TWISTER:
-//    case KNUTH_TAOCP:
-//    case KNUTH_TAOCP2:
-//    case LECUYER_CMRG:
-//	break;
+    newRNG = (RNGtype) (tmp % 100);
+    newN01 = (N01type) (tmp / 100);
+    if (newN01 < 0 || newN01 > KINDERMAN_RAMAGE)
+	error(_(".Random.seed[0] is not a valid Normal type"));
+    switch(newRNG) {
+    case WICHMANN_HILL:
+    case MARSAGLIA_MULTICARRY:
+    case SUPER_DUPER:
+    case MERSENNE_TWISTER:
+    case KNUTH_TAOCP:
+    case KNUTH_TAOCP2:
+    case LECUYER_CMRG:
+	break;
 //    case USER_UNIF:
 //	if(!User_unif_fun)
 //	    error(_(".Random.seed[1] = 5 but no user-supplied generator"));
 //	break;
-//    default:
-//	error(_(".Random.seed[1] is not a valid RNG kind (code)"));
-//    }
-//    RNG_kind = newRNG; N01_kind = newN01;
-//    return;
-//}
-
+    default:
+	error(_(".Random.seed[1] is not a valid RNG kind (code)"));
+    }
+    RNG_kind = newRNG; N01_kind = newN01;
+    return;
+}
 
 void GetRNGstate()
 {
+//libRrng_COMMENT_START
 //    /* Get  .Random.seed  into proper variables */
-//    int len_seed;
-//    SEXP seeds;
+    int len_seed;
+    rseed* seeds;
 //
 //    /* look only in the workspace */
-//    seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
-//    if (seeds == R_UnboundValue) {
-//	Randomize(RNG_kind);
-//    } else {
-//	GetRNGkind(seeds);
-//	len_seed = RNG_Table[RNG_kind].n_seed;
-//	/* Not sure whether this test is needed: wrong for USER_UNIF */
-//	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
-//	    error(_(".Random.seed has wrong length"));
-//	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
-//	    Randomize(RNG_kind);
-//	else {
-//	    int j, *is = INTEGER(seeds);
-//	    for(j = 1; j <= len_seed; j++)
-//		RNG_Table[RNG_kind].i_seed[j - 1] = is[j];
+    seeds = &_Random_seed;
+
+    if ( seeds->nseed == -1 ) {
+	Randomize(RNG_kind);
+    } else {
+	GetRNGkind(seeds);
+	len_seed = RNG_Table[RNG_kind].n_seed;
+	/* Not sure whether this test is needed: wrong for USER_UNIF */
+	if(seeds->nseed > 1 && seeds->nseed < len_seed + 1)
+	    error(_(".Random.seed has wrong length"));
+	if(seeds->nseed == 1 && RNG_kind != USER_UNIF)
+	    Randomize(RNG_kind);
+	else {
+	    int j, *is = seeds->data;
+	    for(j = 1; j <= len_seed; j++)
+		RNG_Table[RNG_kind].i_seed[j - 1] = is[j];
 	    FixupSeeds(RNG_kind, 0);
-//	}
-//    }
+	}
+    }
 }
-//
-//void PutRNGstate()
-//{
-//    /* Copy out seeds to  .Random.seed  */
-//    int len_seed, j;
-//    SEXP seeds;
-//
-//    if (RNG_kind < 0 || RNG_kind > LECUYER_CMRG ||
-//	N01_kind < 0 || N01_kind > KINDERMAN_RAMAGE) {
-//	warning("Internal .Random.seed is corrupt: not saving");
-//	return;
-//    }
-//
-//    len_seed = RNG_Table[RNG_kind].n_seed;
-//
+
+void PutRNGstate()
+{
+    /* Copy out seeds to  .Random.seed  */
+    int len_seed, j;
+    rseed* seeds = &_Random_seed;
+
+    if (RNG_kind < 0 || RNG_kind > LECUYER_CMRG ||
+	N01_kind < 0 || N01_kind > KINDERMAN_RAMAGE) {
+	warning("Internal .Random.seed is corrupt: not saving");
+	return;
+    }
+
+    len_seed = RNG_Table[RNG_kind].n_seed;
+    seeds->nseed = len_seed;
+
+//libRrng_COMMENT_START
 //    PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
-//
-//    INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind;
-//    for(j = 0; j < len_seed; j++)
-//	INTEGER(seeds)[j+1] = RNG_Table[RNG_kind].i_seed[j];
-//
+//libRrng_COMMENT_END
+
+    seeds->data[0] = RNG_kind + 100 * N01_kind;
+    for(j = 0; j < len_seed; j++)
+    	seeds->data[j+1] = RNG_Table[RNG_kind].i_seed[j];
+
+//libRrng_COMMENT_START
 //    /* assign only in the workspace */
 //    defineVar(R_SeedsSymbol, seeds, R_GlobalEnv);
 //    UNPROTECT(1);
-//}
+//libRrng_COMMENT_END
+}
 
 static void RNGkind(RNGtype newkind)
 {
@@ -443,8 +487,10 @@ static void RNGkind(RNGtype newkind)
     case MARSAGLIA_MULTICARRY:
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
+//libRrng_COMMENT_START
 //    case KNUTH_TAOCP:
 //    case USER_UNIF:
+//libRrng_COMMENT_END
     case KNUTH_TAOCP2:
     case LECUYER_CMRG:
 	break;
@@ -454,7 +500,9 @@ static void RNGkind(RNGtype newkind)
     GetRNGstate();
     RNG_Init(newkind, unif_rand() * UINT_MAX);
     RNG_kind = newkind;
+//libRrng_COMMENT_START
 //    PutRNGstate();
+//libRrng_COMMENT_END
 }
 
 static void Norm_kind(N01type kind)
@@ -462,21 +510,20 @@ static void Norm_kind(N01type kind)
     if (kind == -1) kind = N01_DEFAULT;
     if (kind < 0 || kind > KINDERMAN_RAMAGE)
 	error(_("invalid Normal type in RNGkind"));
+//libRrng_COMMENT_START
 //    if (kind == USER_NORM) {
 //	User_norm_fun = R_FindSymbol("user_norm_rand", "", NULL);
 //	if (!User_norm_fun) error(_("'user_norm_rand' not in load table"));
 //    }
+//libRrng_COMMENT_END
     GetRNGstate(); /* might not be initialized */
     if (kind == BOX_MULLER)
 	BM_norm_keep = 0.0; /* zap Box-Muller history */
     N01_kind = kind;
+//libRrng_COMMENT_START
 //    PutRNGstate();
+//libRrng_COMMENT_END
 }
-
-
-/*------ .Internal interface ------------------------*/
-#define asInteger(x) x
-#define isNull(x) (x==NULL)
 
 void do_RNGkind (RNGtype* rng, N01type* norm)
 {
@@ -489,7 +536,7 @@ void do_RNGkind (RNGtype* rng, N01type* norm)
 //    INTEGER(ans)[1] = N01_kind;
 //    rng = CAR(args);
 //    norm = CADR(args);
-//    GetRNGkind(R_NilValue); /* pull from .Random.seed if present */
+    GetRNGkind(R_NilValue); /* pull from .Random.seed if present */
     if(!isNull(rng)) { /* set a new RNG kind */
 	RNGkind((RNGtype) asInteger(*rng));
     }
@@ -512,16 +559,20 @@ void do_setseed (Int32 seed, RNGtype* skind, N01type* nkind)
 //	error(_("supplied seed is not a valid integer"));
 //    skind = CADR(args);
 //    nkind = CADDR(args);
-//    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from
-//			       .Random.seed if present */
-    if (!isNull(skind)) RNGkind((RNGtype) asInteger(*skind));
-    if (!isNull(nkind)) Norm_kind((N01type) asInteger(*nkind));
+    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from
+			       .Random.seed if present */
+    if (!isNull(skind)) { /* set a new RNG kind */
+    	RNGkind((RNGtype) asInteger(*skind));
+    }
+    if (!isNull(nkind))  { /* set a new normal kind */
+    	Norm_kind((N01type) asInteger(*nkind));
+    }
     RNG_Init(RNG_kind, (Int32) seed); /* zaps BM history */
-//    PutRNGstate();
+    PutRNGstate();
 //    return R_NilValue;
 }
 
-
+//libRrng_COMMENT_START
 ///* S COMPATIBILITY */
 //
 ///* The following entry points provide compatibility with S. */
@@ -536,6 +587,7 @@ void do_setseed (Int32 seed, RNGtype* skind, N01type* nkind)
 //{
 //    PutRNGstate();
 //}
+//libRrng_COMMENT_END
 
 /* ===================  Mersenne Twister ========================== */
 /* From http://www.math.keio.ac.jp/~matumoto/emt.html */
@@ -772,282 +824,8 @@ static Int32 KT_next(void)
 //    KT_pos = 100;
 //}
 
-double norm_rand(void){
-	#define BIG 134217728 /* 2^27 */
-	/* unif_rand() alone is not of high enough precision */
-	double u1 = unif_rand();
-	u1 = (int)(BIG*u1) + unif_rand();
-	return qnorm5(u1/BIG, 0.0, 1.0, 1, 0);
-}
 
-double exp_rand(void)
-{
-    /* q[k-1] = sum(log(2)^k / k!)  k=1,..,n, */
-    /* The highest n (here 16) is determined by q[n-1] = 1.0 */
-    /* within standard precision */
-    const static double q[] =
-    {
-	0.6931471805599453,
-	0.9333736875190459,
-	0.9888777961838675,
-	0.9984959252914960,
-	0.9998292811061389,
-	0.9999833164100727,
-	0.9999985691438767,
-	0.9999998906925558,
-	0.9999999924734159,
-	0.9999999995283275,
-	0.9999999999728814,
-	0.9999999999985598,
-	0.9999999999999289,
-	0.9999999999999968,
-	0.9999999999999999,
-	1.0000000000000000
-    };
-
-    double a = 0.;
-    double u = unif_rand();    /* precaution if u = 0 is ever returned */
-    while(u <= 0. || u >= 1.) u = unif_rand();
-    for (;;) {
-	u += u;
-	if (u > 1.)
-	    break;
-	a += q[0];
-    }
-    u -= 1.;
-
-    if (u <= q[0])
-	return a + u;
-
-    int i = 0;
-    double ustar = unif_rand(), umin = ustar;
-    do {
-	ustar = unif_rand();
-	if (umin > ustar)
-	    umin = ustar;
-	i++;
-    } while (u > q[i]);
-    return a + umin * q[0];
-}
-
-# define R_FINITE(x)    isfinite(x)
-
-/* From rgamma.c */
-
-/*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2008 The R Development Core Team
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
- *
- *  SYNOPSIS
- *
- *    #include <Rmath.h>
- *    double rgamma(double a, double scale);
- *
- *  DESCRIPTION
- *
- *    Random variates from the gamma distribution.
- *
- *  REFERENCES
- *
- *    [1] Shape parameter a >= 1.  Algorithm GD in:
- *
- *	  Ahrens, J.H. and Dieter, U. (1982).
- *	  Generating gamma variates by a modified
- *	  rejection technique.
- *	  Comm. ACM, 25, 47-54.
- *
- *
- *    [2] Shape parameter 0 < a < 1. Algorithm GS in:
- *
- *	  Ahrens, J.H. and Dieter, U. (1974).
- *	  Computer methods for sampling from gamma, beta,
- *	  poisson and binomial distributions.
- *	  Computing, 12, 223-246.
- *
- *    Input: a = parameter (mean) of the standard gamma distribution.
- *    Output: a variate from the gamma(a)-distribution
- */
-
-#define repeat for(;;)
-
-double rgamma(double a, double scale)
-{
-/* Constants : */
-    const static double sqrt32 = 5.656854;
-    const static double exp_m1 = 0.36787944117144232159;/* exp(-1) = 1/e */
-
-    /* Coefficients q[k] - for q0 = sum(q[k]*a^(-k))
-     * Coefficients a[k] - for q = q0+(t*t/2)*sum(a[k]*v^k)
-     * Coefficients e[k] - for exp(q)-1 = sum(e[k]*q^k)
-     */
-    const static double q1 = 0.04166669;
-    const static double q2 = 0.02083148;
-    const static double q3 = 0.00801191;
-    const static double q4 = 0.00144121;
-    const static double q5 = -7.388e-5;
-    const static double q6 = 2.4511e-4;
-    const static double q7 = 2.424e-4;
-
-    const static double a1 = 0.3333333;
-    const static double a2 = -0.250003;
-    const static double a3 = 0.2000062;
-    const static double a4 = -0.1662921;
-    const static double a5 = 0.1423657;
-    const static double a6 = -0.1367177;
-    const static double a7 = 0.1233795;
-
-    /* State variables [FIXME for threading!] :*/
-    static double aa = 0.;
-    static double aaa = 0.;
-    static double s, s2, d;    /* no. 1 (step 1) */
-    static double q0, b, si, c;/* no. 2 (step 4) */
-
-    double e, p, q, r, t, u, v, w, x, ret_val;
-
-    if (!R_FINITE(a) || !R_FINITE(scale) || a < 0.0 || scale <= 0.0) {
-	if(scale == 0.) return 0.;
-	ML_ERR_return_NAN;
-    }
-
-    if (a < 1.) { /* GS algorithm for parameters a < 1 */
-	if(a == 0)
-	    return 0.;
-	e = 1.0 + exp_m1 * a;
-	repeat {
-	    p = e * unif_rand();
-	    if (p >= 1.0) {
-		x = -log((e - p) / a);
-		if (exp_rand() >= (1.0 - a) * log(x))
-		    break;
-	    } else {
-		x = exp(log(p) / a);
-		if (exp_rand() >= x)
-		    break;
-	    }
-	}
-	return scale * x;
-    }
-
-    /* --- a >= 1 : GD algorithm --- */
-
-    /* Step 1: Recalculations of s2, s, d if a has changed */
-    if (a != aa) {
-	aa = a;
-	s2 = a - 0.5;
-	s = sqrt(s2);
-	d = sqrt32 - s * 12.0;
-    }
-    /* Step 2: t = standard normal deviate,
-               x = (s,1/2) -normal deviate. */
-
-    /* immediate acceptance (i) */
-    t = norm_rand();
-    x = s + 0.5 * t;
-    ret_val = x * x;
-    if (t >= 0.0)
-	return scale * ret_val;
-
-    /* Step 3: u = 0,1 - uniform sample. squeeze acceptance (s) */
-    u = unif_rand();
-    if (d * u <= t * t * t)
-	return scale * ret_val;
-
-    /* Step 4: recalculations of q0, b, si, c if necessary */
-
-    if (a != aaa) {
-	aaa = a;
-	r = 1.0 / a;
-	q0 = ((((((q7 * r + q6) * r + q5) * r + q4) * r + q3) * r
-	       + q2) * r + q1) * r;
-
-	/* Approximation depending on size of parameter a */
-	/* The constants in the expressions for b, si and c */
-	/* were established by numerical experiments */
-
-	if (a <= 3.686) {
-	    b = 0.463 + s + 0.178 * s2;
-	    si = 1.235;
-	    c = 0.195 / s - 0.079 + 0.16 * s;
-	} else if (a <= 13.022) {
-	    b = 1.654 + 0.0076 * s2;
-	    si = 1.68 / s + 0.275;
-	    c = 0.062 / s + 0.024;
-	} else {
-	    b = 1.77;
-	    si = 0.75;
-	    c = 0.1515 / s;
-	}
-    }
-    /* Step 5: no quotient test if x not positive */
-
-    if (x > 0.0) {
-	/* Step 6: calculation of v and quotient q */
-	v = t / (s + s);
-	if (fabs(v) <= 0.25)
-	    q = q0 + 0.5 * t * t * ((((((a7 * v + a6) * v + a5) * v + a4) * v
-				      + a3) * v + a2) * v + a1) * v;
-	else
-	    q = q0 - s * t + 0.25 * t * t + (s2 + s2) * log(1.0 + v);
-
-
-	/* Step 7: quotient acceptance (q) */
-	if (log(1.0 - u) <= q)
-	    return scale * ret_val;
-    }
-
-    repeat {
-		
-	/* Step 8: e = standard exponential deviate
-	 *	u =  0,1 -uniform deviate
-	 *	t = (b,si)-double exponential (laplace) sample */
-	e = exp_rand();
-	u = unif_rand();
-	u = u + u - 1.0;
-	if (u < 0.0)
-	    t = b - si * e;
-	else
-	    t = b + si * e;
-	/* Step	 9:  rejection if t < tau(1) = -0.71874483771719 */
-	if (t >= -0.71874483771719) {
-	    /* Step 10:	 calculation of v and quotient q */
-	    v = t / (s + s);
-	    if (fabs(v) <= 0.25)
-		q = q0 + 0.5 * t * t *
-		    ((((((a7 * v + a6) * v + a5) * v + a4) * v + a3) * v
-		      + a2) * v + a1) * v;
-	    else
-		q = q0 - s * t + 0.25 * t * t + (s2 + s2) * log(1.0 + v);
-	    /* Step 11:	 hat acceptance (h) */
-	    /* (if q not positive go to step 8) */
-	    if (q > 0.0) {
-		w = expm1(q);
-		/*  ^^^^^ original code had approximation with rel.err < 2e-7 */
-		/* if t is rejected sample again at step 8 */
-		if (c * fabs(u) <= w * exp(e - 0.5 * t * t))
-		    break;
-	    }
-	}
-    } /* repeat .. until  `t' is accepted */
-    x = s + 0.5 * t;
-    return scale * x * x;
-}
-
-#if 0
+#if 1
 
 int main(void)
  {
@@ -1055,15 +833,15 @@ int main(void)
 
     // you can seed with any uint32, but the best are odds in 0..(2^32 - 1)
 
-    set_seed(123);
+    do_setseed(123, NULL, NULL);
 
     // print the first 2,002 random numbers seven to a line as an example
 
     for(j=0; j<6; j++)
-        printf(" %10lf", unif_rand());
+        printf(" %.10lf", unif_rand());
     printf("\n");
         
-    set_seed(123);
+    do_setseed(123, NULL, NULL);
     for(j=0; j<6; j++)
         printf(" %.10lf", unif_rand());
 

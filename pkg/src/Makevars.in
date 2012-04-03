@@ -22,4 +22,6 @@ OctaveModule:
 	cp -f PKG_ADD *.oct $(OCT_MODULES_PATH);
 
 clean:
-	rm *.o;
+	rm *.o; \
+	cd modules; \
+	make clean;
