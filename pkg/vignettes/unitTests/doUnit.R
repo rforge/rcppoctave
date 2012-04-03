@@ -42,7 +42,7 @@ writeUnitVignette <- function(pkg, file){
 	Rnw.template <- 
 "
 \\documentclass[10pt]{article}
-%\\VignetteIndexEntry{RcppOctave-unitTests}
+%\\VignetteIndexEntry{@pkg@-unitTests}
 \\usepackage{vmargin}
 \\setmargrb{0.75in}{0.75in}{0.75in}{0.75in}
 
@@ -50,7 +50,7 @@ writeUnitVignette <- function(pkg, file){
 \\RequirePackage[T1]{fontenc}
 
 <<echo=FALSE,print=FALSE>>=
-pkg <- @pkg@
+pkg <- '@pkg@'
 require( pkg, character.only=TRUE )
 prettyVersion <- packageDescription(pkg)$Version
 prettyDate <- format(Sys.Date(), '%B %e, %Y')
@@ -68,6 +68,9 @@ authors <- packageDescription(pkg)$Author
 @results@
 \\end{verbatim}
 
+\\section*{Session Information}
+@sessionInfo@
+
 \\end{document}
 "
 	# load the results of the unit tests
@@ -82,9 +85,11 @@ authors <- packageDescription(pkg)$Author
 	# substitute template variables
 	contents <- Rnw.template
 	# package name
-	contents <-	gsub("@pkg@", paste("'", pkg, "'", sep=''), contents)
+	contents <-	gsub("@pkg@", pkg, contents)
 	# unit test results
 	contents <-	gsub("@results@", results, contents)
+	# session info
+	contents <-	gsub("@sessionInfo@", gsub("\\", "\\\\", paste(toLatex(sessionInfo()), collapse="\n"), fixed=TRUE), contents)
 	
 	# write into the file
 	writeLines(contents, file)

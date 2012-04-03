@@ -1,4 +1,4 @@
-## This Makefile was borrowed from the RcppGSL package
+## This Makefile was inspired from the RcppGSL package
 ## Copyright (C) 2011 Romain François and Edd Eddelbuettel
 ## It was modifed by Renaud Gaujoux to make it more generic and to generate the 
 ## fake vignettes on the fly.
@@ -13,17 +13,19 @@
 ## on Ubuntu so for now Dirk will insist on pdflatex and this helps.
 AUTHOR_USER=renaud
 R_PACKAGE=RcppOctave
+MAKEPDF=1
 
 ##---------------------------------------------------------------------
 ## Everything below this should be generic and work for any package provided that
 ## they have the following directory inst/doc setting:
-## - inst/doc/vignettes: contains the Rnw files for normal vignettes
-## - inst/doc/unitTests: contains an R file <PKGNAME>-unitTests.R and an .Rnw file
+## - inst/vignettes/src: contains the Rnw files for normal vignettes
+## - inst/vignettes/unitTests: contains an R file <PKGNAME>-unitTests.R and an .Rnw file
 ## that run the unit tests and generate the unit test vignette respectively
 ##---------------------------------------------------------------------
 
+SRC_DIR=src
 whoami=$(shell whoami)
-RNW_SRCS = $(notdir $(wildcard vignettes/*.Rnw))
+RNW_SRCS = $(notdir $(wildcard ${SRC_DIR}/*.Rnw))
 PDF_OBJS=$(RNW_SRCS:.Rnw=.pdf)
 
 # add unit tests if necessary
@@ -33,6 +35,7 @@ endif
 
 ifneq (,$(findstring $(AUTHOR_USER),$(whoami)))
 LOCAL_MODE=1
+MAKEPDF=1
 endif
 
 ifeq (${R_HOME},)
@@ -61,15 +64,15 @@ define do_install
 endef	
 endif
 
-ifdef LOCAL_MODE
-define update_inst_doc
-	# Updating PDF files in inst/doc
-	cp -f *.pdf ../inst/doc
-endef
-else
-define update_inst_doc
-endef	
-endif
+#ifdef LOCAL_MODE
+#define update_inst_doc
+#	# Updating PDF files in inst/doc
+#	mv -f *.pdf ../inst/doc
+#endef
+#else
+#define update_inst_doc
+#endef	
+#endif
 
 all: init $(PDF_OBJS) do_clean
 	@echo "# All vignettes in 'vignettes' are up to date"
@@ -84,10 +87,10 @@ else
 endif
 
 clean:
-	rm -f *.tex *.bbl *.blg *.aux *.out *.log *.err
+	rm -fr *.tex *.bbl *.blg *.aux *.out *.log *.err *-blx.bib unitTests-results
 
 clean-all: clean
-	rm -fr *.pdf ../inst/doc/*.pdf *.Rnw unitTests-results
+	rm -fr *.pdf ../inst/doc/*.pdf *.Rnw
 
 setvars:
 ifeq (${R_HOME},)
@@ -96,43 +99,41 @@ endif
 RPROG=	$(R_HOME)/bin/R
 RSCRIPT=$(R_HOME)/bin/Rscript
 
+.SECONDARY:
+
 do_clean:
 	# Removing temporary install directory '$(TMP_INSTALL_DIR)'
 	@-rm -rf $(TMP_INSTALL_DIR);
 
 # Generate .pdf from .tex
-%.pdf: %.tex
+%.pdf: ${SRC_DIR}/%.Rnw
 	$(eval VIGNETTE_BASENAME := $(shell basename $@ .pdf))
-	# Generating pdf $@ from $<
+	$(do_install)
+	# Generating vignette $@ from ${SRC_DIR}/$*.Rnw
+	# Using R_LIBS: $(R_LIBS)
+	$(RSCRIPT) --vanilla -e "require(knitr); knit('${SRC_DIR}/$*.Rnw', '$*.tex');"
+	# Generating pdf $@ from $*.tex
+ifdef MAKEPDF
 ifdef LOCAL_MODE
+	# Using pdflatex
 	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
-else
-	$(RSCRIPT) -e "tools::texi2dvi( '$(VIGNETTE_BASENAME).tex', pdf = TRUE, clean = FALSE )"
-endif
 	-bibtex $(VIGNETTE_BASENAME)
-ifdef LOCAL_MODE
 	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
 	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
 else
+	# Using tools::texi2dvi
+	$(RSCRIPT) -e "tools::texi2dvi( '$(VIGNETTE_BASENAME).tex', pdf = TRUE, clean = FALSE )"
+	-bibtex $(VIGNETTE_BASENAME)
 	$(RSCRIPT) -e "tools::texi2dvi( '$(VIGNETTE_BASENAME).tex', pdf = TRUE, clean = TRUE )"
 endif
-	# Create fake vignette file ./$(VIGNETTE_BASENAME).Rnw
-	@echo "\\documentclass[10pt]{article}\n%\\VignetteIndexEntry{$(VIGNETTE_BASENAME)}\n\
-\usepackage{url}\n\usepackage[colorlinks]{hyperref}\n\n\\\\begin{document}\n\end{document}\n" > $(VIGNETTE_BASENAME).Rnw
+endif	
 	# Remove temporary LaTeX files (but keep the .tex)
 	rm -fr $(VIGNETTE_BASENAME).toc $(VIGNETTE_BASENAME).log \
 	$(VIGNETTE_BASENAME).bbl $(VIGNETTE_BASENAME).blg \
-	$(VIGNETTE_BASENAME).aux $(VIGNETTE_BASENAME).out
-
+	$(VIGNETTE_BASENAME).aux $(VIGNETTE_BASENAME).out $(VIGNETTE_BASENAME)-blx.bib	
+	# Update fake vignette file ./$*.Rnw
+	$(RSCRIPT) --vanilla -e "${R_PACKAGE}:::makeFakeVignette('${SRC_DIR}/$*.Rnw', '$*.Rnw')"
 	$(update_inst_doc)
-
-# Generate a .tex file for a single vignette: generate from the 
-# actual .Rnw file, stored in the subdirectory 'vignettes'
-%.tex: vignettes/%.Rnw
-	$(do_install)	
-	# Generating vignette $@ from $<
-	# Using R_LIBS: $(R_LIBS)
-	$(RSCRIPT) --vanilla -e "require(highlight); driver <- HighlightWeaveLatex(boxes = TRUE); Sweave( '$<', driver = driver ); "
 
 ifneq ("$(wildcard unitTests)","")
 %-unitTests.pdf: unitTests/doUnit.R
@@ -151,12 +152,6 @@ ifneq ("$(wildcard unitTests)","")
 	$(RSCRIPT) --vanilla -e "tools::texi2dvi( '$(R_PACKAGE)-unitTests.tex', pdf = TRUE, clean = TRUE )"
 	# Cleanup latex file $(R_PACKAGE)-unitTests.tex
 	rm -fr $(R_PACKAGE)-unitTests.tex
-	
 	$(update_inst_doc)
+	
 endif
-
-#	$(eval VIGNETTE_BASENAME := $(shell basename $< .Rnw))
-#	$(eval R_LIBS := $(TMP_INSTALL_DIR):$(R_LIBS))
-#	@echo $(R_LIBS)
-#	@echo "# Generating vignette $(VIGNETTE_BASENAME) from $<"
-#	$(RSCRIPT) --vanilla -e "require(highlight); driver <- HighlightWeaveLatex(boxes = TRUE); Sweave( '$<', driver = driver ); "
