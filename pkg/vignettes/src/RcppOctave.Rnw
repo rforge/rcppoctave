@@ -19,9 +19,6 @@ prettyDate <- format(Sys.Date(), "%B %e, %Y")
 \setlength{\oddsidemargin}{0pt}
 
 \usepackage[minnames=1,maxnames=2]{biblatex}
-%<<bib, echo=FALSE, results='asis', warning=FALSE>>=
-%cat("\\bibliography{", file.path(system.file(package=pkg), "REFERENCES"), "}\n", sep='')
-%@
 \bibliography{Rpackages}
 \newcommand{\citet}[1]{\citeauthor{#1}~\cite{#1}}
 
@@ -62,20 +59,32 @@ implemented using the \citeCRANpkg{Rcpp}.
 It allows to call Octave functions in a similar way as calling
 C/C++/Fortran functions using the R core function~\code{.Call}.
 Since Octave uses a language that is mostly compatible with Matlab, the
-\Rpkg{RcppOctave} may be used to run Matlab m-files.
-As a matter of fact, it was originally developed to facilitates the port and comparison of R and Matlab code.
+\Rpkg{RcppOctave} may also be used to run Matlab m-files.
+As a matter of fact, this package was originally developed to facilitates the
+port and comparison of R and Matlab code.
 
-The package provides modules that port R core random number generators into Octave, that enable to reproduce and compare stochastic computations.
-These may also be used in any Octave session, independently of R, increasing the range of RNGs available in Octave.
+The package provides Octave modules that allow calling R core random number
+generators from Octave, which enables to reproduce and compare stochastic
+computations.
+%These may also be used in any Octave session, independently of R, increasing
+% the range of RNGs available in Octave.
 
-\section{Sample session}
+\section{Calling Octave functions from R}
 
-The \pkgname package provides the function \code{.CallOctave} to call Octave functions:
+The \pkgname package provides the function \code{.CallOctave} to call Octave
+functions from R, mimicking the way native \proglang{C/C++} functions
+are called with \code{.Call}:
 
 <<sample_CallOctave>>=
 	.CallOctave('eye', 3)
 	.CallOctave('svd', matrix(1:9,3))
 @
+
+\section{Calling R functions from Octave}
+
+TODO
+
+\section{Direct interface: the \texttt{.O} object}
 
 A convenient shortcut interface in defined by the object \code{.O} of class
 \code{Octave}, exported from \Rpkg{RcppOctave} namespace:
@@ -84,6 +93,9 @@ A convenient shortcut interface in defined by the object \code{.O} of class
 	.O$eye(3)
 	.O$svd(matrix(1:9,3))
 @
+
+
+\section{Sample session}
 
 Comparing equivalent R and Octave functions is therefore as easy as comparing two R functions.
 For example, one can compare the respective functions \code{svd} with the following code: 
@@ -125,7 +137,6 @@ This can be done using argument \code{argout}:
 sessionInfo()
 @
 }
-
 
 \printbibliography
 

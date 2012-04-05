@@ -332,9 +332,7 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 		const std::vector<string>& onames = *output_names;
 
 		VERBOSE_LOG("octave_feval - Calling feval now ... ");
-		// TODO: synchronise RNG
 		octave_value_list out = feval(fname, args, nres);
-		// TODO: synchronise RNG
 		if ( !error_state ){
 			VERBOSE_LOG("OK\noctave_feval - Result has %i elements\n", out.length());
 
@@ -394,7 +392,7 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 	// throw an R error
 	std::ostringstream err;
 	err << R_PACKAGE_NAME" - error in Octave function `" << fname.c_str() << "`.";
-	error(err.str().c_str());
+	Rf_error(err.str().c_str());
 
 	return octave_value_list();
 }
