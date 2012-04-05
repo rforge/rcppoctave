@@ -1,8 +1,8 @@
 % Rrng functions
-autoload('runif', 'Rrng.oct');
-autoload('rnorm', 'Rrng.oct');
-autoload('rexp', 'Rrng.oct');
-autoload('rgamma', 'Rrng.oct');
+autoload('rand', 'Rrng.oct');
+autoload('randn', 'Rrng.oct');
+autoload('rande', 'Rrng.oct');
+autoload('randg', 'Rrng.oct');
 autoload('setseed', 'Rrng.oct');
 autoload('getseed', 'Rrng.oct');
 

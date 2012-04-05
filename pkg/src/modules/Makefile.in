@@ -1,0 +1,37 @@
+# Makefile for the Octave modules used in RcppOctave
+#
+# Inspired from Dirk Eddelbuettel's randmt Octave module
+# http://dirk.eddelbuettel.com/code/octave-mt.html
+# Copyright (C) 1999 Dirk Eddelbuettel <edd@debian.org> 
+#
+# Copyright (C) 2011 Renaud Gaujoux
+#
+# Released under the GNU General Public License just like Octave
+
+CC = @CC@
+CFLAGS = @CFLAGS@ -fPIC -Wall -O6 -std=gnu99
+CXXFLAGS = @CXXFLAGS@ -fPIC -Wall -O6
+
+# Get flags for R
+RFLAGS = `"$(R_HOME)/bin$(R_ARCH_BIN)/R" CMD config --cppflags`
+# Get flags for Rcpp
+#PKG_LIBS = `"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" -e "Rcpp:::LdFlags()"`
+#PKG_CPPFLAGS = `"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" -e "Rcpp:::CxxFlags()"`
+
+OCT_SOURCES = $(wildcard ./*.cc)
+OCT_OBJECTS = $(OCT_SOURCES:.cc=.oct)
+
+all: ${OCT_OBJECTS}
+
+%.oct: %.cc
+	@OCTAVE_MKOCTFILE@ -v -c ${RFLAGS} $(PKG_CPPFLAGS) $*.cc 
+	@OCTAVE_MKOCTFILE@ $*.o -lR $(PKG_LIBS) --output $@
+
+utils.oct: utils.cc
+	@OCTAVE_MKOCTFILE@ $<
+	
+clean:
+	rm -vf *.o *~
+	
+clean-all: clean
+	rm -vf *.oct

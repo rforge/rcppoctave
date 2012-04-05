@@ -23,15 +23,15 @@ authors <- packageDescription(pkg)$Author
 \maketitle
 
 \begin{verbatim}
-RUNIT TEST PROTOCOL -- Tue Apr  3 17:12:15 2012 
+RUNIT TEST PROTOCOL -- Thu Apr  5 14:30:33 2012 
 *********************************************** 
-Number of test functions: 11 
+Number of test functions: 10 
 Number of errors: 0 
 Number of failures: 0 
 
  
 1 Test Suite : 
-RcppOctave unit testing - 11 test functions, 0 errors, 0 failures
+RcppOctave unit testing - 10 test functions, 0 errors, 0 failures
 
 
 
@@ -41,24 +41,23 @@ Test Suite: RcppOctave unit testing
 Test function regexp: ^test.+ 
 Test file regexp: ^runit.+.[rR]$ 
 Involved directory: 
-/tmp/tmp.jJlpm73cHk/RcppOctave/unitTests 
+/tmp/tmp.nwNnwfhTQh/RcppOctave/unitTests 
 --------------------------- 
-Test file: /tmp/tmp.jJlpm73cHk/RcppOctave/unitTests/runit.conversions.R 
+Test file: /tmp/tmp.nwNnwfhTQh/RcppOctave/unitTests/runit.conversions.R 
 test.bool: (7 checks) ... OK (0 seconds)
 test.char: (7 checks) ... OK (0 seconds)
 test.double: (9 checks) ... OK (0 seconds)
 test.int: (9 checks) ... OK (0 seconds)
 test.list: (37 checks) ... OK (0.01 seconds)
 --------------------------- 
-Test file: /tmp/tmp.jJlpm73cHk/RcppOctave/unitTests/runit.eval.R 
-test.o_get: (20 checks) ... OK (0.03 seconds)
+Test file: /tmp/tmp.nwNnwfhTQh/RcppOctave/unitTests/runit.eval.R 
+test.o_get: (20 checks) ... OK (0.01 seconds)
 --------------------------- 
-Test file: /tmp/tmp.jJlpm73cHk/RcppOctave/unitTests/runit.stats.R 
-test.o_rexp: (5 checks) ... OK (0 seconds)
-test.o_rgamma: (15 checks) ... OK (0 seconds)
-test.o_rnorm: (5 checks) ... OK (0 seconds)
-test.o_runif: (5 checks) ... OK (0 seconds)
-test.o_set.seed: (1 checks) ... OK (0 seconds)
+Test file: /tmp/tmp.nwNnwfhTQh/RcppOctave/unitTests/runit.stats.R 
+test.o_rexp: (12 checks) ... OK (0 seconds)
+test.o_rgamma: (48 checks) ... OK (0.02 seconds)
+test.o_rnorm: (12 checks) ... OK (0 seconds)
+test.o_runif: (12 checks) ... OK (0 seconds)
 \end{verbatim}
 
 \section*{Session Information}

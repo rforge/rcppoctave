@@ -1,5 +1,6 @@
 \docType{data}
 \name{.O}
+\alias{.DollarNames.Octave}
 \alias{.DollarNames,Octave-method}
 \alias{.O}
 \alias{$<-,Octave-method}
@@ -10,6 +11,8 @@
 \format{\code{.O} is an object of class \code{\linkS4class{Octave}}.}
 \usage{
   .O
+
+  .DollarNames.Octave(x, pattern = "")
 }
 \description{
   \code{RcppOctave} provides a simple interface to Octave

@@ -27,8 +27,8 @@
  * Simply returns its argument unchanged
  */
 DEFUN_DLD (identity, args, nargout,
- "obj = identity(obj)\n\n\
-Simply returns its argument unchanged.\n")
+"USAGE: obj = identity(obj)\n\n"
+"Simply returns its argument unchanged.\n")
 {
   // list of return values
   octave_value_list retval;

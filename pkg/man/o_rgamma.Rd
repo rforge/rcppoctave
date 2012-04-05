@@ -14,10 +14,16 @@
   \item{p}{number of output columns (default to \code{n})}
 }
 \description{
-  Drawing from R Gamma Distribution in Octave
+  This function wraps a call to the standard Octave
+  function \code{randg}, which is redefined by
+  \code{RcppOctave} to call the R base function
+  \code{\link{rgamma}}. This enables to exactly reproduce
+  stochastic computations in R and Octave, without changing
+  the original Octave/Matlab code. See
+  \code{\link{o_runif}} for more details.
 }
-\section{Octave Documentation for \emph{rgamma}}{
-  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rgamma,rd=TRUE)}
+\section{Octave Documentation for \emph{randg}}{
+  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(randg,rd=TRUE)}
 
   \emph{[Generated from
   Octave-\Sexpr{RcppOctave::o_version()} on
@@ -25,10 +31,12 @@
 }
 \examples{
 # Draw random gamma values (in vector form)
+set.seed(123)
 o_rgamma(1)
 o_rgamma(1, 10)
 
 # Draw random gamma values (in matrix form)
+set.seed(123)
 o_rgamma(2)
 o_rgamma(2, 5)
 
@@ -39,8 +47,7 @@ o_rgamma(1, 10, scale=0.5)
 \seealso{
   rgamma
 
-  Other orandom: \code{\link{o_Random.seed}},
-  \code{\link{o_rexp}}, \code{\link{o_rnorm}},
-  \code{\link{o_runif}}, \code{\link{o_set.seed}}
+  Other orandom: \code{\link{o_rexp}},
+  \code{\link{o_rnorm}}, \code{\link{o_runif}}
 }
 

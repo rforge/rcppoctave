@@ -16,10 +16,28 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_LANG(C++)
 
+# You will very likely need to ensure that the same C compiler and compiler 
+# flags are used in the configure tests as when compiling R or your package. 
+# Under a Unix-alike, you can achieve this by including the following fragment 
+# early in configure.ac
+: ${R_HOME=`R RHOME`}
+if test -z "${R_HOME}"; then
+  echo "could not determine R_HOME"
+  exit 1
+fi
+CC=`"${R_HOME}/bin/R" CMD config CC`
+CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+
 ## Use octave-config to find arguments for compiler and linker flags
 ##
-## Check for non-standard programs: octave-config(1)
+## Check for non-standard programs: 
+## octave-config
 AC_PATH_PROG([OCTAVE_CONFIG], [octave-config])
+## mkoctfile
+AC_PATH_PROG([OCTAVE_MKOCTFILE], [mkoctfile])
+
 ## If octave-config was found, let's use it
 if test "${OCTAVE_CONFIG}" != ""; then	
     # Use gsl-config for header and linker arguments
@@ -55,3 +73,4 @@ AC_SUBST(OCT_POST_3_4_0)
 #AC_CONFIG_SUBDIRS([src/modules])
 
 AC_OUTPUT(src/Makevars)
+AC_OUTPUT(src/modules/Makefile)

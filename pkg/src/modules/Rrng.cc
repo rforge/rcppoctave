@@ -37,9 +37,19 @@
 // STD includes
 #include <limits.h>
 
-// libRrng
+#ifndef LIBRRNG_STANDALONE
+//#include <RcppCommon.h>
+//#include <Rdefines.h>
+#include <Rmath.h>
+#include <R_ext/Random.h>
+#else
+// Standalone libRrng
 #include "libRrng.h"
+#endif
 
+#ifndef LIBRRNG_STANDALONE
+#define INIT_LIBRRNG
+#else
 static void init(){
 	static bool initRNG = true;
 	if( initRNG ){
@@ -48,14 +58,13 @@ static void init(){
 		initRNG = false;
 	}
 }
+#define INIT_LIBRRNG init();
 
 DEFUN_DLD (setseed, args, nargout,
  "setseed(n)\n\n\
 Sets the seed for the current RNG.\n")
 {
-  init();
   octave_value_list retval;	// list of return values
-
   int nargs = args.length ();	// number of arguments supplied
 
   if (nargs != 1) {		// if wrong arguments, show message
@@ -64,6 +73,8 @@ Sets the seed for the current RNG.\n")
   }
 
   long n = long(args(0).double_value());
+
+  init();
   do_setseed((Int32) n, NULL, NULL);
 
   return retval;
@@ -97,9 +108,7 @@ The value correspond to the value of .Random.seed in R.\n\
 See ?.Random.seed in an R session.")
 {
 
-  init();
   octave_value_list retval;	// list of return values
-
   int nargs = args.length ();	// number of arguments supplied
 
   if (nargs != 0) {		// if wrong arguments, show message
@@ -113,108 +122,120 @@ See ?.Random.seed in an R session.")
   int32NDArray m(dim_vector(1, len+1));
   for(int i=0; i<len+1; i++)
   	  m(0,i) = rs[i];
-
   retval(0) = m;
+
   return retval;
 }
 
-#define RAND_ARGS(octave_fun, max_arg) \
-init(); \
+#endif
+
+// Macros that define blocks for generic random generator Octave functions:
+// * parameter check
+// * value:
+// rand(n) => n x n matrix
+// rand(n, p) => n x p matrix
+//
+#define RAND_ARGS(octave_fun, min_arg, max_arg, iarg_row, iarg_col) \
+INIT_LIBRRNG \
 octave_value_list retval;\
 int nargs = args.length ();	\
 \
-if (nargs<1 || nargs>max_arg) { \
-usage("Try 'help "octave_fun"' for info");\
+if (nargs<min_arg || nargs>max_arg) { \
+std::stringstream err;\
+err << "Invalid call to '" << octave_fun << "': ";\
+if( nargs<min_arg ) err << "at least " << min_arg << " argument(s) required.";\
+else err << "too many arguments.";\
+err << std::endl << "See 'help " << octave_fun << "' for more details.";\
+usage(err.str().c_str());\
 return retval;\
 }\
 \
 long n,k;\
-octave_value tmp = args(0);\
-if( tmp.is_matrix_type() ){\
-Array<int> iv = tmp.int_vector_value (true);\
-n = iv(0);\
-k = iv(1);\
+if( nargs <= iarg_row ){\
+	n = k = 1;\
 }else{\
-n = long(args(0).double_value());\
-k = ( nargs >= 2 && !args(1).is_empty() ? long(args(1).double_value()) : n);\
-}\
-\
-Matrix X(n, k);
-
-#define RAND_RESULT(octave_fun_call) \
-for (long j=0; j<k; j++){\
-	for (long i=0; i<n; i++){\
-	  X(i,j) = octave_fun_call;\
+	octave_value tmp = args(iarg_row);\
+	if( tmp.is_matrix_type() ){\
+		Array<int> iv = tmp.int_vector_value (true);\
+		n = iv(0);\
+		k = iv(1);\
+	}else{\
+		n = long(args(iarg_row).double_value());\
+		k = ( nargs > iarg_col && !args(iarg_col).is_empty() ? long(args(iarg_col).double_value()) : n);\
 	}\
 }\
-\
+Matrix X(n, k);
+
+#define RAND_RESULT(fun_rand_call) \
+GetRNGstate(); /* update R internal random seed*/\
+for (long j=0; j<k; j++){\
+	for (long i=0; i<n; i++){\
+	  X(i,j) = fun_rand_call;\
+	}\
+}\
+PutRNGstate(); /* update R variable .Random.seed */\
 retval(0) = X;\
 \
 return retval;
 
 #define RAND_FUNCTION(fun_rand, octave_fun) \
-RAND_ARGS(octave_fun, 2) \
+RAND_ARGS(octave_fun, 0, 2, 0, 1) \
 RAND_RESULT(fun_rand())
 
-DEFUN_DLD (runif, args, nargout,
-"USAGE: U = runif( n [, k])\n\n\
-Generates uniform random variates using the current RNG.\n\
-runif(n, k)   returns a n*k matrix with uncorrelated U(0, 1) deviates drawn in columns\n\
-runif(n)      returns a n*n matrix with uncorrelated U(0, 1) deviates drawn in columns\n")
+#define RCPP_OCTAVE_HELP_NOTE \
+"\n\nNOTE:\n"\
+"This function substitutes Octave original function in calls from RcppOctave\n\n"
+
+DEFUN_DLD (rand, args, nargout,
+"USAGE: U = rand( n [, k])\n\n"
+"Generates uniform random variates as R function 'runif' -- using the current RNG from R."
+"\n\nPossible calls:\n"
+"rand(n, k)   returns a n*k matrix with uncorrelated U(0, 1) deviates drawn in columns\n"
+"rand(n)      returns a n*n matrix with uncorrelated U(0, 1) deviates drawn in columns\n"
+RCPP_OCTAVE_HELP_NOTE)
 {
-	 RAND_FUNCTION(unif_rand, "runif")
+	 RAND_FUNCTION(unif_rand, "rand")
 }
 
-DEFUN_DLD (rnorm, args, nargout, 
- "USAGE: N = rnorm( n [, k])\n\n\
-Generates standard-normal random variates using the current RNG.\n\
-rnorm(n, k)   returns a n*k matrix with uncorrelated N(0, 1) deviates drawn in columns\n\
-rnorm(n)      returns a n*n matrix with uncorrelated N(0, 1) deviates draw in columns\n")
+DEFUN_DLD (randn, args, nargout,
+ "USAGE: N = randn( n [, k])\n\n"
+"Generates standard-normal random variates as R function 'rnorm' -- using the current RNG from R."
+"\n\nPossible calls:\n"
+"randn(n, k)   returns a n*k matrix with uncorrelated N(0, 1) deviates drawn in columns\n"
+"randn(n)      returns a n*n matrix with uncorrelated N(0, 1) deviates draw in columns\n"
+RCPP_OCTAVE_HELP_NOTE)
 {
-	RAND_FUNCTION(norm_rand, "rnorm")
+	RAND_FUNCTION(norm_rand, "randn")
 }
 
-DEFUN_DLD (rexp, args, nargout, 
- "USAGE: E = rexp( n [, k])\n\n\
-Generates standard-exponential random variates using the current RNG.\n\
-rexp(n, k)   returns n*k matrix with uncorrelated E(0, 1) deviates drawn in columns\n\
-rexp(n)      returns n*n matrix with uncorrelated E(0, 1) deviates drawn in columns\n")
+DEFUN_DLD (rande, args, nargout,
+ "USAGE: E = rande( n [, k])\n\n"
+"Generates standard-exponential random variatesas R function 'rexp' -- using the current RNG from R."
+"\n\nPossible calls:\n"
+"rande(n, k)   returns n*k matrix with uncorrelated E(0, 1) deviates drawn in columns\n"
+"rande(n)      returns n*n matrix with uncorrelated E(0, 1) deviates drawn in columns\n"
+RCPP_OCTAVE_HELP_NOTE)
 {
-	RAND_FUNCTION(exp_rand, "rexp")
+	RAND_FUNCTION(exp_rand, "rande")
 }
 
-DEFUN_DLD (rgamma, args, ,
-"USAGE: E = rgamma( n [, k, shape, scale])\n\n\
-Generates Gamma random variates using the current RNG.\n\n\
-rgamma(n, k)   returns n*k matrix with uncorrelated E(0, 1) deviates drawn in columns\n\
-rgamma(n)      returns n*n matrix with uncorrelated E(0, 1) deviates drawn in columns\n\
-\nOptional parameters:\n\n\
-a = mean of the standard gamma distribution.\n\
-scale = scale of the standard gamma distribution.\n\
-\nREFERENCES\n\n\
-[1] Shape parameter a >= 1.  Algorithm GD in:\n\n\
-Ahrens, J.H. and Dieter, U. (1982).\n\
-Generating gamma variates by a modified rejection technique.\n\
-Comm. ACM, 25, 47-54.\n\n\
-\n\
-[2] Shape parameter 0 < a < 1. Algorithm GS in:\n\n\
-Ahrens, J.H. and Dieter, U. (1974).\n\
-Computer methods for sampling from gamma, beta, poisson and binomial distributions.\n\
-Computing, 12, 223-246.\n\n\n\
-LICENSE INFORMATION\n\n\
-GNU General Public License (>=2)\n\n\
-Mathlib : A C Library of Special Functions\n\
-Copyright (C) 1998 Ross Ihaka\n\
-Copyright (C) 2000--2008 The R Development Core Team\n\
-Copyright (C) 2011 Renaud Gaujoux (Standalone library + Octave module)")
+DEFUN_DLD (randg, args, ,
+"USAGE: E = randg( n [, k, shape, scale])\n\n"
+"Generates Gamma random variates as R function 'rgamma' -- using the current RNG from R."
+"\n\nPossible calls:\n"
+"randg(shape)				returns a single draw from G(shape, 1)\n"
+"randg(shape, n) 			returns n*n matrix with uncorrelated G(shape, 1) deviates drawn in columns\n"
+"randg(shape, n, p) 		returns n*p matrix with uncorrelated G(shape, 1) deviates drawn in columns\n"
+"randg(shape, n, p, scale) 	returns n*p matrix with uncorrelated G(shape, scale) deviates drawn in columns\n"
+RCPP_OCTAVE_HELP_NOTE)
 {
 	
-  RAND_ARGS("rgamma", 4)
+  RAND_ARGS("randg", 1, 4, 1, 2)
 
   int nArgs = args.length ();	// number of arguments supplied
 
   // retrieve shape and scale parameters
-  double shape(nArgs >= 3 && !args(2).is_empty() ? args(2).double_value() : 1);
+  double shape = args(0).double_value();
   double scale(nArgs >= 4 && !args(3).is_empty() ? args(3).double_value() : 1);
 
   RAND_RESULT(rgamma(shape, scale))\

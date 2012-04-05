@@ -57,6 +57,10 @@ o_exist <- function(NAME, ...){
 	.CallOctave('exist', NAME, ...)
 }
 
+
+#' @rdname OctaveInterface
+#' @S3method .DollarNames Octave
+#' @export
 .DollarNames.Octave <- function(x, pattern = "") o_completion_matches(pattern)
 
 #' The method \code{$} provides a direct way of calling Octave functions or 
