@@ -280,3 +280,13 @@ write.bib <- function(entry=NULL, file="Rpackages.bib", append = FALSE, verbose 
 	## return Bibtex items invisibly
 	invisible(bibs)
 }
+
+#' Returns the location of a package BiBTeX file, usually named 'REFERENCES.bib' in  
+#' the package's root directory.
+#' 
+#' @param pkg Package name
+#' @rdname write.bib
+#' @export
+pkgBibfile <- function(pkg){
+	file.path(system.file(package=pkg), "REFERENCES")
+} 

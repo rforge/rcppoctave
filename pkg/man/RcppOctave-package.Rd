@@ -20,6 +20,11 @@ o_help('svd')
 
   Maintainer: Renaud Gaujoux \email{renaud@cbio.uct.ac.za}
 }
+\references{
+  Eaton JW (2002). _GNU Octave Manual_. Network Theory
+  Limited. ISBN 0-9541617-2-6, <URL:
+  http://www.octave.org/>.
+}
 \seealso{
   See \code{\link{.CallOctave}}, \code{\link{o_source}},
   \code{\link{o_help}}

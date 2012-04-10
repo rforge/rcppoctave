@@ -19,6 +19,9 @@
 #' @docType package
 #' @title Interfacing R with Octave
 #' @keywords package
+#' 
+#' @cite Eaton2002
+#' @bibliography ~/Documents/articles/library.bib
 #' @examples
 #' 
 #' .CallOctave('svd', matrix(1:9, 3))

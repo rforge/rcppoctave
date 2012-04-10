@@ -1,10 +1,13 @@
 \encoding{utf8}
 \name{write.bib}
+\alias{pkgBibfile}
 \alias{write.bib}
 \title{Generate a Bibtex File from Package Citations}
 \usage{
   write.bib(entry = NULL, file = "Rpackages.bib",
     append = FALSE, verbose = TRUE)
+
+  pkgBibfile(pkg)
 }
 \arguments{
   \item{entry}{a \code{\link{bibentry}} object or a
@@ -23,6 +26,8 @@
 
   \item{verbose}{a logical to toggle verbosity. If
   \code{file=NULL}, verbosity is forced off.}
+
+  \item{pkg}{Package name}
 }
 \value{
   the list of Bibtex objects -- invisibly.
@@ -31,6 +36,9 @@
   Generates a Bibtex file from a list of packages or all
   the installed packages. It is useful for adding relevant
   citations in Sweave documents.
+
+  Returns the location of a package BiBTeX file, usually
+  named 'REFERENCES.bib' in the package's root directory.
 }
 \details{
   Multiple citations are handled by adding a numeric suffix

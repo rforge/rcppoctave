@@ -12,6 +12,8 @@ pkgtitle <- packageDescription(pkg)$Title
 prettyDate <- format(Sys.Date(), "%B %e, %Y")
 @
 
+\usepackage{amsmath} %math symbols
+\usepackage{amssymb} %extra math symbols
 \usepackage{xspace}
 \usepackage{url}
 \usepackage[colorlinks]{hyperref}
@@ -19,9 +21,18 @@ prettyDate <- format(Sys.Date(), "%B %e, %Y")
 \setlength{\oddsidemargin}{0pt}
 
 \usepackage[minnames=1,maxnames=2]{biblatex}
+<<bib, echo=FALSE, results='asis', warning=FALSE>>=
+cat("\\bibliography{", pkgBibfile(pkg),"}\n", sep='') 
+@
 \bibliography{Rpackages}
 \newcommand{\citet}[1]{\citeauthor{#1}~\cite{#1}}
 
+% TABLE OF CONTENTS
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\usepackage[toc]{multitoc}
+
+\newcommand{\matlab}{Matlab$^\circledR$\xspace}
 
 % R stuff
 \let\proglang=\textit
@@ -49,25 +60,46 @@ prettyDate <- format(Sys.Date(), "%B %e, %Y")
 \usepackage[noabbrev, capitalise, nameinlink]{cleveref}
 
 \author{Renaud Gaujoux}
-\title{\Rpkg{\Sexpr{pkg}}: \Sexpr{pkgtitle}}
+\title{\pkgname{\Sexpr{pkg}}: \Sexpr{pkgtitle}}
 \date{\Rpkg{\Sexpr{pkg}} -- Version \Sexpr{prettyVersion} [\Sexpr{prettyDate}]}
 \begin{document}
 \maketitle
 
-The \Rpkg{RcppOctave} package provides a direct interface to Octave from R,
-implemented using the \citeCRANpkg{Rcpp}.
-It allows to call Octave functions in a similar way as calling
-C/C++/Fortran functions using the R core function~\code{.Call}.
-Since Octave uses a language that is mostly compatible with Matlab, the
-\Rpkg{RcppOctave} may also be used to run Matlab m-files.
-As a matter of fact, this package was originally developed to facilitates the
-port and comparison of R and Matlab code.
+\begin{abstract}
+The \Rpkg{RcppOctave} provides a direct interface to \proglang{Octave} from
+\proglang{R}.
+It allows \proglang{Octave} functions to be called from an \proglang{R} session, in a similar way \proglang{C/C++} or
+\proglang{Fortran} functions are called using the base function~\code{.Call}.
+Since \proglang{Octave} uses a language that is mostly compatible with \matlab,
+the \Rpkg{RcppOctave} may also be used to run Matlab m-files.
 
-The package provides Octave modules that allow calling R core random number
-generators from Octave, which enables to reproduce and compare stochastic
-computations.
+As a matter of fact, this package was originally developed to facilitate the
+port and comparison of R and Matlab code.
+In particular, it provides \proglang{Octave} modules that redefine
+\proglang{Octave} default random number generator functions, so that they call
+\proglang{R} own dedicated functions like \code{runif}, \code{rnorm}, etc\ldots.
+This enables to easily reproduce and compare stochastic computations.
+\end{abstract}
+
 %These may also be used in any Octave session, independently of R, increasing
 % the range of RNGs available in Octave.
+
+\tableofcontents
+
+In many research fields, source code of algorithms and statistical methods are
+published as Matlab files (the so called m-files).
+While the code is generally released under public Open Source licenses like
+the GNU Public Licenses (GPLs) \cite{gnuGPL}, effectively running/using it 
+require either to have \matlab, which is a nice but expensive proprietary
+software, or to be at least a bit familiar with \proglang{Octave}
+\cite{Eaton2002}, which is free and open source, and is able to read and execute m-files -- as long as
+these do not require Matlab-specific functions.
+Arguably, \proglang{R} users may neither have Matlab, nor the
+time/will required to become \proglang{Octave}-skilled, and yet want to
+use or incorporate their analysis pipelines algorithms written for
+Matlab.
+
+\citeCRANpkg{Rcpp}
 
 \section{Calling Octave functions from R}
 
@@ -138,7 +170,7 @@ sessionInfo()
 @
 }
 
-\printbibliography
+\printbibliography[heading=bibintoc]
 
 <<bibtex_entries, echo=FALSE, include=FALSE>>=
 library(bibtex)
