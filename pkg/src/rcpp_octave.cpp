@@ -185,6 +185,11 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 						, Rcpp::as<int>(output));
 	}
 
+	// special case of no result
+	if( out.is_empty() ){
+		return R_NilValue;
+	}
+
 	// unlist result if requested
 	if( do_unlist ){
 		if( out.is_cs_list() PRE_3_4_0(|| out.is_list()) ){ // unnamed list
@@ -323,9 +328,11 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 			}else if( n_output > nres ){ // the user requested less than the maximum output
 				VERBOSE_LOG("%i [truncate]\n", nres);
 				autonames.clear();
+			}else if( n_output == -1 ){
+					VERBOSE_LOG("%i [force]\n", nres);
+					autonames.clear();
 			}else{
 				VERBOSE_LOG("%i\n", nres);
-				autonames.clear();
 			}
 			output_names = &autonames;
 		}
@@ -343,9 +350,9 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 			}
 
 			// directly return the result if no output names are available
-			if( onames.size() == 0 )
+			if( onames.size() == 0 ){
 				return out;
-			else{ // return the result as a map
+			}else{ // return the result as a map
 				int n = onames.size();
 				if( n != out.length() ){
 					warning("Dropping names due to inconsistent lengths");

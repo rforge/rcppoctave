@@ -1,6 +1,5 @@
 \docType{data}
 \name{.O}
-\alias{.DollarNames.Octave}
 \alias{.DollarNames,Octave-method}
 \alias{.O}
 \alias{$<-,Octave-method}
@@ -11,8 +10,6 @@
 \format{\code{.O} is an object of class \code{\linkS4class{Octave}}.}
 \usage{
   .O
-
-  .DollarNames.Octave(x, pattern = "")
 }
 \description{
   \code{RcppOctave} provides a simple interface to Octave
@@ -25,7 +22,10 @@
   \describe{ \item{.DollarNames,Octave-method}{The method
   \code{$} provides a direct way of calling Octave
   functions or retrieving variables from Octave base
-  context, via e.g. \code{.O$svd(x)} or \code{.O$a}. See
+  context, via e.g. \code{.O$svd(x)} or \code{.O$a}. It is
+  equivalent to \code{o_get(name, exact=TRUE)}, meaning
+  that no partial match is performed and \code{name} must
+  correspond exactly to a variable or a function name. See
   generic \code{\link{.DollarNames}}.
 
   Usage: .DollarNames(NA) }
@@ -40,9 +40,16 @@
 }
 \examples{
 .O
-.O$help()
+# assign/get Octave variables
 .O$a <- 10
 .O$a
+
+# call Octave functions
+.O$help()
+.O$svd(matrix(runif(9), 3))
+}
+\seealso{
+  \code{\link{o_get}}
 }
 \keyword{datasets}
 

@@ -42,11 +42,11 @@ namespace Rcpp {
 // otherwise the specialization will not be seen by Rcpp types
 #include <Rcpp.h>
 
+#define VERBOSE_LOG if( RCPP_OCTAVE_VERBOSE ) Rprintf
+
 #ifndef R_PACKAGE_NAME
 #define R_PACKAGE_NAME "RcppOctave"
 #endif
-
-#define VERBOSE_LOG if( RCPP_OCTAVE_VERBOSE ) Rprintf
 
 #define RcppOctave_error(funame, err) \
 	{\

@@ -26,20 +26,24 @@ setClass("Octave", contains='character')
 #' @export
 #' @examples
 #' .O
-#' .O$help()
+#' # assign/get Octave variables
 #' .O$a <- 10
 #' .O$a
+#' 
+#' # call Octave functions
+#' .O$help()
+#' .O$svd(matrix(runif(9), 3))
 #' 
 .O <- new("Octave")
 
 #' @rdname OctaveInterface
 #' @export
 setMethod('show', 'Octave',
-		function(object){
-			cat("<Octave Interface>\n")
-			cat("Use `$<name>` to call Octave function or get variable <name>.\n")
-			cat("Use `$<name>` <- to set the value of the Octave variable <name>.\n")
-		}
+	function(object){
+		cat(" <Octave Interface>\n")
+		cat(" - Use `$x` to call Octave function or get variable x.\n")
+		cat(" - Use `$x <- val` to assign a value val to the Octave variable x.\n")
+	}
 )
 
 #' @importMethodsFrom methods show
@@ -58,7 +62,7 @@ o_exist <- function(NAME, ...){
 }
 
 
-#' @rdname OctaveInterface
+#' @noRd
 #' @S3method .DollarNames Octave
 #' @export
 .DollarNames.Octave <- function(x, pattern = "") o_completion_matches(pattern)
@@ -66,14 +70,18 @@ o_exist <- function(NAME, ...){
 #' The method \code{$} provides a direct way of calling Octave functions or 
 #' retrieving variables from Octave base context, via e.g. \code{.O$svd(x)} 
 #' or \code{.O$a}.
+#' It is equivalent to \code{o_get(name, exact=TRUE)}, meaning that no partial 
+#' match is performed and \code{name} must correspond exactly to a variable or 
+#' a function name. 
 #'  
 #' @rdname OctaveInterface
+#' @seealso \code{\link{o_get}}
 #' @export
 setMethod('.DollarNames', 'Octave', .DollarNames.Octave)
 
 #' @rdname OctaveInterface
 #' @export
-setMethod('$', 'Octave', function(x, name)	o_get(name))
+setMethod('$', 'Octave', function(x, name)	o_get(name, exact=TRUE))
 
 #' The method \code{$<-} allow to directly assign/set Octave variables via e.g.
 #' \code{.O$a <- 10}. 
@@ -82,8 +90,15 @@ setMethod('$', 'Octave', function(x, name)	o_get(name))
 #' @export 
 setReplaceMethod('$', 'Octave',
 	function(x, name, value){
-		value <- eval(value)
-		o_assign(name, value)
+		# remove variable if value is directly NULL
+		if( is.null(value) ){
+			o_clear(name)			
+		}else{
+			# force evaluation now
+			value <- force(value)
+			# assign result of evaluation
+			o_assign(name, value)
+		}
 		x
 	}
 )

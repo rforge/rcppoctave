@@ -12,6 +12,13 @@
 #' 
 #' @param file the path to the Octave/Matlab source file -- typically with 
 #' extension ".m".
+#' @param text a character vector containing \emph{Octave} statements, that are 
+#' concatenated in a temporary file, which is then sourced.
+#' This argument typically enables the evaluation of multiple statements, as 
+#' opposed to single statement evaluation performed by \code{\link{o_eval}}.
+#' @param sep single character string added as suffix to each element of 
+#' \code{text}. The concatenation of all suffixed element should form a valid 
+#' \emph{Octave} block.
 #' 
 #' @templateVar name source
 #' @template OctaveDoc
@@ -21,7 +28,32 @@
 #'  
 #' @export
 #' 
-o_source <- function(file){
+#' @examples 
+#' 
+#' \dontshow{ o_clear() }
+#' 
+#' # source file
+#' mfile <- system.file("scripts/ex_source.m", package='RcppOctave')
+#' o_source(mfile)
+#' 
+#' # pass multiple statements
+#' o_source(text="a=1;b=3;c=randn(1,5);")
+#' o_get('a','b','c')
+#' 
+#' # also works with a character vector of statements
+#' o_source(text=c("a=10;b=30;", "c=randn(1,5)", "d=4"))
+#' o_get('a','b','c', 'd')
+#' 
+o_source <- function(file = "", text=NULL, sep=";\n"){
+	
+	# create temporary file with provided text
+	if( !missing(text) ){
+		text <- paste(text, sep, sep='')
+		mfile <- tempfile("mfile_")
+		on.exit(file.remove(mfile))
+		cat(text, file=mfile, sep='')
+		file <- mfile
+	}
 	
 	if( !file.exists(file) )
 		stop("File `", file, "` does not exist.")

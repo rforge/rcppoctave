@@ -34,9 +34,9 @@ OctaveFunction <- function(name){
 	
 	e <- new.env()
 	f <- evalq({
-		fname <- name
+		.NAME <- name
 		function(...){
-			.CallOctave(fname, ...)		
+			.CallOctave(.NAME, ...)		
 		}		
 	}, e)
 	new('OctaveFunction', f, name=name)

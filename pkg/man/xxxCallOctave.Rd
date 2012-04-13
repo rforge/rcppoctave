@@ -2,11 +2,11 @@
 \alias{.CallOctave}
 \title{Calling an Octave Function}
 \usage{
-  .CallOctave(fname, ..., argout = -1,
+  .CallOctave(.NAME, ..., argout = -1,
     unlist = !is.character(argout))
 }
 \arguments{
-  \item{fname}{an Octave function name. The function must
+  \item{.NAME}{an Octave function name. The function must
   be a valid function name in the current Octave session.}
 
   \item{...}{arguments passed to the Octave function}

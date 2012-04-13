@@ -11,7 +11,7 @@
 
   packageName()
 
-  packagePath()
+  packagePath(...)
 }
 \arguments{
   \item{env}{logical that indicates that the namespace's
@@ -20,6 +20,8 @@
 
   \item{info}{logical that indicate that the complete
   information list should be returned}
+
+  \item{...}{arguments passed to \code{\link{file.path}}.}
 }
 \value{
   an environment

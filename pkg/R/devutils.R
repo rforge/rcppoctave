@@ -105,26 +105,42 @@ packageName <- function(){
 #' its installation/loading directory in the case of an installed package, or
 #' its source directory served by devtools. 
 #' 
+#' @param ... arguments passed to \code{\link{file.path}}.
+#' 
 #' @rdname devutils
 #' @return a character string
-packagePath <- function(){
+packagePath <- function(...){
 	
 	# try to find the path from the package's environment (namespace)
-	if( exists('.packageName', packageEnv()) && .packageName != 'datasets' ){
-		# get the path from installation
-		path <- system.file(package=.packageName)
-		# somehow this fails when loading an installed package but is works 
-		# when loading a package during the post-install check
-		if( path != '' ) return(path)
-	}
-	# get the info from the loadingNamespace
-	info <- getLoadingNamespace(info=TRUE)
-	if( !is.null(info) ) # check whether we are loading the namespace 
-		file.path(info$libname, info$pkgname)
-	else{# we are in dev mode: use devtools
-		p <- devtools::as.package(.LOCAL_PKG_NAME)
-		return(p$path)
-	}
+	path <- 
+			if( exists('.packageName', packageEnv()) && .packageName != 'datasets' ){
+				# get the path from installation
+				system.file(package=.packageName)		
+			}
+	
+	# somehow this fails when loading an installed package but is works 
+	# when loading a package during the post-install check
+	if( is.null(path) || path == '' ){
+		# get the info from the loadingNamespace
+		info <- getLoadingNamespace(info=TRUE)
+		path <- 
+				if( !is.null(info) ) # check whether we are loading the namespace 
+					file.path(info$libname, info$pkgname)
+				else{# we are in dev mode: use devtools
+					library(devtools)
+					p <- as.package(.LOCAL_PKG_NAME)
+					
+					# handle special sub-directories of the package's root directory
+					if( nargs() == 0 || sub("^/?([^/]+).*", "\\1", list(...)[1]) %in% c('tests', 'data','R','src') )
+						p$path
+					else file.path(p$path,'inst')
+					
+				}
+	}	
+	stopifnot( !is.null(path) && path != '' )
+	
+	# add other part of the path
+	file.path(path, ...)	
 }
 
 roctave <- function(end=TRUE, load=TRUE){

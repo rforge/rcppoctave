@@ -9,7 +9,7 @@
 #' 
 #' \code{.CallOctave} calls an Octave function and returns its value.
 #' 
-#' @param fname an Octave function name. The function must be a valid function 
+#' @param .NAME an Octave function name. The function must be a valid function 
 #' name in the current Octave session.
 #' @param ... arguments passed to the Octave function
 #' @param argout the number of output values, or a vector of names to use as output
@@ -45,11 +45,12 @@
 #' # call Octave function 'svd' asking for 3 named output values: [U, S, V] = svd(x)
 #' .CallOctave('svd', x, argout=c('U', 'S', 'V'))
 #' 
-.CallOctave <- function(fname, ..., argout=-1, unlist=!is.character(argout)){
+.CallOctave <- function(.NAME, ..., argout=-1, unlist=!is.character(argout)){
 	
-	res <- .Call("octave_feval", fname, list(...), argout, unlist, PACKAGE='RcppOctave')
+	res <- .Call("octave_feval", .NAME, list(...), argout, unlist, PACKAGE='RcppOctave')
 	if( identical(argout, 0) || identical(argout, 0L) )	invisible()
-	else res	
+	else if( is.null(res) && argout <= 1L ) invisible()
+	else res
 }
 
 #' Low-level Function Interfacing with Octave
@@ -107,6 +108,26 @@ omodules <- function(verbose=getOption('verbose')){
 		message("Loading Octave modules for ", packageName()
 				, " from '", path, "'");
 	o_addpath(path)
+}
+
+#' Loading Example M-files
+#' 
+#' Source an example M-file in the sub-directory \dQuote{scripts/} of RcppOctave
+#' installation. 
+#' 
+#' @param file filename of the example script to source
+#' 
+#' @export
+#' @examples 
+#' 
+#' sourceExamples()
+#' sourceExamples('ex_source.m')
+#' 
+sourceExamples <- function(file='example.m'){
+	# TODO: rename file 'example.m' into 'ex_functions.m'
+	# add script path to Octave path
+	o_source(packagePath('scripts', file))
+	
 }
 
 

@@ -2,36 +2,36 @@
 % Example file for the R package RcppOctave
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [a,b,c] = fun1()
-
-	a = rand(3,4);
-	b = rand(6,2);
-c = "it works sdsad";
-
+function [a] = fun1()
+	a = rand(1,4);
 end
 
-function [a] = fun2()
-
-	a = rand(3,4);
-
+function [a,b,c] = fun2()
+	a = rand(1,4);
+	b = rand(2,3);
+	c = "some text";
 end
 
-function fun_noargout() 
-	x = 1; 
+function fun_noargout(x) 
+	% no effect outside the function
+	y = 1;
+	printf("%% Printed from Octave: x="), disp(x);
 end
 
-function [u, s, v] = fun_varargout() 
-
-	if (nargout == 1) u = 99; 
-	elseif (nargout == 3)
-		u = 1; s = 99; v = 2; 
-	endif; 
-endfunction
-
-function s = passarg(varargin)
+function [s] = fun_varargin(varargin)
   if (nargin==0)
 	s = 0;
   else
-	s = varargin{1} + plus (varargin{2:nargin});
+	s = varargin{1} + varargin{2} + varargin{3};
   endif
-endfunction
+end
+
+function [u, s, v] = fun_varargout()
+
+	if (nargout == 1) u = 1; 
+	elseif (nargout == 3)
+		u = 10; s = 20; v = 30; 
+	else usage("Expecting 1 or 3 output variables.");
+	endif; 
+end
+

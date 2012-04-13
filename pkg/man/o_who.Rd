@@ -2,14 +2,23 @@
 \alias{o_who}
 \title{Listing Octave Variables}
 \usage{
-  o_who(..., options)
+  o_who(..., options, rm.ans = FALSE, unique = TRUE)
 }
 \arguments{
-  \item{...}{filtering patterns. Only names matching any of
-  the patterns are returned.}
+  \item{...}{filtering patterns or extra arguments passed
+  to \code{o_who} and \code{o_whos}. Only names matching
+  any of the patterns are returned.}
+
+  \item{rm.ans}{a logical that indicates if the automatic
+  Octave variable \code{ans} should be included in the
+  result (\code{FALSE}) or removed (\code{TRUE}).}
 
   \item{options}{options passed to Octave function
   \code{who}. See section \emph{Octave Documentation}.}
+
+  \item{unique}{a logical that indicates whether unique
+  names should be returned. This argument is relevant in
+  the case multiple patterns are specified in \code{...}.}
 }
 \value{
   None
@@ -38,5 +47,8 @@ o_assign( setNames(l, prefnames) )
 o_who()
 o_who('pref*')
 \dontshow{  stopifnot( identical(o_who('pref*'), prefnames) ) }
+}
+\seealso{
+  Other listoct: \code{\link{o_ls}}, \code{\link{o_whos}}
 }
 

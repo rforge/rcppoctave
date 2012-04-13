@@ -1,8 +1,11 @@
 \name{o_clear}
 \alias{o_clear}
+\alias{o_rm}
 \title{Deleting Octave Variables}
 \usage{
   o_clear(..., all = FALSE, options)
+
+  o_rm(..., all = FALSE, options)
 }
 \arguments{
   \item{...}{names or pattern of the variables to delete,
@@ -20,6 +23,8 @@
 }
 \description{
   Deletes variables from Octave global context.
+
+  The function \code{o_rm} is an alias to \code{o_clear}.
 }
 \section{Octave Documentation for \emph{clear}}{
   \Sexpr[results=rd,stage=render]{RcppOctave::o_help(clear,rd=TRUE)}

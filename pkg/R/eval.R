@@ -59,13 +59,13 @@ o_eval <- function(..., CATCH, unlist=TRUE){
 	if( length(dots) == 1 ){
 		if( is.list(dots[[1]]) )
 			dots <- dots[[1]]
-		if( is.character(dots[[1]]) ) 
+		else if( is.character(dots[[1]]) ) 
 			dots <- as.list(dots[[1]])	
 	}
 	
 	res <- 
 			if( missing(CATCH) )
-				sapply(dots, .CallOctave, fname='eval', simplify=FALSE)
+				sapply(dots, .CallOctave, .NAME='eval', simplify=FALSE)
 			else 
 				sapply(dots, function(x){ .CallOctave('eval', x, CATCH) }, simplify=FALSE)		
 	
@@ -166,10 +166,13 @@ o_assignin <- o_assign
 #' 
 #' @param unlist a logical that specifies it single variables should be 
 #' returned as a single value (default), or as a list.
-#' @param ans a logical indicating if the automatic Octave variable \code{ans}
+#' @param rm.ans a logical that indicates if the automatic Octave variable \code{ans}
 #' should be included in the result. Default is not to include it unless otherwise 
 #' explicitly specified with this argument, or if it is part of the requested 
-#' variables in \code{...}. When present, argument \code{ans} is always honoured.
+#' variables in \code{...}. When present, argument \code{rm.ans} is always honoured.
+#' @param exact logical that indicates whether variable names are matched 
+#' partially (\code{FALSE} - default), or if an exact match is required 
+#' (\code{TRUE})
 #' @param pattern regular expression used to filter the requested variable names.
 #' Only names matching the pattern are returned. 
 #' 
@@ -190,7 +193,7 @@ o_assignin <- o_assign
 #' # from unstored previous computation 
 #' o_eval('svd(rand(3,3))')
 #' o_get()
-#' o_get(ans=TRUE)
+#' o_get(rm.ans=FALSE)
 #' 
 #' # load some variables
 #' x <- list(b=1, c=3, d=matrix(1:9, 3))
@@ -221,10 +224,14 @@ o_assignin <- o_assign
 #' 
 #' # an error is thrown in the case of multiple matches (the alternatives are shown)
 #' o_clear()
-#' o_assign(aaa=1, aab=2)
-#' try(o_get('aa'))
+#' o_assign(aaa=1, ab=2)
+#' try(o_get('a'))
 #' 
-o_get <- function(..., unlist=TRUE, ans = FALSE, pattern){
+#' # if an exact match is required then an error is thrown if no match is found
+#' o_get('aa')
+#' try(o_get('aa', exact=TRUE))
+#' 
+o_get <- function(..., unlist=TRUE, rm.ans = TRUE, exact=FALSE, pattern){
 	
 	dots <- unlist(list(...))
 	vnames <- dots
@@ -234,8 +241,8 @@ o_get <- function(..., unlist=TRUE, ans = FALSE, pattern){
 		if( length(dots) == 0 ){ # no argument: get all variables
 			
 			# enforce no ans if not otherwise requested
-			if( missing(ans) )
-				ans <- FALSE
+			if( missing(rm.ans) )
+				rm.ans <- TRUE
 			vnames <- o_who()
 			setNames(vnames, vnames)
 			
@@ -251,8 +258,8 @@ o_get <- function(..., unlist=TRUE, ans = FALSE, pattern){
 		
 	#print(vnames)
 	# keep 'ans' if it is part of the request and not otherwise explicitly requested 
-	if( missing(ans) && 'ans' %in% vnames )
-		ans <- TRUE
+	if( missing(rm.ans) && 'ans' %in% vnames )
+		rm.ans <- FALSE
 	# add names if necessary 
 	if( is.null(names(vnames)) ){
 		vnames <- setNames(vnames, vnames)
@@ -263,7 +270,7 @@ o_get <- function(..., unlist=TRUE, ans = FALSE, pattern){
 		names(vnames)[noname] <- vnames[noname]
 	}
 	# remove the automatic variable 'ans' if requested	
-	if( !ans )
+	if( rm.ans )
 		vnames <- vnames[vnames != 'ans']
 	# subset using the pattern
 	if( !missing(pattern) )
@@ -277,13 +284,17 @@ o_get <- function(..., unlist=TRUE, ans = FALSE, pattern){
 		name <- vnames[[i]]
 		# check for an exact match
 		if( !o_exist(name) ){
+			
+			if( exact )
+				stop("RcppOctave::o_get - Could not find an Octave object named '", name,"'.", call.=FALSE)
+			
 			# check for multiple matches
-			onames <- .DollarNames.Octave(NULL, name)
+			onames <- o_completion_matches(name)
 			if( length(onames) == 0 )
-				stop("RcppOctave::$ - Could not find an Octave object starting with '", name,"'.", call.=FALSE)
+				stop("RcppOctave::o_get - Could not find an Octave object starting with '", name,"'.", call.=FALSE)
 			
 			if( length(onames) > 1 )
-				stop("RcppOctave::$ - Multiple Octave objects [", length(onames), "] start with '", name,"'.\n"
+				stop("RcppOctave::o_get - Multiple Octave objects [", length(onames), "] start with '", name,"'.\n"
 						, "       Matches are: ", stringr::str_wrap(paste(onames, collapse=" "), exdent=20), "\n"
 						, call.=FALSE)
 			name <- onames
@@ -405,32 +416,42 @@ o_load <- function(from, ..., options){
 #' 
 o_clear <- function(..., all=FALSE, options){
 	
-	# add option all
+	# add option -all
 	if( all ){
-		if( missing(options) ) options <- ''
-		paste(options, '-all')
+		if( missing(options) ) options <- '-all'
+		else options <- paste(options, '-all')
 	}
-	
-	if( nargs() == 0 ) .CallOctave('clear')
-	else if( missing(options) ) .CallOctave('clear', ...)
+
+	if( missing(options) ) .CallOctave('clear', ...)
 	else  .CallOctave('clear', options, ...)
 	invisible()
 }
+
+#' The function \code{o_rm} is an alias to \code{o_clear}.
+#' @rdname o_clear
+#' @export
+o_rm <- o_clear
 
 #' Listing Octave Variables
 #' 
 #' Lists currently defined variables in Octave global context.
 #' 
-#' @param ... filtering patterns. Only names matching any of the patterns are 
-#' returned. 
+#' @param ... filtering patterns or extra arguments passed to \code{o_who} 
+#' and \code{o_whos}. Only names matching any of the patterns are returned.
+#' @param rm.ans a logical that indicates if the automatic Octave variable \code{ans}
+#' should be included in the result (\code{FALSE}) or removed (\code{TRUE}).
 #' @param options options passed to Octave function \code{who}. 
 #' See section \emph{Octave Documentation}.
+#' @param unique a logical that indicates whether unique names should be returned.
+#' This argument is relevant in the case multiple patterns are specified in 
+#' \code{...}.
 #' 
 #' @return None
 #' 
 #' @templateVar name who
 #' @template OctaveDoc
-#'  
+#' 
+#' @family listoct 
 #' @export
 #' @examples 
 #' 
@@ -448,9 +469,173 @@ o_clear <- function(..., all=FALSE, options){
 #' \dontshow{  stopifnot( identical(o_who('pref*'), prefnames) ) }
 #' 
 #' 
-o_who <- function(..., options){
+o_who <- function(..., options, rm.ans=FALSE, unique=TRUE){
 	
-	if( nargs() == 0 ) .CallOctave('who')
-	else if( missing(options) ) .CallOctave('who', ...)
+#	# add option -long
+#	if( long ){
+#		if( missing(options) ) options <- '-long'
+#		else options <- paste(options, '-long')
+#	}
+#	
+#	# add option -all
+#	if( all ){
+#		if( missing(options) ) options <- '-all'
+#		else options <- paste(options, '-all')
+#	}
+	
+	res <- 
+	if( missing(options) ) .CallOctave('who', ...)
 	else  .CallOctave('who', options, ...)
+
+	# remove automatic variable 'ans'
+	if( rm.ans ) res <- res[res != 'ans']
+
+	if( unique ) unique(res)
+	else res
 }
+
+#' Detailed Listing of Octave Variables
+#' 
+#' The function \code{o_whos} returns a detailed description of the variables
+#' defined in the current Octave session.
+#' 
+#' @inheritParams o_who
+#'  
+#' @templateVar name whos
+#' @template OctaveDoc
+#' 
+#' @family listoct
+#' @export
+#' 
+#' @examples
+#' \dontshow{ o_clear() }
+#' 
+#' .O$a <- 1
+#' .O$b <- 10
+#' o_whos()
+#' 
+#' o_eval("sqrt(2)")
+#' o_whos()
+#' 
+o_whos <- function(..., options, rm.ans=FALSE){
+
+	ofun <- 'whos'
+	w <- 
+	if( missing(options) ) .CallOctave(ofun, ...)
+	else  .CallOctave(ofun, options, ...)
+	
+	# special case to ensure to have a lists in 'size' and 'nesting' 
+	if( length(w$name) == 1L ){
+		w$size <- list(w$size)
+		w$nesting <- list(w$nesting)
+	}
+	
+	# remove automatic variable 'ans' if necessary
+	if( rm.ans ){
+		wans <- which(w$name == 'ans')
+		if( length(wans) > 0L )
+			w <- lapply(w, '[', -wans)
+	}
+	
+	# add S3 class for better formating 
+	class(w) <- c("Octave_whos", class(w))
+	w
+}
+
+#' @S3method print Octave_whos
+#' @noRd 
+print.Octave_whos <- function(x, ...){
+	# reformat some of the data
+	x$size <- sapply(x$size, paste, collapse="x")
+	x$nesting <- sapply(x$nesting, paste, collapse="")
+	x <- as.data.frame(x)
+	cat(" <Octave session: ", nrow(x)," object(s)>\n", sep='')
+	if( nrow(x) > 0L ) print(x, ..., row.names=FALSE)
+	invisible(x)
+}
+
+#' Listing Objects from the Current Octave Session
+#'  
+#' The function \code{o_ls} is an enhanced listing function, which 
+#' also lists user-defined functions, as opposed to \code{\link{o_who}} or 
+#' \code{\link{o_whos}}, which only list variables.
+#' Note that this function works properly on Octave >= 3.6.1, but is known 
+#' not to list user-defined functions on Octave 3.4.1 (for some unknown reason the 
+#' Octave function \code{completion_matches} does not return the names of 
+#' user-defined functions).
+#' 
+#' @param rm.ans a logical that indicates if the automatic Octave variable \code{ans}
+#' should be included in the result. Default (\code{TRUE}) is not to include it.
+#' 
+#' @param long logical that indicates the desired type of output: if \code{FALSE} 
+#' (default) then only the names of the variables are returned (like dispatched 
+#' \code{o_who}), otherwise a list with more detailed information about 
+#' each variable is returned (like \code{\link{o_whos}}.
+#' 
+#' @return a character vector or a list depending on the value of argument 
+#' \code{long}.
+
+#' @family listoct
+#' @export
+#' @examples 
+#' 
+#' \dontshow{ o_clear(all=TRUE) }
+#' 
+#' # only variables
+#' o_assign(list(a=1, b=2, c=5))
+#' o_ls()
+#' # compare with the output of standard Octave functions
+#' o_who() # should be the same output
+#' o_whos()
+#' 
+#' # variables and user-defined functions
+#' o_clear(all=TRUE) # first clear Octave session
+#' o_source(system.file('scripts/ex_source.m', package='RcppOctave'))
+#' o_ls()
+#' o_ls(long=TRUE)
+#' # compare with the output of standard Octave functions
+#' o_who()
+#' o_whos()
+#' 
+o_ls <- local({
+			
+	.cache <- NULL
+	.cacheMD5 <- ""
+	function(long=FALSE, rm.ans=TRUE){
+	
+		# get all variables
+		if( long ){
+			var <- o_whos(rm.ans=rm.ans)
+			varnames <- var$name
+		}else{
+			var <- o_who(rm.ans=rm.ans)
+			varnames <- var
+		}
+		# get all objects
+		ol <- o_completion_matches("")
+		# remove already known variables
+		ol <- ol[ !is.element(ol, varnames) ]
+		if( {hash <- digest::digest(ol)} != .cacheMD5 ){
+			.cacheMD5 <<- hash
+			# filter for functions
+			ecode <- sapply(ol, o_exist)
+			.cache <<- ol[ecode == 103]
+		}
+		
+		if( long ){
+			l <- list()
+			sapply(.cache, function(x){
+				var$name <<- c(var$name, x)				
+				var$size <<- c(var$size, list(as.character(NA)))
+				var$bytes <<- c(var$bytes, as.numeric(NA))
+				var$class <<- c(var$class, "function")
+				var$global <<- c(var$global, TRUE)
+				var$sparse <<- c(var$sparse, NA)
+				var$complex <<- c(var$complex, NA)
+				var$nesting <<- c(var$nesting, list(list(`function`="", level=1)))
+				var$persistent <<- c(var$persistent, NA)
+			})
+			var
+		}else c(var, .cache)
+	}
+})	
