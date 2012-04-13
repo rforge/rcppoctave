@@ -115,7 +115,8 @@ omodules <- function(verbose=getOption('verbose')){
 #' Source an example M-file in the sub-directory \dQuote{scripts/} of RcppOctave
 #' installation. 
 #' 
-#' @param file filename of the example script to source
+#' @param file filename of the example script to source. If missing, the function 
+#' lists all the m-files from the \dQuote{scripts/} sub-directory. 
 #' 
 #' @export
 #' @examples 
@@ -123,10 +124,12 @@ omodules <- function(verbose=getOption('verbose')){
 #' sourceExamples()
 #' sourceExamples('ex_source.m')
 #' 
-sourceExamples <- function(file='example.m'){
-	# TODO: rename file 'example.m' into 'ex_functions.m'
-	# add script path to Octave path
-	o_source(packagePath('scripts', file))
+sourceExamples <- function(file){
+	if( missing(file) ){
+		list.files(packagePath('scripts'), pattern="\\.m$")
+	}else{# source script
+		o_source(packagePath('scripts', file))
+	}
 	
 }
 
