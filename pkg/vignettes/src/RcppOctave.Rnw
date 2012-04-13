@@ -313,7 +313,7 @@ initialised and exported from \pkgname{RcppOctave}'s namespace.
 Using the \code{.O} object, calls to \octave functions are more compact: 
 
 <<O_object>>=
-show(.O)
+.O
 .O$version()
 .O$eye(3)
 .O$svd(matrix(1:4,2))

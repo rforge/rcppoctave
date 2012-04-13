@@ -36,18 +36,18 @@ setClass("Octave", contains='character')
 #' 
 .O <- new("Octave")
 
+#' @importMethodsFrom methods show
+setGeneric('show', package='methods')
+
 #' @rdname OctaveInterface
 #' @export
 setMethod('show', 'Octave',
-	function(object){
-		cat(" <Octave Interface>\n")
-		cat(" - Use `$x` to call Octave function or get variable x.\n")
-		cat(" - Use `$x <- val` to assign a value val to the Octave variable x.\n")
-	}
+		function(object){
+			cat(" <Octave Interface>\n")
+			cat(" - Use `$x` to call Octave function or get variable x.\n")
+			cat(" - Use `$x <- val` to assign a value val to the Octave variable x.\n")
+		}
 )
-
-#' @importMethodsFrom methods show
-setGeneric('show', package='methods')
 
 setGeneric('.DollarNames', package='utils')
 
