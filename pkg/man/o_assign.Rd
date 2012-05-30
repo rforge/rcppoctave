@@ -8,8 +8,7 @@
 
   o_assignin(...)
 
-  o_get(..., unlist = TRUE, rm.ans = TRUE, exact = FALSE,
-    pattern)
+  o_get(..., unlist = TRUE, rm.ans = TRUE, pattern)
 }
 \arguments{
   \item{...}{variables to assign in Octave global context
@@ -26,10 +25,6 @@
   explicitly specified with this argument, or if it is part
   of the requested variables in \code{...}. When present,
   argument \code{rm.ans} is always honoured.}
-
-  \item{exact}{logical that indicates whether variable
-  names are matched partially (\code{FALSE} - default), or
-  if an exact match is required (\code{TRUE})}
 
   \item{pattern}{regular expression used to filter the
   requested variable names. Only names matching the pattern
@@ -136,9 +131,5 @@ f(matrix(1:9,3), argout=3)
 o_clear()
 o_assign(aaa=1, ab=2)
 try(o_get('a'))
-
-# if an exact match is required then an error is thrown if no match is found
-o_get('aa')
-try(o_get('aa', exact=TRUE))
 }
 

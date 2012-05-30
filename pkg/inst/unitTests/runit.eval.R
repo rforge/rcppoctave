@@ -81,11 +81,12 @@ test.o_get <- function(){
 	o_clear(all=TRUE)
 	o_assign(a=1, aaaa=2, aab=3)
 	checkIdentical(o_get('a'), 1, "Ok if multiple partial matches but one exact match")
-	checkIdentical(o_get('a', exact=TRUE), 1, "Ok if multiple partial matches but one exact match (arg exatc=TRUE)")
+#	checkIdentical(o_get('a', exact=TRUE), 1, "Ok if multiple partial matches but one exact match (arg exatc=TRUE)")
 	checkException(o_get('aa'), "Error if multiple matches but no exact match")
-	checkException(o_get('aa', exact=TRUE), "Error if multiple matches but no exact match (exact = TRUE)")
-	checkIdentical(o_get('aaa'), 2, "Ok if unique partial match but no exact match")
-	checkException(o_get('aaa', exact=TRUE), "Error if unique partial match but no exact match and exact=TRUE ")
+#	checkException(o_get('aa', exact=TRUE), "Error if multiple matches but no exact match (exact = TRUE)")
+#	checkIdentical(o_get('aaa'), 2, "Ok if unique partial match but no exact match")
+#	checkException(o_get('aaa', exact=TRUE), "Error if unique partial match but no exact match and exact=TRUE ")
+	checkException(o_get('aaa'), "Error if unique partial match but no exact match")
 	
 }
 

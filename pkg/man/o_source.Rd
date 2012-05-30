@@ -2,7 +2,7 @@
 \alias{o_source}
 \title{Sourcing Octave/Matlab Files}
 \usage{
-  o_source(file = "", text = NULL, sep = ";\n")
+  o_source(file = "", text = NULL, sep = ";\\n")
 }
 \arguments{
   \item{file}{the path to the Octave/Matlab source file --

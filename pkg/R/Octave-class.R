@@ -39,7 +39,7 @@ setClass("Octave", contains='character')
 #' @importMethodsFrom methods show
 setGeneric('show', package='methods')
 
-#' @rdname OctaveInterface
+#' Show method for \code{\linkS4class{Octave}} objects
 #' @export
 setMethod('show', 'Octave',
 		function(object){
@@ -61,27 +61,22 @@ o_exist <- function(NAME, ...){
 	.CallOctave('exist', NAME, ...)
 }
 
-
-#' @noRd
 #' @S3method .DollarNames Octave
-#' @export
 .DollarNames.Octave <- function(x, pattern = "") o_completion_matches(pattern)
+
+#' Auto-completion for \code{\linkS4class{Octave}} objects
+#' @export
+setMethod('.DollarNames', 'Octave', .DollarNames.Octave)
 
 #' The method \code{$} provides a direct way of calling Octave functions or 
 #' retrieving variables from Octave base context, via e.g. \code{.O$svd(x)} 
 #' or \code{.O$a}.
-#' It is equivalent to \code{o_get(name, exact=TRUE)}, meaning that no partial 
-#' match is performed and \code{name} must correspond exactly to a variable or 
-#' a function name. 
+#' It is equivalent to \code{o_get(name)}. 
 #'  
 #' @rdname OctaveInterface
 #' @seealso \code{\link{o_get}}
 #' @export
-setMethod('.DollarNames', 'Octave', .DollarNames.Octave)
-
-#' @rdname OctaveInterface
-#' @export
-setMethod('$', 'Octave', function(x, name)	o_get(name, exact=TRUE))
+setMethod('$', 'Octave', function(x, name)	o_get(name))
 
 #' The method \code{$<-} allow to directly assign/set Octave variables via e.g.
 #' \code{.O$a <- 10}. 

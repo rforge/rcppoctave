@@ -12,26 +12,22 @@
 ### http://cran.r-project.org/web/packages/Rcpp/index.html
 ###
 ### Adapted to the package RcppOctave
-if( identical( .Platform$OS.type, "windows" ) && identical( .Platform$r_arch, "x64" ) ){
-	print( "unit tests not run on windows 64 (workaround alert)" )
+if(require("RUnit", quietly = TRUE)) {
+	pkg <- "RcppOctave"
+	
+	require( pkg, character.only=TRUE)
+	
+	path <- system.file("unitTests", package = pkg)
+	
+	stopifnot(file.exists(path), file.info(path.expand(path))$isdir)
+	
+	# without this, we get unit test failures
+	Sys.setenv( R_TESTS = "" )
+	
+	RcppOctave.unit.test.output.dir <- getwd()
+	
+	source(file.path(path, "runTests.R"), echo = TRUE)
+	
 } else {
-	if(require("RUnit", quietly = TRUE)) {
-		pkg <- "RcppOctave"
-		
-		require( pkg, character.only=TRUE)
-		
-		path <- system.file("unitTests", package = pkg)
-		
-		stopifnot(file.exists(path), file.info(path.expand(path))$isdir)
-		
-		# without this, we get unit test failures
-		Sys.setenv( R_TESTS = "" )
-		
-		RcppOctave.unit.test.output.dir <- getwd()
-		
-		source(file.path(path, "runTests.R"), echo = TRUE)
-		
-	} else {
-		print( "package RUnit not available, cannot run unit tests" )
-	}       
+	print( "package RUnit not available, cannot run unit tests" )
 }

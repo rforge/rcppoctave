@@ -170,9 +170,6 @@ o_assignin <- o_assign
 #' should be included in the result. Default is not to include it unless otherwise 
 #' explicitly specified with this argument, or if it is part of the requested 
 #' variables in \code{...}. When present, argument \code{rm.ans} is always honoured.
-#' @param exact logical that indicates whether variable names are matched 
-#' partially (\code{FALSE} - default), or if an exact match is required 
-#' (\code{TRUE})
 #' @param pattern regular expression used to filter the requested variable names.
 #' Only names matching the pattern are returned. 
 #' 
@@ -227,12 +224,10 @@ o_assignin <- o_assign
 #' o_assign(aaa=1, ab=2)
 #' try(o_get('a'))
 #' 
-#' # if an exact match is required then an error is thrown if no match is found
-#' o_get('aa')
-#' try(o_get('aa', exact=TRUE))
-#' 
-o_get <- function(..., unlist=TRUE, rm.ans = TRUE, exact=FALSE, pattern){
-	
+o_get <- function(..., unlist=TRUE, rm.ans = TRUE
+#				, exact=FALSE
+				, pattern){
+			
 	dots <- unlist(list(...))
 	vnames <- dots
 	#print(dots)
@@ -285,19 +280,26 @@ o_get <- function(..., unlist=TRUE, rm.ans = TRUE, exact=FALSE, pattern){
 		# check for an exact match
 		if( !o_exist(name) ){
 			
-			if( exact )
-				stop("RcppOctave::o_get - Could not find an Octave object named '", name,"'.", call.=FALSE)
-			
-			# check for multiple matches
 			onames <- o_completion_matches(name)
-			if( length(onames) == 0 )
-				stop("RcppOctave::o_get - Could not find an Octave object starting with '", name,"'.", call.=FALSE)
+			sugg <- 
+			if( length(onames) > 0L )
+				str_c("\n       Match(es): ", str_wrap(paste(onames, collapse=" "), exdent=18), "\n")
 			
-			if( length(onames) > 1 )
-				stop("RcppOctave::o_get - Multiple Octave objects [", length(onames), "] start with '", name,"'.\n"
-						, "       Matches are: ", stringr::str_wrap(paste(onames, collapse=" "), exdent=20), "\n"
-						, call.=FALSE)
-			name <- onames
+			stop("RcppOctave::o_get - Could not find an Octave object named '", name,"'.", sugg, call.=FALSE)
+			
+#			if( exact )
+#				stop("RcppOctave::o_get - Could not find an Octave object named '", name,"'.", call.=FALSE)
+#			
+#			# check for multiple matches
+#			onames <- o_completion_matches(name)
+#			if( length(onames) == 0 )
+#				stop("RcppOctave::o_get - Could not find an Octave object starting with '", name,"'.", call.=FALSE)
+#			
+#			if( length(onames) > 1 )
+#				stop("RcppOctave::o_get - Multiple Octave objects [", length(onames), "] start with '", name,"'.\n"
+#						, "       Matches are: ", stringr::str_wrap(paste(onames, collapse=" "), exdent=20), "\n"
+#						, call.=FALSE)
+#			name <- onames
 		}
 		
 		# check if `name` is a variable

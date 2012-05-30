@@ -396,17 +396,19 @@ Variables may be assigned or retrieved individually in separate calls to
 ## ASSIGN
 o_assign(a=1)
 o_assign(a=10, b=20)
-o_assign(list(a=5, b=6, aaa=7))
+o_assign(list(a=5, b=6, aaa=7, aab=list(1,2,3)))
 
 ## GET
 # get all variables
-o_get()
+str( o_get() )
 # selected variables
 o_get('a')
 o_get('a', 'b')
 # rename on the fly
 o_get(c='a', d='b')
-# o_get partially matches (here: 'aa' -> 'aaa')
+# o_get throw an error for objects that do not exist
+o_get('xxxxx')
+# but suggests potential matches
 o_get('aa')
 # get a function
 f <- o_get('svd')
