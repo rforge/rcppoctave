@@ -1,6 +1,5 @@
 \docType{class}
 \name{Octave-class}
-\alias{Octave}
 \alias{Octave-class}
 \title{Class Octave: Seamless Access to Octave Functions and Variables}
 \description{

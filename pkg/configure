@@ -620,6 +620,8 @@ OCTLIBDIR
 OCTINCLUDEDIR
 OCTAVE_MKOCTFILE
 OCTAVE_CONFIG
+R_LDFLAGS
+R_CPPFLAGS
 ac_ct_CXX
 CXXFLAGS
 CXX
@@ -2878,9 +2880,15 @@ CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 
+R_CPPFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --cppflags`
+
+R_LDFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --ldflags`
+
+
 ## Use octave-config to find arguments for compiler and linker flags
 ##
-## Check for non-standard programs: octave-config(1)
+## Check for non-standard programs:
+## octave-config
 # Extract the first word of "octave-config", so it can be a program name with args.
 set dummy octave-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -2921,6 +2929,7 @@ $as_echo "no" >&6; }
 fi
 
 
+## mkoctfile
 # Extract the first word of "mkoctfile", so it can be a program name with args.
 set dummy mkoctfile; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -2959,6 +2968,7 @@ else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
+
 
 
 ## If octave-config was found, let's use it

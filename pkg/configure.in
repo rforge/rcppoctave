@@ -30,6 +30,10 @@ CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 
+# pass R flags down to makefile in modules/
+AC_SUBST(R_CPPFLAGS,`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --cppflags`)
+AC_SUBST(R_LDFLAGS,`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --ldflags`)
+
 ## Use octave-config to find arguments for compiler and linker flags
 ##
 ## Check for non-standard programs: 

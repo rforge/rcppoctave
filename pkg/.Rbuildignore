@@ -1,2 +1,3 @@
 src/libRrng
 src/modules/*.oct
+src/modules/Makefile$
