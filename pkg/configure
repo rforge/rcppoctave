@@ -2875,14 +2875,37 @@ if test -z "${R_HOME}"; then
   echo "could not determine R_HOME"
   exit 1
 fi
-CC=`"${R_HOME}/bin/R" CMD config CC`
-CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 
+# check R is a shared library
+R_LDFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --ldflags 2>/dev/null`
+has_R_shlib=no
+if test -n "$R_LDFLAGS"; then
+   has_R_shlib=yes
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether R is a shared library" >&5
+$as_echo_n "checking whether R is a shared library... " >&6; }
+if test "${has_R_shlib}" = no; then
+    as_fn_error $? "R was configured without --enable-R-shlib or --enable-R-static-lib
+
+*** RcppOctave requires R (shared or static) library.                   ***
+*** Please install R library or compile R with either --enable-R-shlib  ***
+*** or --enable-R-static-lib support                                    ***
+" "$LINENO" 5
+else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${R_LDFLAGS}" >&5
+$as_echo "${R_LDFLAGS}" >&6; }
+fi
+
+# get compilation flags
+CC=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CC`
+CFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CFLAGS`
+CPPFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CPPFLAGS`
+CXXFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CXXFLAGS`
+
+# pass R flags down to makefile in modules/
 R_CPPFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --cppflags`
 
-R_LDFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --ldflags`
 
 
 ## Use octave-config to find arguments for compiler and linker flags
