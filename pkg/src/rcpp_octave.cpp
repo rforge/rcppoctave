@@ -96,7 +96,7 @@ bool octave_session(bool start=true){
 		argv(2) = "--no-line-editing";
 		argv(3) = "--no-history";
 		if( !octave_main(narg, argv.c_str_vec(), true /*embedded*/) )
-			error("Failed to start Octave interpreter");
+			Rf_error("Failed to start Octave interpreter");
 
 		OCTAVE_INITIALIZED = true;
 		bind_internal_variable("crash_dumps_octave_core", false);
@@ -215,7 +215,7 @@ SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist=R_NilValue){
 			err << R_PACKAGE_NAME" - could not unlist the result of function `"
 					<< Rcpp::as<string>(fname).c_str()
 					<< "`: unsupported returned value type [" << out.type_name().c_str() << "].";
-			error(err.str().c_str());
+			Rf_error(err.str().c_str());
 		}
 	}
 
@@ -366,7 +366,7 @@ octave_value octave_feval(const string& fname, const octave_value_list& args, in
 					const string& s = onames[i];
 					VERBOSE_LOG(" '%s'", s.c_str());
 					if( s[0] == '\0' ){
-						error(R_PACKAGE_NAME"octave_feval - empty output name.");
+						Rf_error(R_PACKAGE_NAME"octave_feval - empty output name.");
 					}
 					m.assign(s, out(i));
 				}

@@ -9,7 +9,7 @@
 ## Copyright (C) 2011 Renaud Gaujoux
 
 # The version set here will propagate to other files from here
-AC_INIT([RcppOctave], 0.6.1)
+AC_INIT([RcppOctave], 0.8.3)
 
 # Checks for common programs using default macros
 AC_PROG_CC
@@ -28,6 +28,7 @@ fi
 
 # check R is a shared library
 R_LDFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --ldflags 2>/dev/null`
+R_CPPFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --cppflags 2>/dev/null`
 has_R_shlib=no
 if test -n "$R_LDFLAGS"; then
    has_R_shlib=yes
@@ -35,15 +36,15 @@ fi
 
 AC_MSG_CHECKING([whether R is a shared library])
 if test "${has_R_shlib}" = no; then
-    AC_MSG_ERROR([R was configured without --enable-R-shlib or --enable-R-static-lib
-
-*** RcppOctave requires R (shared or static) library.                   ***
-*** Please install R library or compile R with either --enable-R-shlib  ***
-*** or --enable-R-static-lib support                                    ***
-])
+	AC_MSG_RESULT(no)
+	# add path to R headers 
+	R_CPPFLAGS="-I'${R_INCLUDE_DIR}' -I'${R_INCLUDE_DIR}${R_ARCH}'"
 else
-   AC_MSG_RESULT(${R_LDFLAGS})
+   AC_MSG_RESULT(yes)
 fi
+
+AC_MSG_RESULT([Using R LDFLAGS: ${R_LDFLAGS}])
+AC_MSG_RESULT([Using R CPPFLAGS: ${R_CPPFLAGS}])
 
 # get compilation flags
 CC=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CC`
@@ -52,7 +53,7 @@ CPPFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CPPFLAGS`
 CXXFLAGS=`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config CXXFLAGS`
 
 # pass R flags down to makefile in modules/
-AC_SUBST(R_CPPFLAGS,`"${R_HOME}/bin${R_ARCH_BIN}/R" CMD config --cppflags`)
+AC_SUBST(R_CPPFLAGS)
 AC_SUBST(R_LDFLAGS)
 
 ## Use octave-config to find arguments for compiler and linker flags

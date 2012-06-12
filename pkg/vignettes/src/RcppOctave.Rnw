@@ -160,7 +160,7 @@ from \proglang{R} with:
 \end{itemize}
 
 Future development should provide similar reverse capabilities, i.e. an out
-of the box embedded R session, typically via \citeCRANpkg{RInside}.
+of the box embedded R session, typically via \CRANpkg{RInside}.
 
 \section{Accessing Octave from R}
 
@@ -655,7 +655,7 @@ sessionInfo()
 
 <<bibtex_entries, echo=FALSE, include=FALSE>>=
 library(bibtex)
-write.bib(c('Rcpp', 'RcppOctave', 'RInside', 'knitr'), file='../Rpackages.bib')
+write.bib(c('Rcpp', 'RcppOctave', 'knitr'), file='../Rpackages.bib')
 @
 
 
