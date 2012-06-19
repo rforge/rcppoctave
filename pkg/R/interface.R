@@ -88,13 +88,29 @@ overbose <- function(value){
 #' \code{oconfig} retrieves Octave configuration variables. 
 #' 
 #' @param varname Name (as a character string) of the Octave configuration 
-#' variable to retrieve. It is used in following system call \samp{octave-config -p <varname>}
+#' variable to retrieve. It is used in following system call 
+#' \samp{octave-config -p <varname>}.
+#' This function is vectorised and returns a character vector of the same length
+#' as its argument.
+#' @param warn logical that indicates if a warning should be thrown when a 
+#' variable is returned empty, which generally means that \code{x} is not a valid 
+#' config variable name.
 #'  
 #' @rdname octave-ll
 #' @seealso OctaveConfig
 #' @export
-oconfig <- function(varname){
-	system(paste('octave-config -p', varname), intern=TRUE)
+oconfig <- function(varname, verbose=FALSE, warn=TRUE){
+	sapply(varname, function(x){
+		if( verbose ) message("# Loading Octave config variable '", x, "' ... ", appendLF=FALSE)
+		res <- system(paste('octave-config -p', x), intern=TRUE)
+		if( res == '' ){
+			if( verbose ) message("WARNING")
+			if( warn ) warning("Octave config variable '", x, "' is empty")
+			return(res)
+		}
+		if( verbose ) message('OK')
+		res
+	})
 }
 
 #' \code{omodules} add the Octave modules shipped with RcppOctave to Octave path.

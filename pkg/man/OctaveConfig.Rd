@@ -2,7 +2,7 @@
 \alias{OctaveConfig}
 \title{Cached RcppOctave Configuration Paths}
 \usage{
-  OctaveConfig(name, ...)
+  OctaveConfig(name, ..., reset = FALSE)
 }
 \arguments{
   \item{name}{Name of an RcppOctave path variable}

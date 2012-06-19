@@ -3053,7 +3053,12 @@ $as_echo "no" >&6; }
 fi
 
 else
-    as_fn_error $? "octave-config not found, is Octave installed?" "$LINENO" 5
+    as_fn_error $? "octave-config not found, is Octave installed?
+
+    On Debian/Ubuntu please check that the required packages are installed:
+    * For Octave 3.6: sudo apt-get install octave liboctave-dev
+    * For Octave 3.2.4: sudo apt-get install octave3.2 octave-headers
+    " "$LINENO" 5
 fi
 
 # Now substitute these variables in src/Makevars.in to create src/Makevars

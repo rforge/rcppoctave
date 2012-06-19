@@ -7,18 +7,12 @@
 \RequirePackage{ae,mathpple}    % ae as a default font pkg works with Sweave
 \RequirePackage[T1]{fontenc}
 
-<<echo=FALSE,print=FALSE>>=
-pkg <- 'RcppOctave'
-require( pkg, character.only=TRUE )
-prettyVersion <- packageDescription(pkg)$Version
-prettyDate <- format(Sys.Date(), '%B %e, %Y')
-authors <- packageDescription(pkg)$Author
-@
 
 \usepackage[colorlinks]{hyperref}
-\author{\Sexpr{authors}}
-\title{\texttt{\Sexpr{pkg}}: Unit testing results}
-\date{\texttt{\Sexpr{pkg}} version \Sexpr{prettyVersion} as of \Sexpr{prettyDate}}
+\author{Renaud Gaujoux}
+\title{\texttt{RcppOctave}: Unit testing results}
+\date{\texttt{RcppOctave} version 0.8.4 as of June 19, 2012}
+\usepackage{Sweave}
 \begin{document}
 \maketitle
 

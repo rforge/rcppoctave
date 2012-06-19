@@ -87,7 +87,12 @@ if test "${OCTAVE_CONFIG}" != ""; then
     AS_IF([test "${OCT_POST_3_4_0}" != "-1"], AC_MSG_RESULT([yes]), AC_MSG_RESULT([no]))
     
 else
-    AC_MSG_ERROR([octave-config not found, is Octave installed?])
+    AC_MSG_ERROR([octave-config not found, is Octave installed?
+    
+    On Debian/Ubuntu please check that the required packages are installed:
+    * For Octave 3.6: sudo apt-get install octave liboctave-dev
+    * For Octave 3.2.4: sudo apt-get install octave3.2 octave-headers
+    ])
 fi
 
 # Now substitute these variables in src/Makevars.in to create src/Makevars

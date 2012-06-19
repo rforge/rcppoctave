@@ -1,6 +1,7 @@
 \documentclass[10pt]{article}
 %\VignetteIndexEntry{RcppOctave}
-%\VignetteDepends{knitr,bibtex,}
+%\VignetteDepends{knitr,bibtex}
+%\VignetteCompiler{knitr}
 \usepackage{url}
 \usepackage[colorlinks]{hyperref}
 

@@ -1,6 +1,7 @@
 \documentclass[english,10pt,a4paper]{article}
 %\VignetteIndexEntry{RcppOctave}
-%\VignetteDepends{knitr,bibtex,}
+%\VignetteDepends{knitr,bibtex}
+%\VignetteCompiler{knitr}
 
 \usepackage{Sweave}
 
@@ -22,12 +23,6 @@ prettyDate <- format(Sys.Date(), "%B %e, %Y")
 \usepackage{a4wide}
 \setlength{\oddsidemargin}{0pt}
 
-\usepackage[minnames=1,maxnames=2]{biblatex}
-<<bib, echo=FALSE, results='asis', warning=FALSE>>=
-cat("\\bibliography{", pkgBibfile(pkg),"}\n", sep='') 
-@
-\bibliography{Rpackages}
-\newcommand{\citet}[1]{\citeauthor{#1}~\cite{#1}}
 
 % TABLE OF CONTENTS
 \usepackage{tocloft}
@@ -37,28 +32,24 @@ cat("\\bibliography{", pkgBibfile(pkg),"}\n", sep='')
 
 \newcommand{\matlab}{Matlab$^\circledR$\xspace}
 
-% R stuff
-\let\proglang=\textit
-\let\code=\texttt 
-\newcommand{\R}{\proglang{R}\xspace}
-\newcommand{\Rcode}{\texttt}
-\newcommand{\pkgname}[1]{\textit{#1}}
-\newcommand{\Rpkg}[1]{\pkgname{#1} package\xspace}
+% add preamble from pkgmaker
+<<pkgmaker_preamble, echo=FALSE, results='asis'>>=
+pkgmaker::latex_preamble()
+@
 
+% REFERENCES
+\usepackage[minnames=1,maxnames=2]{biblatex}
+\AtEveryCitekey{\clearfield{url}}
+<<bibliofile, echo=FALSE, results='asis'>>=
+pkgmaker::latex_bibliography(pkg)	
+@
+\bibliography{Rpackages}
+\newcommand{\citet}[1]{\citeauthor{#1}~\cite{#1}}
+%%
+
+\newcommand{\R}{\proglang{R}\xspace}
 \newcommand{\graphwidth}{0.9\columnwidth}
 %\newcommand{\revision}[2][]{\textcolor{blue}{#2}{\bf \textcolor{blue}{$\blacksquare$ REV[#1]}}}
-% CRAN
-\newcommand{\CRANurl}[1]{\url{http://cran.r-project.org/package=#1}}
-\newcommand{\CRANpkg}[1]{\href{http://cran.r-project.org/package=#1}{\pkgname{#1}} package\footnote{\CRANurl{#1}}}
-\newcommand{\citeCRANpkg}[1]{\CRANpkg{#1}~\cite{#1}}
-% Bioconductor
-\newcommand{\BioCurl}[1]{\url{http://www.bioconductor.org/packages/release/bioc/html/#1.html}}
-\newcommand{\BioCpkg}[1]{\href{http://www.bioconductor.org/packages/release/bioc/html/#1.html}{\pkgname{#1}} package\footnote{\BioCurl{#1}}}
-\newcommand{\citeBioCpkg}[1]{\BioCpkg{#1}~\cite{#1}}
-% Bioconductor annotation
-\newcommand{\BioCAnnurl}[1]{\url{http://www.bioconductor.org/packages/release/data/annotation/html/#1.html}}
-\newcommand{\BioCAnnpkg}[1]{\href{http://www.bioconductor.org/packages/release/data/annotation/html/#1.html}{\Rcode{#1}} annotation package\footnote{\BioCAnnurl{#1}}}
-\newcommand{\citeBioCAnnpkg}[1]{\BioCAnnpkg{#1}~\cite{#1}}
 
 % Octave
 \newcommand{\octave}{\proglang{Octave}\xspace}
@@ -75,16 +66,16 @@ cat("\\bibliography{", pkgBibfile(pkg),"}\n", sep='')
 \maketitle
 
 \begin{abstract}
-The \Rpkg{RcppOctave} provides a direct interface to \proglang{Octave} from
-\proglang{R}.
-It allows \proglang{Octave} functions to be called from an \proglang{R} session,
+The \Rpkg{RcppOctave} provides a direct interface to \octave from
+\R.
+It allows \\octave functions to be called from an \R session,
 in a similar way \proglang{C/C++} or \proglang{Fortran} functions are called using the base function~\code{.Call}.
-Since \proglang{Octave} uses a language that is mostly compatible with \matlab,
+Since \octave uses a language that is mostly compatible with \matlab,
 \pkgname{RcppOctave} may also be used to run Matlab m-files.
 This package was originally developed to facilitate the port and comparison of R
 and Matlab code.
-In particular, it provides \proglang{Octave} modules that redefine
-\proglang{Octave} default random number generator functions, so that they call
+In particular, it provides \octave modules that redefine
+\octave default random number generator functions, so that they call
 \proglang{R} own dedicated functions.
 This enables to also reproduce and compare stochastic computations.
 \end{abstract}
@@ -102,12 +93,12 @@ published as Matlab files (the so called m-files).
 While such code is generally released under public Open Source licenses like the
 GNU Public Licenses (GPLs) \cite{gnuGPL}, effectively running or using it
 require either to have \matlab, which is a nice but expensive proprietary
-software\footnote{\url{http://www.mathworks.com}}, or to be/get -- at least -- a bit familiar with \proglang{Octave} \cite{Eaton2002}, which is free and open source, and is able to read and execute m-files, as long as they do not require Matlab-specific functions.
+software\footnote{\url{http://www.mathworks.com}}, or to be/get -- at least -- a bit familiar with \octave \cite{Eaton2002}, which is free and open source, and is able to read and execute m-files, as long as they do not require Matlab-specific functions.
 However, \proglang{R} users may have neither Matlab license, nor the
-time/will to become \proglang{Octave}-skilled, and yet want to use algorithms written in
-Matlab/\proglang{Octave} for their analyses and research.
+time/will to become \octave-skilled, and yet want to use algorithms written in
+Matlab/\octave for their analyses and research.
 
-Being able to run m-files or selectively use \proglang{Octave} functionalities
+Being able to run m-files or selectively use \octave functionalities
 directly from \proglang{R} can greatly alleviate a process that otherwise
 typically implies exporting/importing data between the two environments via
 files on disk, as well as dealing with a variety of issues including
@@ -115,63 +106,63 @@ rounding errors, format compatibility or subtle implementation differences,
 that all may lead to intricate hard-to-debug situations.
 Even if one eventually wants to rewrite or optimise a given algorithm in plain
 \proglang{R} or in \proglang{C/C++}, and therefore remove any dependency to
-\proglang{Octave}, it is important to test the correctness of the port by
+\octave, it is important to test the correctness of the port by
 comparing its results with the original implementation.
 Also, a direct interface allows users to stick to their preferred computing
 environment, in which they are more comfortable and productive.
 
 An \proglang{R} package called \pkgname{ROctave}
 \footnote{\url{http://www.omegahat.org/ROctave}} do exist, and intends to
-provide an interface between \proglang{R} and \proglang{Octave}, but appears
+provide an interface between \proglang{R} and \octave, but appears
 to be outdated (2002), and does not work out of the box with recent version of
-\proglang{Octave}.
+\octave.
 A more recent forum
 post\footnote{\url{http://octave.1599824.n4.nabble.com/ROctave-bindings-for-2-1-73-2-9-x-td1602060.html}}
 brought back some interest on binding these two environments, but
 apparently without any following.
 
 The \citeCRANpkg{RcppOctave} described in this vignette aims at filling the gap
-and facilitating the usage of \proglang{Octave/Matlab} code from \proglang{R}, by providing a lean interface that enables direct and easy interaction with an embedded \proglang{Octave} session.
+and facilitating the usage of \proglang{Octave/Matlab} code from \proglang{R}, by providing a lean interface that enables direct and easy interaction with an embedded \octave session.
 The package's name was chosen both to differentiate it from the
 existing \Rpkg{ROctave}, and to reflect its use and integration of the
-\proglang{C++} framework defined by \citeCRANpkg{Rcpp}.
+\proglang{C++} framework defined by the \citeCRANpkg{Rcpp}.
 
 \section{Objectives \& Features}
 The ultimate objective of \pkgname{RcppOctave} is to provide a two-way
-interface between \proglang{R} and \proglang{Octave}, i.e. that allows calling
-\proglang{Octave} from \proglang{R} and vice-versa.
+interface between \proglang{R} and \octave, i.e. that allows calling
+\octave from \proglang{R} and vice-versa.
 The interface intends to be lean and as transparent as possible, as well
 as providing convenient utilities to perform commonly needed tasks (e.g. source
 files, browse documentation).
 
-Currently, the package focuses on accessing \proglang{Octave} functionalities
+Currently, the package focuses on accessing \octave functionalities
 from \proglang{R} with:
 
 \begin{itemize}
- \item An out-of-the-box-working embedded \proglang{Octave} session;
+ \item An out-of-the-box-working embedded \octave session;
  \item Ability to run/source m-files from \proglang{R};
- \item Ability to evaluate \proglang{Octave} statements and function calls from
+ \item Ability to evaluate \octave statements and function calls from
  \proglang{R};
- \item Ability to call \proglang{R} functions in \proglang{Octave}
+ \item Ability to call \proglang{R} functions in \octave
  code\footnote{Currently only when run from \proglang{R} through
  \pkgname{RcppOctave}.};
- \item Transparent passage of variables between \proglang{R} and \proglang{Octave};
+ \item Transparent passage of variables between \proglang{R} and \octave;
  \item Reproducibility of computations, including stochastic computations, in both environment;
 \end{itemize}
 
 Future development should provide similar reverse capabilities, i.e. an out
-of the box embedded R session, typically via \CRANpkg{RInside}.
+of the box embedded R session, typically via the \CRANpkg{RInside}.
 
 \section{Accessing Octave from R}
 
 The \Rpkg{RcppOctave} defines the function \code{.CallOctave}, which acts as a
-single entry point for calling \proglang{Octave} functions from \proglang{R}.
+single entry point for calling \octave functions from \proglang{R}.
 In order to make common function calls easier (e.g. \code{eval}), other utility
 functions are defined, which essentially wraps a call to \code{.CallOctave}, but
 enhance argument handling and result formating.
 
 \subsection{Core interface: \texttt{.CallOctave}}
-The function \code{.CallOctave} calls an \proglang{Octave} \underline{function}
+The function \code{.CallOctave} calls an \octave \underline{function}
 from R, mimicking the way native \proglang{C/C++} functions are called with
 \code{.Call}.
 
@@ -322,9 +313,9 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 @
 
 \subsubsection{Manipulating variables}
-The \code{.O} object facilitates manipulating single \proglang{Octave}
+The \code{.O} object facilitates manipulating single \octave
 variables, as it emulates an \proglang{R} environment-like object whose elements
-would be the objects available in the current \proglang{Octave}
+would be the objects available in the current \octave
 embedded session:
 
 <<O_object_variables>>=
@@ -341,7 +332,7 @@ embedded session:
 @
 
 \subsubsection{Calling functions}
-As illustrated above, \proglang{Octave} functions can be called through the
+As illustrated above, \octave functions can be called through the
 \code{.O} object, by passing specifying its arguments as a function call:
 <<O_object_function_call>>=
 # density of x=5 for Poisson(2)
@@ -366,21 +357,21 @@ f(5, 2)
 An advantage of using the \code{.O} object is that it has auto-completion
 capabilities similar to the \proglang{R} console.
 This greatly helps and speeds up the interaction with the current embedded
-\proglang{Octave} session.
+\octave session.
 For example, typing \code{.O\$std} + \code{TAB} + \code{TAB} will show all
 functions or variables available in the current session, that start with ``std". 
 
 \subsection{Utility functions}
 
 The \Rpkg{RcppOctave} defines some utilities to enhance the interaction with
-\proglang{Octave}, and alleviate calls to a set of commonly used
-\proglang{Octave} functions.
+\octave, and alleviate calls to a set of commonly used
+\octave functions.
 All these functions start with the prefix ``o\_" (e.g.
 \code{o\_source}), so that they can be listed by typing \code{o\_ + TAB + TAB}
 in the \proglang{R} console.
-Their names have been chosen to reflect the corresponding \proglang{Octave}
+Their names have been chosen to reflect the corresponding \octave
 function, and, in some cases, aliases matching standard \proglang{R} names are
-also provided, so that users not familiar with \proglang{Octave} can find their
+also provided, so that users not familiar with \octave can find their
 way quickly (e.g. \code{o\_rm} is an alias to \code{o\_clear}).
 
 \subsubsection{Assign/get variables}
@@ -454,7 +445,7 @@ and/or sequences of multiple commands that perform a given task.
 This is the form most public third party algorithms are published.
 
 The function \code{o\_source} allows to load these files in the current
-\proglang{Octave} session, so that the object they define are available, or the
+\octave session, so that the object they define are available, or the
 commands they contain are executed.
 \pkgname{RcppOctave} ships an example m-file in the ``scripts/" sub-directory
 of its installation:
@@ -536,7 +527,7 @@ command `Ctrl + h' -- as stated in the \octave documentation for \code{doc} (see
 
 \pkgname{RcppOctave} builds upon the \Rpkg{Rcpp}, and defines specialisation
 for the \proglang{Rcpp} template functions \code{Rcpp::as} and
-\code{Rcpp::wrap}, for converting \proglang{R} types to \proglang{Octave}
+\code{Rcpp::wrap}, for converting \proglang{R} types to \octave
 types and \emph{vice versa}.
 Currently these templates are not exported, but will probably be in the future.
 
@@ -652,11 +643,5 @@ sessionInfo()
 }
 
 \printbibliography[heading=bibintoc]
-
-<<bibtex_entries, echo=FALSE, include=FALSE>>=
-library(bibtex)
-write.bib(c('Rcpp', 'RcppOctave', 'knitr'), file='../Rpackages.bib')
-@
-
 
 \end{document}

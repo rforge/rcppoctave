@@ -12,7 +12,7 @@
 
   overbose(value)
 
-  oconfig(varname)
+  oconfig(varname, verbose = FALSE, warn = TRUE)
 
   omodules(verbose = getOption("verbose"))
 }
@@ -24,7 +24,13 @@
 
   \item{varname}{Name (as a character string) of the Octave
   configuration variable to retrieve. It is used in
-  following system call \samp{octave-config -p <varname>}}
+  following system call \samp{octave-config -p <varname>}.
+  This function is vectorised and returns a character
+  vector of the same length as its argument.}
+
+  \item{warn}{logical that indicates if a warning should be
+  thrown when a variable is returned empty, which generally
+  means that \code{x} is not a valid config variable name.}
 }
 \description{
   \code{ostart} Initialize an Octave session.

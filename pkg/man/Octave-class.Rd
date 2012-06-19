@@ -23,8 +23,8 @@
   \item{.DollarNames}{\code{signature(x = "Octave")}:
   Auto-completion for \code{\linkS4class{Octave}} objects }
 
-  \item{show}{\code{signature( = "Octave")}: Show method
-  for \code{\linkS4class{Octave}} objects }
+  \item{show}{\code{signature(object = "Octave")}: Show
+  method for \code{\linkS4class{Octave}} objects }
 
   }
 }

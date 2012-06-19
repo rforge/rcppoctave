@@ -12,7 +12,7 @@
 ## reportedly has been squashed upstream but I am still bitten by it
 ## on Ubuntu so for now Dirk will insist on pdflatex and this helps.
 AUTHOR_USER=renaud
-R_PACKAGE=RcppOctave
+MAKE_R_PACKAGE=RcppOctave
 MAKEPDF=1
 
 ##---------------------------------------------------------------------
@@ -25,12 +25,12 @@ MAKEPDF=1
 
 SRC_DIR=src
 whoami=$(shell whoami)
-RNW_SRCS = $(notdir $(wildcard ${SRC_DIR}/*.Rnw))
+RNW_SRCS = $(notdir $(wildcard src/*.Rnw))
 PDF_OBJS=$(RNW_SRCS:.Rnw=.pdf)
 
 # add unit tests if necessary
 ifneq ("$(wildcard unitTests)","")
-PDF_OBJS:=$(R_PACKAGE)-unitTests.pdf $(PDF_OBJS)
+PDF_OBJS:=$(MAKE_R_PACKAGE)-unitTests.pdf $(PDF_OBJS)
 endif
 
 ifneq (,$(findstring $(AUTHOR_USER),$(whoami)))
@@ -42,6 +42,7 @@ ifeq (${R_HOME},)
 NOT_CHECKING=1
 TMP_INSTALL_DIR := $(shell mktemp -d)
 export R_LIBS=$(shell pwd)/../../../lib
+export MAKE_R_PACKAGE
 endif
 
 # Define command for temporary installation (used when make is directly called,
@@ -50,7 +51,7 @@ ifdef NOT_CHECKING
 define do_install
 	# Installing the package in temporary library directory $(TMP_INSTALL_DIR)
 	-$(RPROG) CMD INSTALL -l "$(TMP_INSTALL_DIR)" ../. >> Rinstall.log 2>> Rinstall.err
-	@if test ! -d "$(TMP_INSTALL_DIR)/$(R_PACKAGE)"; then \
+	@if test ! -d "$(TMP_INSTALL_DIR)/$(MAKE_R_PACKAGE)"; then \
 	echo "ERROR: Temporary installation failed: see Rinstall.log"; \
 	echo "# Removing temporary library directory $(TMP_INSTALL_DIR)"; \
 	rm -rf $(TMP_INSTALL_DIR); \
@@ -78,7 +79,7 @@ all: init $(PDF_OBJS) do_clean
 	@echo "# All vignettes in 'vignettes' are up to date"
 
 init:
-	# Generating vignettes for package $(R_PACKAGE)
+	# Generating vignettes for package $(MAKE_R_PACKAGE)
 	# Detected vignettes: $(PDF_OBJS)
 ifdef LOCAL_MODE
 	# Mode: Local Development
@@ -87,10 +88,13 @@ else
 endif
 
 clean:
-	rm -fr *.tex *.bbl *.blg *.aux *.out *.log *.err *-blx.bib unitTests-results
+	rm -fr *.bbl *.run.xml *.blg *.aux *.out *.log *.err *-blx.bib unitTests-results
+ifndef LOCAL_MODE
+	rm *.tex
+endif
 
 clean-all: clean
-	rm -fr *.pdf ../inst/doc/*.pdf *.Rnw
+	rm -fr *.tex $(PDF_OBJS) $(RNW_SRCS)
 
 setvars:
 ifeq (${R_HOME},)
@@ -111,15 +115,17 @@ do_clean:
 	$(do_install)
 	# Generating vignette $@ from ${SRC_DIR}/$*.Rnw
 	# Using R_LIBS: $(R_LIBS)
-	$(RSCRIPT) --vanilla -e "require(knitr); knit('${SRC_DIR}/$*.Rnw', '$*.tex');"
+	$(RSCRIPT) --vanilla -e "pkgmaker::rnw('${SRC_DIR}/$*.Rnw', '$*.tex');"
 	# Generating pdf $@ from $*.tex
 ifdef MAKEPDF
 ifdef LOCAL_MODE
 	# Using pdflatex
-	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
+	@pdflatex $(VIGNETTE_BASENAME) >> $(VIGNETTE_BASENAME)-pdflatex.log
 	-bibtex $(VIGNETTE_BASENAME)
-	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
-	@pdflatex $(VIGNETTE_BASENAME) >> pdflatex.log
+	@pdflatex $(VIGNETTE_BASENAME) >> $(VIGNETTE_BASENAME)-pdflatex.log
+	@pdflatex $(VIGNETTE_BASENAME) >> $(VIGNETTE_BASENAME)-pdflatex.log
+	# Compact vignettes
+	$(RSCRIPT) -e "tools::compactPDF('$(VIGNETTE_BASENAME).pdf')"
 else
 	# Using tools::texi2dvi
 	$(RSCRIPT) -e "tools::texi2dvi( '$(VIGNETTE_BASENAME).tex', pdf = TRUE, clean = FALSE )"
@@ -132,7 +138,7 @@ endif
 	$(VIGNETTE_BASENAME).bbl $(VIGNETTE_BASENAME).blg \
 	$(VIGNETTE_BASENAME).aux $(VIGNETTE_BASENAME).out $(VIGNETTE_BASENAME)-blx.bib	
 	# Update fake vignette file ./$*.Rnw
-	$(RSCRIPT) --vanilla -e "${R_PACKAGE}:::makeFakeVignette('${SRC_DIR}/$*.Rnw', '$*.Rnw')"
+	$(RSCRIPT) --vanilla -e "pkgmaker::makeFakeVignette('${SRC_DIR}/$*.Rnw', '$*.Rnw')"
 	$(update_inst_doc)
 
 ifneq ("$(wildcard unitTests)","")
@@ -142,16 +148,18 @@ ifneq ("$(wildcard unitTests)","")
 	# Generating vignette for unit tests: $@
 	# Using R_LIBS: $(R_LIBS)
 	# Cleanup unit test result directory and sweave source
-	if -e $(R_PACKAGE)-unitTests.Rnw; then rm $(R_PACKAGE)-unitTests.Rnw; fi
+	if -e $(MAKE_R_PACKAGE)-unitTests.Rnw; then rm $(MAKE_R_PACKAGE)-unitTests.Rnw; fi
 	rm -fr unitTests-results/*
 	# Run unit test file: 'unitTests/doUnit.R'
-	$(RSCRIPT) --vanilla -e "source('unitTests/doUnit.R'); doUnit('$(R_PACKAGE)', '$(R_PACKAGE)-unitTests.Rnw');" >> unitTests.log
-	# Sweave generated file: $(R_PACKAGE)-unitTests.Rnw
-	$(RPROG) CMD Sweave $(R_PACKAGE)-unitTests.Rnw
-	# Run texi2dvi on $(R_PACKAGE)-unitTests.tex
-	$(RSCRIPT) --vanilla -e "tools::texi2dvi( '$(R_PACKAGE)-unitTests.tex', pdf = TRUE, clean = TRUE )"
-	# Cleanup latex file $(R_PACKAGE)-unitTests.tex
-	rm -fr $(R_PACKAGE)-unitTests.tex
+	$(RSCRIPT) --vanilla -e "source('unitTests/doUnit.R'); doUnit('$(MAKE_R_PACKAGE)', '$(MAKE_R_PACKAGE)-unitTests.Rnw');" >> unitTests.log
+	# Sweave generated file: $(MAKE_R_PACKAGE)-unitTests.Rnw
+	$(RPROG) CMD Sweave $(MAKE_R_PACKAGE)-unitTests.Rnw
+	# Run texi2dvi on $(MAKE_R_PACKAGE)-unitTests.tex
+	$(RSCRIPT) --vanilla -e "tools::texi2dvi( '$(MAKE_R_PACKAGE)-unitTests.tex', pdf = TRUE, clean = TRUE )"
+ifndef LOCAL_MODE
+	# Cleanup latex file $(MAKE_R_PACKAGE)-unitTests.tex
+	rm -fr $(MAKE_R_PACKAGE)-unitTests.tex
+endif
 	$(update_inst_doc)
 	
 endif

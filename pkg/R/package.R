@@ -27,6 +27,7 @@
 #' .CallOctave('svd', matrix(1:9, 3))
 #' o_help('svd')
 #' 
+#' @import pkgmaker
 #' @seealso See \code{\link{.CallOctave}}, \code{\link{o_source}}, \code{\link{o_help}}
 NULL
 
@@ -55,23 +56,23 @@ NULL
 #' OctaveConfig('lib')
 #' OctaveConfig('include')
 #' 
-OctaveConfig <- function(name, ...){
+OctaveConfig <- function(name, ..., reset=FALSE){
 	
 	# return the whole config list if no name is provided
-	if( missing(name) ){
+	if( missing(name) || reset ){
 		# create the config list at first call
-		if( !exists('.OctaveConfig', packageEnv()) ){
-			conf <- list(lib=oconfig('OCTLIBDIR')
-						, include=oconfig('OCTINCLUDEDIR')
+		if( !exists('.OctaveConfig', packageEnv()) || reset ){
+			conf <- list(lib=oconfig(c('LIBDIR', 'OCTLIBDIR'))
+						, include=oconfig(c('INCLUDEDIR', 'OCTINCLUDEDIR'))
 				)
 			
 			# add a configuration variable for the module path
-			conf$modules <- file.path(packagePath(), 'modules')
+			conf$modules <- packagePath('modules')
 			
 			assign('.OctaveConfig', conf, packageEnv())
 		}
-				
-		return(.OctaveConfig)
+		
+		if( missing(name) ) return(.OctaveConfig)
 	}
 		
 	settings <- .OctaveConfig[[name]]
@@ -79,21 +80,22 @@ OctaveConfig <- function(name, ...){
 }
 
 # Load/Unload Octave Libraries
+#' @importFrom utils file_test
 .OctaveLibs <- function(unload=FALSE){
 		
-	dyn.fun <- 
-	if( !unload ){ # LOAD		
-		function(x, dlls){
-			if( !x %in%  dlls )
-				dyn.load(OctaveConfig('lib', paste(x, .Platform$dynlib.ext, sep='')))
+	dyn.fun <- function(x, dlls){
+		if( !x %in%  dlls ){
+			libname <- paste(x, .Platform$dynlib.ext, sep='')
+			libs <- OctaveConfig('lib', libname)
+			for( l in libs ){
+				if( utils::file_test('-f', l) ){
+					return( if( !unload ) dyn.load(l) else dyn.unload(l) )
+				}
+			}
+			stop("Could not find Octave library '", x, "'")
 		}
-	}else{ #UNLOAD
-		function(x, dlls){
-			if( x %in%  dlls )
-				dyn.unload(OctaveConfig('lib', paste(x, .Platform$dynlib.ext, sep='')))
-		}		
 	}
-
+	
 	# load/unload required Octave libraries
 	octlibs <- c('liboctave', 'liboctinterp')
 	sapply(octlibs, dyn.fun, names(base::getLoadedDLLs()))
