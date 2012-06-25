@@ -2,11 +2,9 @@
 ## Copyright (C) 2012 Renaud Gaujoux
 
 ifneq (${R_HOME},)
-RPROG=$(R_HOME)/bin/R
 RSCRIPT=$(R_HOME)/bin/Rscript
 else 
-RPROG=R
-RSCRIPT=Rscript
+RSCRIPT=`which R`script
 endif
 
 MK=$(shell $(RSCRIPT) --vanilla -e "pkgmaker::vignetteMakefile('renaud', 'RcppOctave')")

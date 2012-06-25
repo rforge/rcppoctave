@@ -471,7 +471,7 @@
 \usepackage[minnames=1,maxnames=2]{biblatex}
 \AtEveryCitekey{\clearfield{url}}
 
-\bibliography{/tmp/tmp.8CcUmQIEUx/RcppOctave/REFERENCES}
+\bibliography{/tmp/tmp.0EorDmYDx8/RcppOctave/REFERENCES}
 
 
 
@@ -491,8 +491,8 @@
 
 \author{Renaud Gaujoux}
 \title{\pkgname{RcppOctave}: Seamless Interface to Octave -- and Matlab}
-\date{\Rpkg{RcppOctave} -- Version 0.8.4
-[June 19, 2012]\footnote{This vignette was built using \octave
+\date{\Rpkg{RcppOctave} -- Version 0.8.5
+[June 25, 2012]\footnote{This vignette was built using \octave
 3.6.1}}
 \begin{document}
 \maketitle
@@ -773,7 +773,7 @@ functionalities:
 \normalfont
 \end{flushleft}
 \begin{verbatim}
-## [1] 0.8940 0.7440 0.9512 0.6544
+## [1] 0.5666 0.5789 0.1916 0.1920
 \end{verbatim}
 \begin{flushleft}
 \ttfamily\noindent
@@ -783,12 +783,12 @@ functionalities:
 \end{flushleft}
 \begin{verbatim}
 ## $a
-## [1] 0.6508 0.9670 0.7290 0.8637
+## [1] 0.8270 0.8484 0.8407 0.6481
 ## 
 ## $b
 ##        [,1]   [,2]   [,3]
-## [1,] 0.7811 0.2495 0.3693
-## [2,] 0.5391 0.9141 0.6042
+## [1,] 0.8738 0.5066 0.6229
+## [2,] 0.2032 0.2720 0.0369
 ## 
 ## $c
 ## [1] "some text"
@@ -1267,10 +1267,10 @@ can also evaluate a list of statements sequentially:
 \normalfont
 \end{flushleft}
 \begin{verbatim}
-##         [,1]
-## [1,] 1.41842
-## [2,] 0.33964
-## [3,] 0.02026
+##          [,1]
+## [1,] 1.430548
+## [2,] 0.402496
+## [3,] 0.003649
 \end{verbatim}
 \begin{flushleft}
 \ttfamily\noindent
@@ -1278,10 +1278,10 @@ can also evaluate a list of statements sequentially:
 \normalfont
 \end{flushleft}
 \begin{verbatim}
-##         [,1]
-## [1,] 1.41842
-## [2,] 0.33964
-## [3,] 0.02026
+##          [,1]
+## [1,] 1.430548
+## [2,] 0.402496
+## [3,] 0.003649
 \end{verbatim}
 \begin{flushleft}
 \ttfamily\noindent
@@ -1292,13 +1292,13 @@ can also evaluate a list of statements sequentially:
 \end{flushleft}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.457 0.367
+## [1] 0.4503 0.3480
 ## 
 ## [[2]]
-## [1] 1.1547 0.3385
+## [1] -0.7227 -1.6021
 ## 
 ## [[3]]
-## [1] 0.5817 0.6610 0.9897
+## [1] 0.2188 0.8346 0.2441
 ## 
 \end{verbatim}
 \begin{flushleft}
@@ -1326,7 +1326,7 @@ can also evaluate a list of statements sequentially:
 \normalfont
 \end{flushleft}
 \begin{verbatim}
-## [1] 0.457 0.367
+## [1] 0.4503 0.3480
 \end{verbatim}
 \begin{flushleft}
 \ttfamily\noindent
@@ -1343,7 +1343,7 @@ can also evaluate a list of statements sequentially:
 \normalfont
 \end{flushleft}
 \begin{verbatim}
-## [1] 0.457 0.367
+## [1] 0.4503 0.3480
 \end{verbatim}
 \begin{flushleft}
 \ttfamily\noindent
@@ -1607,9 +1607,9 @@ following code, which defines a wrapper functions to format the output of
 \end{flushleft}
 \begin{verbatim}
 ## List of 3
-##  $ d: num [1:5] 2.8777 1.1213 0.7617 0.3728 0.0057
-##  $ u: num [1:5, 1:5] -0.474 -0.185 -0.405 -0.58 -0.49 ...
-##  $ v: num [1:5, 1:5] -0.422 -0.4 -0.32 -0.475 -0.578 ...
+##  $ d: num [1:5] 2.233 0.713 0.579 0.354 0.207
+##  $ u: num [1:5, 1:5] -0.244 -0.323 -0.406 -0.641 -0.51 ...
+##  $ v: num [1:5, 1:5] -0.5 -0.452 -0.304 -0.444 -0.507 ...
 \end{verbatim}
 \begin{flushleft}
 \ttfamily\noindent
@@ -1627,9 +1627,9 @@ following code, which defines a wrapper functions to format the output of
 \normalfont
 \end{flushleft}
 \begin{verbatim}
-## [1] "Component 1: Mean relative difference: 1.752e-16"
-## [2] "Component 2: Mean relative difference: 3.071e-16"
-## [3] "Component 3: Mean relative difference: 2.794e-16"
+## [1] "Component 1: Mean relative difference: 2.106e-16"
+## [2] "Component 2: Mean relative difference: 6.756e-16"
+## [3] "Component 3: Mean relative difference: 5.919e-16"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1737,7 +1737,7 @@ attached base packages:
 [1] methods   stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
-[1] RcppOctave_0.8.4 pkgmaker_0.6.4   codetools_0.2-8  Rcpp_0.9.10     
+[1] RcppOctave_0.8.5 pkgmaker_0.6.5   codetools_0.2-8  Rcpp_0.9.10     
 [5] stringr_0.6      digest_0.5.2     knitr_0.6.1     
 
 loaded via a namespace (and not attached):
