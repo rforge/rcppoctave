@@ -1,34 +1,191 @@
-%\VignetteDepends{RcppOctave,rbenchmark}
-%\VignetteCompiler{knitr}
-
-\title{RcppOctave: Octave along with R}
+\title{RcppOctave: Octave along with R}  %% just a draft title
 \author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
 \maketitle
 
 \abstract{
-The RcppOctave package connects Octave to R.
-TODO: Expand.
+  The \pkg{RcppOctave} package connects Octave to R. TODO: Expand
 }
-
 
 \section{Introduction}
 
-Octave \cite{Eaton2008} is a high-level interactive language which is primarily intended for numeri- cal computations. 
-As it is mostly compatible with Matlab \cite{MATLAB2010}, it has found widespread adoption across different disciplines.
-While Matlab has historically been pre-eminent in domains such as electrical engineering and signal processing, it is also widely used in other fields such as bioinformatics or finance. 
-Consequently, a large corpus of application programs are available as .m-files (named after the commonly-chose file extension).
-R \cite{R}, a language and environment for statistical computing and graphics, has become the dominant language for statistical research, and a widely-used environment for empirical work in a variety of fields.
-While both languages share commonalities, their respective focus is different making a combination of both environments an even more compelling choice.
-This short paper illustrates the RcppOctave package by \cite{RcppOctave} which implements an interface between both these environments.
+Octave \citep{Eaton:2008} is a high-level interactive language which is
+primarily intended for numerical computations.  It has found widespread
+adoption across different disciplines as it is mostly compatible with Matlab
+\citep{MATLAB:2010}.  While Matlab has historically been pre-eminent in
+domains such as applied mathematics, electrical engineering and signal
+processing, it is also widely used in other fields such as machine
+learning, %% TODO/DE: Maybe ask Soren and the folks at MLOSS.org about Matlab numbers
+bioinformatics, and finance.  Consequently, a large corpus of application
+programs are available as \code{.m}-files (named after the commonly-chose
+file extension) for which Octave provides an open source engine.
 
-\address{Dirk Eddeluettel\\
+R \citep{R:2012}, a language and environment for statistical
+computing and graphics, has become the dominant language for statistical
+research, and a widely-used environment for empirical work in a variety of
+fields. % DE: I don't want to single out BioC here, but maybe we could point
+        % to the CRAN Task Views? Or just leave it as this is for the R Journal..
+
+While both languages share commonalities, their respective focus is different
+making a combination of both environments an even more compelling choice.
+This short paper illustrates the \pkg{RcppOctave} package by
+\cite{CRAN:RcppOctave} which implements an interface between both these
+environments.
+
+\section{Octave}
+
+TODO: Two or three short paragraphs about Octave
+
+\section{Example: Matrix Operations}  % or something else
+
+TODO: Show two or three simple call illustrating the variable arguments etc.
+
+\section{Example: RNG}
+
+<<rng, tidy=FALSE, cache=TRUE>>=
+library(RcppOctave)
+
+# R runif
+set.seed(1)
+a <- runif(10)
+
+# define octave function
+o_source(text="
+function [x] = orng(n)
+	x = rand(1, n);
+end
+")
+set.seed(1)
+identical(.O$orng(10), a)
+@
+
+\section{Example: Kalman Filter}
+
+\cite{Eddelbuettel+Sanderson:2012} motivate the \pkg{RcppArmadillo} package
+with an example comparing a Kalman Filter implementation in both R and
+C++. As the code underlying this example was initially published for
+Matlab\footnote{See
+  \url{http://www.mathworks.com/products/matlab-coder/demos.html?file=/products/demos/shipping/coder/coderdemo_kalman_filter.html}.},
+it can of course also be used with RcppOctave.
+
+TODO: Few words about the example
+
+\begin{smallexample}
+function Y = kalmanM(pos)
+  dt=1;	
+  %% Initialize state transition matrix
+  A=[ 1 0 dt 0 0 0;...     % [x  ]
+     0 1 0 dt 0 0;...     % [y  ]
+     0 0 1 0 dt 0;...     % [Vx]
+     0 0 0 1 0 dt;...     % [Vy]
+     0 0 0 0 1 0 ;...     % [Ax]
+     0 0 0 0 0 1 ];       % [Ay]
+  % Initialize measurement matrix
+  H = [ 1 0 0 0 0 0; 0 1 0 0 0 0 ];    
+  Q = eye(6);
+  R = 1000 * eye(2);
+  x_est = zeros(6, 1);             
+  p_est = zeros(6, 6);
+
+  numPts = size(pos,1);
+  Y = zeros(numPts, 2);
+
+  for idx = 1:numPts
+    z = pos(idx, :)';
+      
+    %% Predicted state and covariance
+    x_prd = A * x_est;
+    p_prd = A * p_est * A' + Q;
+    %% Estimation
+    S = H * p_prd' * H' + R;
+    B = H * p_prd';
+    klm_gain = (S \ B)';
+    %% Estimated state and covariance
+    x_est = x_prd + klm_gain * (z - H * x_prd);
+    p_est = p_prd - klm_gain * H * p_prd;
+    %% Compute the estimated measurements
+    Y(idx, :) = H * x_est;
+  end                % of the function
+end   % of the function
+\end{smallexample}
+
+This function, along with several R implementations, is provided in the
+\pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
+Table~\ref{tab:benchmark} summaries the performance.
+
+%                 test replications elapsed relative
+% 7  KalmanOctave(pos)          100   3.943  1.00000
+% 2      KalmanRC(pos)          100   5.987  1.51839
+% 1       KalmanR(pos)          100   6.047  1.53360
+% 4   KalmanRfunC(pos)          100   6.262  1.58813
+% 3    KalmanRfun(pos)          100   6.648  1.68603
+% 6 FirstKalmanRC(pos)          100   8.992  2.28050
+% 5  FirstKalmanR(pos)          100   9.405  2.38524
+
+\begin{table}[hbt]
+  \begin{center}
+    \begin{small}
+      \begin{tabular}{lrr}
+        \toprule
+        {\bf Implementation \phantom{XX}} & {\bf Time in sec.} & {\bf Rel.~ to best} \\
+        \cmidrule(r){1-3}
+         KalmanOctave  & 3.943 & 1.000 \\
+             KalmanRC  & 5.987 & 1.518 \\
+              KalmanR  & 6.047 & 1.534 \\
+          KalmanRfunC  & 6.262 & 1.588 \\
+           KalmanRfun  & 6.648 & 1.686 \\
+        FirstKalmanRC  & 8.992 & 2.281 \\
+         FirstKalmanR  & 9.405 & 2.385 \\
+        \bottomrule 
+      \end{tabular}
+      \caption{Performance comparison of various implementations of a Kalman filter.
+        KalmanOctave is the \pkg{RcppOctave} based implementation shown above.
+        KalmanR is the \R implementation using an environment; KalmanRfun use a
+        function; FirstKalmanR is a direct translation of the original Matlab
+        implementation; versions ending in C are the byte-compiled variants of
+        the respective version.  Timings are averaged over 100 replications.
+        The comparison was made using R version 2.15.1, Rcpp version 0.9.13 and
+        RcppOctave version 0.8.5 on Ubuntu 12.04 running in 64-bit mode on a
+        2.67 GHz Intel i7 processor.}
+      \label{tab:benchmark}
+    \end{small}
+  \end{center}
+\end{table}
+
+% TODO: We may want to skip one (pair) of the R variants...
+
+TODO: More about the example, performance comparison, knocking socks off R
+
+
+\section{Example: Gibbs Sampler}
+
+Wilkinson (TODO: Reference from his repeated blog posts) used a simple
+bivariate Gibbs Sampler as a basis for comparisons between different
+programming languages such as C, Java, Python and R. His example has been
+re-used in number of other presentations.  
+
+We can adapt this example here as it provides a suitable framework for
+showing how \pkg{RcppOctave} can interact with the random number generators
+in R. 
+
+
+\bibliography{../inst/REFERENCES}
+
+
+\address{Dirk Eddelbuettel \\
+  %Affiliation\\
   River Forest, IL\\
   USA}\\
 \email{edd@debian.org}
 
-\address{Renaud Gaujoux\\
-  Computational Biology\\
-  University of Cape Town\\
+\address{Renaud Gaujoux \\
+  Computational Biology \\
+  University of Cape Town \\
+  Cape Town \\
   South Africa}\\
 \email{renaud@cbio.uct.ac.za}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "RJwrapper"
+%%% End: 

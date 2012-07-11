@@ -1,0 +1,14 @@
+RcppOctave
+pkgmaker
+codetools
+Rcpp
+stringr
+digest
+methods
+knitr
+stats
+graphics
+grDevices
+utils
+datasets
+base

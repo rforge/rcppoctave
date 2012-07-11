@@ -1,6 +1,3 @@
-%\VignetteDepends{RcppOctave,rbenchmark}
-%\VignetteCompiler{knitr}
-
 \title{RcppOctave: Octave along with R}  %% just a draft title
 \author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
@@ -42,6 +39,35 @@ TODO: Two or three short paragraphs about Octave
 \section{Example: Matrix Operations}  % or something else
 
 TODO: Show two or three simple call illustrating the variable arguments etc.
+
+\section{Example: RNG}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlfunctioncall{library}\hlkeyword{(}\hlsymbol{RcppOctave}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }R{\ }runif}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{a}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{runif}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }octave{\ }function}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlargument{text}\hlargument{=}\hlstring{"{}\hspace*{\fill}\\
+\hlstd{}function{\ }[x]{\ }={\ }orng(n)\hspace*{\fill}\\
+\hlstd{}	x{\ }={\ }rand(1,{\ }n);\hspace*{\fill}\\
+\hlstd{}end\hspace*{\fill}\\
+\hlstd{}"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{orng}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{a}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \section{Example: Kalman Filter}
 

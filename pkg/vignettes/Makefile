@@ -7,6 +7,9 @@ else
 RSCRIPT=`which R`script
 endif
 
+.PHONY: src/RJwrapper.Rnw
+
 MK=$(shell $(RSCRIPT) --vanilla -e "pkgmaker::vignetteMakefile(c('renaud','edd'), 'RcppOctave', skip='EddelbuettelGaujoux.Rnw')")
 
 include $(MK)
+
