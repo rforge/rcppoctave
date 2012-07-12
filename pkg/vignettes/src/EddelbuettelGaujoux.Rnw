@@ -42,6 +42,8 @@ TODO: Show two or three simple call illustrating the variable arguments etc.
 
 \section{Example: RNG}
 
+% DE: Super-useful feature, but shall we have that here or as part of the
+%     Gibbs sampler comparison
 <<rng, tidy=FALSE, cache=TRUE>>=
 library(RcppOctave)
 
@@ -70,9 +72,10 @@ it can of course also be used with RcppOctave.
 
 TODO: Few words about the example
 
+TODO: render code 'pretty' whith knitr which must have a Matlab filter too
 \begin{smallexample}
 function Y = kalmanM(pos)
-  dt=1;	
+  dt=1;
   %% Initialize state transition matrix
   A=[ 1 0 dt 0 0 0;...     % [x  ]
      0 1 0 dt 0 0;...     % [y  ]
@@ -81,10 +84,10 @@ function Y = kalmanM(pos)
      0 0 0 0 1 0 ;...     % [Ax]
      0 0 0 0 0 1 ];       % [Ay]
   % Initialize measurement matrix
-  H = [ 1 0 0 0 0 0; 0 1 0 0 0 0 ];    
+  H = [ 1 0 0 0 0 0; 0 1 0 0 0 0 ];
   Q = eye(6);
   R = 1000 * eye(2);
-  x_est = zeros(6, 1);             
+  x_est = zeros(6, 1);
   p_est = zeros(6, 6);
 
   numPts = size(pos,1);
@@ -92,7 +95,7 @@ function Y = kalmanM(pos)
 
   for idx = 1:numPts
     z = pos(idx, :)';
-      
+
     %% Predicted state and covariance
     x_prd = A * x_est;
     p_prd = A * p_est * A' + Q;
@@ -136,7 +139,7 @@ Table~\ref{tab:benchmark} summaries the performance.
            KalmanRfun  & 6.648 & 1.686 \\
         FirstKalmanRC  & 8.992 & 2.281 \\
          FirstKalmanR  & 9.405 & 2.385 \\
-        \bottomrule 
+        \bottomrule
       \end{tabular}
       \caption{Performance comparison of various implementations of a Kalman filter.
         KalmanOctave is the \pkg{RcppOctave} based implementation shown above.
@@ -162,11 +165,11 @@ TODO: More about the example, performance comparison, knocking socks off R
 Wilkinson (TODO: Reference from his repeated blog posts) used a simple
 bivariate Gibbs Sampler as a basis for comparisons between different
 programming languages such as C, Java, Python and R. His example has been
-re-used in number of other presentations.  
+re-used in number of other presentations.
 
 We can adapt this example here as it provides a suitable framework for
 showing how \pkg{RcppOctave} can interact with the random number generators
-in R. 
+in R.
 
 
 \bibliography{../inst/REFERENCES}
@@ -185,7 +188,7 @@ in R.
   South Africa}\\
 \email{renaud@cbio.uct.ac.za}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "RJwrapper"
-%%% End: 
+%%% End:
