@@ -1,3 +1,14 @@
+<<setup, include=FALSE>>=
+knit_engines$set(highlight = function(options) {
+  f = tempfile()
+  writeLines(code <- options$code, f)
+  cmd = sprintf('highlight -S %s -O %s --no-doc %s', options$hi.syntax, options$hi.output, shQuote(f))
+  out = if (options$eval) system(cmd, intern = TRUE) else ''
+  options$echo = FALSE # do not echo source code
+  knitr:::engine_output(code, out, options)
+})
+@
+
 \title{RcppOctave: Octave along with R}  %% just a draft title
 \author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
@@ -73,7 +84,7 @@ it can of course also be used with RcppOctave.
 TODO: Few words about the example
 
 TODO: render code 'pretty' whith knitr which must have a Matlab filter too
-\begin{smallexample}
+<<kalman, engine='highlight', hi.syntax='matlab', hi.output='LATEX', results='asis'>>=
 function Y = kalmanM(pos)
   dt=1;
   %% Initialize state transition matrix
@@ -110,7 +121,7 @@ function Y = kalmanM(pos)
     Y(idx, :) = H * x_est;
   end                % of the function
 end   % of the function
-\end{smallexample}
+@
 
 This function, along with several R implementations, is provided in the
 \pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
