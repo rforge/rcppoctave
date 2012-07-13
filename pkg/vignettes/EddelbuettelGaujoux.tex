@@ -1,3 +1,5 @@
+
+
 \title{RcppOctave: Octave along with R}  %% just a draft title
 \author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
@@ -40,35 +42,6 @@ TODO: Two or three short paragraphs about Octave
 
 TODO: Show two or three simple call illustrating the variable arguments etc.
 
-\section{Example: RNG}
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{library}\hlkeyword{(}\hlsymbol{RcppOctave}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }R{\ }runif}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{a}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{runif}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }octave{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlargument{text}\hlargument{=}\hlstring{"{}\hspace*{\fill}\\
-\hlstd{}function{\ }[x]{\ }={\ }orng(n)\hspace*{\fill}\\
-\hlstd{}	x{\ }={\ }rand(1,{\ }n);\hspace*{\fill}\\
-\hlstd{}end\hspace*{\fill}\\
-\hlstd{}"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{orng}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{a}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
-\begin{verbatim}
-## [1] TRUE
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-
 \section{Example: Kalman Filter}
 
 \cite{Eddelbuettel+Sanderson:2012} motivate the \pkg{RcppArmadillo} package
@@ -80,44 +53,9 @@ it can of course also be used with RcppOctave.
 
 TODO: Few words about the example
 
-\begin{smallexample}
-function Y = kalmanM(pos)
-  dt=1;	
-  %% Initialize state transition matrix
-  A=[ 1 0 dt 0 0 0;...     % [x  ]
-     0 1 0 dt 0 0;...     % [y  ]
-     0 0 1 0 dt 0;...     % [Vx]
-     0 0 0 1 0 dt;...     % [Vy]
-     0 0 0 0 1 0 ;...     % [Ax]
-     0 0 0 0 0 1 ];       % [Ay]
-  % Initialize measurement matrix
-  H = [ 1 0 0 0 0 0; 0 1 0 0 0 0 ];    
-  Q = eye(6);
-  R = 1000 * eye(2);
-  x_est = zeros(6, 1);             
-  p_est = zeros(6, 6);
+TODO: render code 'pretty' whith knitr which must have a Matlab filter too
 
-  numPts = size(pos,1);
-  Y = zeros(numPts, 2);
 
-  for idx = 1:numPts
-    z = pos(idx, :)';
-      
-    %% Predicted state and covariance
-    x_prd = A * x_est;
-    p_prd = A * p_est * A' + Q;
-    %% Estimation
-    S = H * p_prd' * H' + R;
-    B = H * p_prd';
-    klm_gain = (S \ B)';
-    %% Estimated state and covariance
-    x_est = x_prd + klm_gain * (z - H * x_prd);
-    p_est = p_prd - klm_gain * H * p_prd;
-    %% Compute the estimated measurements
-    Y(idx, :) = H * x_est;
-  end                % of the function
-end   % of the function
-\end{smallexample}
 
 This function, along with several R implementations, is provided in the
 \pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
@@ -146,7 +84,7 @@ Table~\ref{tab:benchmark} summaries the performance.
            KalmanRfun  & 6.648 & 1.686 \\
         FirstKalmanRC  & 8.992 & 2.281 \\
          FirstKalmanR  & 9.405 & 2.385 \\
-        \bottomrule 
+        \bottomrule
       \end{tabular}
       \caption{Performance comparison of various implementations of a Kalman filter.
         KalmanOctave is the \pkg{RcppOctave} based implementation shown above.
@@ -172,11 +110,41 @@ TODO: More about the example, performance comparison, knocking socks off R
 Wilkinson (TODO: Reference from his repeated blog posts) used a simple
 bivariate Gibbs Sampler as a basis for comparisons between different
 programming languages such as C, Java, Python and R. His example has been
-re-used in number of other presentations.  
+re-used in number of other presentations.
 
 We can adapt this example here as it provides a suitable framework for
 showing how \pkg{RcppOctave} can interact with the random number generators
-in R. 
+in R.
+
+%DE: Super-useful feature, but shall we have that here or as part of the Gibbs sampler comparison
+TODO: Make true Gibbs sampler example
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlfunctioncall{library}\hlkeyword{(}\hlsymbol{RcppOctave}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }R{\ }runif}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{a}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{runif}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }octave{\ }function}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlargument{text}\hlargument{=}\hlstring{"{}{}\hspace*{\fill}\\
+\hlstd{}function{\ }[x]{\ }={\ }orng(n)\hspace*{\fill}\\
+\hlstd{}	x{\ }={\ }rand(1,{\ }n);\hspace*{\fill}\\
+\hlstd{}end\hspace*{\fill}\\
+\hlstd{}"{}{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{orng}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{a}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
 
 
 \bibliography{../inst/REFERENCES}
@@ -195,7 +163,7 @@ in R.
   South Africa}\\
 \email{renaud@cbio.uct.ac.za}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "RJwrapper"
-%%% End: 
+%%% End:

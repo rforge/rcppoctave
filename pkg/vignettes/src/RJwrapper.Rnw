@@ -12,6 +12,11 @@
 
 %% load any required packages here
 \usepackage{booktabs}
+% define commands for notes
+\usepackage{todonotes}
+\newcommand{\devnote}[3]{\todo[inline, backgroundcolor=#1!20!white]{\scriptsize\textsf{\textbf{#2:} #3}}}
+\newcommand{\dirk}[1]{\devnote{blue}{DE}{#1}}
+\newcommand{\renaud}[1]{\devnote{red}{RG}{#1}}
 
 \begin{document}
 

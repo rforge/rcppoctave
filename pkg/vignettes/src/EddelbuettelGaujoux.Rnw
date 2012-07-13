@@ -1,6 +1,7 @@
 <<setup, include=FALSE>>=
 knit_engines$set(highlight = function(options) {
-  f = tempfile()
+  f = file()
+  on.exit(close(f))
   writeLines(code <- options$code, f)
   cmd = sprintf('highlight -S %s -O %s --no-doc %s', options$hi.syntax, options$hi.output, shQuote(f))
   out = if (options$eval) system(cmd, intern = TRUE) else ''
@@ -50,27 +51,6 @@ TODO: Two or three short paragraphs about Octave
 \section{Example: Matrix Operations}  % or something else
 
 TODO: Show two or three simple call illustrating the variable arguments etc.
-
-\section{Example: RNG}
-
-% DE: Super-useful feature, but shall we have that here or as part of the
-%     Gibbs sampler comparison
-<<rng, tidy=FALSE, cache=TRUE>>=
-library(RcppOctave)
-
-# R runif
-set.seed(1)
-a <- runif(10)
-
-# define octave function
-o_source(text="
-function [x] = orng(n)
-	x = rand(1, n);
-end
-")
-set.seed(1)
-identical(.O$orng(10), a)
-@
 
 \section{Example: Kalman Filter}
 
@@ -181,6 +161,26 @@ re-used in number of other presentations.
 We can adapt this example here as it provides a suitable framework for
 showing how \pkg{RcppOctave} can interact with the random number generators
 in R.
+
+%DE: Super-useful feature, but shall we have that here or as part of the Gibbs sampler comparison
+TODO: Make true Gibbs sampler example
+<<rng, tidy=FALSE, cache=TRUE>>=
+library(RcppOctave)
+
+# R runif
+set.seed(1)
+a <- runif(10)
+
+# define octave function
+o_source(text="
+function [x] = orng(n)
+	x = rand(1, n);
+end
+")
+set.seed(1)
+identical(.O$orng(10), a)
+@
+
 
 
 \bibliography{../inst/REFERENCES}

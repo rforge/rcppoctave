@@ -15,7 +15,7 @@
 \makeatother
 
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\definecolor{fgcolor}{rgb}{0.267, 0.267, 0.267}
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
 \newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
 \newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
 \newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
@@ -29,7 +29,7 @@
 \newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
 \newcommand{\hlslot}[1]{\textit{#1}}%
 \newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.266666666666667,0.266666666666667,0.266666666666667}{#1}}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
 
 \usepackage{color}%
  
@@ -373,7 +373,7 @@
 \newcommand{\hlcom}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
 \newcommand{\hldir}[1]{\textcolor[rgb]{0,0.51,0}{#1}}
 \newcommand{\hlsym}[1]{\textcolor[rgb]{0,0,0}{#1}}
-\newcommand{\hlline}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
+% \newcommand{\hlline}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
 \newcommand{\hlkwa}[1]{\textcolor[rgb]{0,0,0}{\bf{#1}}}
 \newcommand{\hlkwb}[1]{\textcolor[rgb]{0.51,0,0}{#1}}
 \newcommand{\hlkwc}[1]{\textcolor[rgb]{0,0,0}{\bf{#1}}}
@@ -383,6 +383,11 @@
 \usepackage{framed}
 \makeatletter
 \newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
  \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
  \colorbox{shadecolor}{##1}\hskip-\fboxsep
      % There is no \\@totalrightmargin, so:
@@ -390,12 +395,19 @@
  \MakeFramed {\advance\hsize-\width
    \@totalleftmargin\z@ \linewidth\hsize
    \@setminipage}}%
- {\par\unskip\endMakeFramed}
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
 \makeatother
 
 \definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
+
+% copied from highlight.sty
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}
 
 \usepackage{RJournal}
 \usepackage[round]{natbib}
@@ -403,6 +415,11 @@
 
 %% load any required packages here
 \usepackage{booktabs}
+% define commands for notes
+\usepackage{todonotes}
+\newcommand{\devnote}[3]{\todo[inline, backgroundcolor=#1!20!white]{\scriptsize\textsf{\textbf{#2:} #3}}}
+\newcommand{\dirk}[1]{\devnote{blue}{DE}{#1}}
+\newcommand{\renaud}[1]{\devnote{red}{RG}{#1}}
 
 \begin{document}
 
