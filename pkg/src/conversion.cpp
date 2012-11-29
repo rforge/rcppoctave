@@ -311,7 +311,7 @@ template <> SEXP Rcpp::wrap( const octave_value_list& val ){
 /**
  * Copy an Rcpp matrix into an Octave array.
  */
-template <int RTYPE, typename T> void as_OctaveMatrix(const Rcpp::Matrix<RTYPE>& x, Array<T>& res){
+template <int RTYPE, typename T> void as_OctaveMatrix( Rcpp::Matrix<RTYPE> x, Array<T>& res){
 
 	int n = x.nrow();
 	int p = x.ncol();
@@ -422,7 +422,7 @@ template <> octave_value Rcpp::as( SEXP x ){
 			return octave_value(as<string>(x));
 		}else {
 			VERBOSE_LOG("(CharacterVector[%i])\n", Rf_length(x));
-			const CharacterVector vx(x);
+			CharacterVector vx(x);
 			Cell v = Cell(dim_vector(1, vx.length()));
 			for (int i=n-1; i>=0; --i) {
 				v.elem(i) = charNDArray(vx[i]);
@@ -443,8 +443,8 @@ template <> octave_value Rcpp::as( SEXP x ){
 
 		}else{ // store as an Octave map
 			VERBOSE_LOG("(NamedList[%i]) -> Octave map:\n", Rf_length(x));
-			const CharacterVector names(rnames);
-			const Rcpp::List xl(x);
+			CharacterVector names(rnames);
+			Rcpp::List xl(x);
 			int n = xl.length();
 			if( n != na )
 				AS_ERROR(" - Inconsistent names and list lengths.")
