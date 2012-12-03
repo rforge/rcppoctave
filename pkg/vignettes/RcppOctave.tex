@@ -12,7 +12,7 @@
 \makeatother
 
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\definecolor{fgcolor}{rgb}{0.267, 0.267, 0.267}
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
 \newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
 \newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
 \newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
@@ -26,360 +26,16 @@
 \newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
 \newcommand{\hlslot}[1]{\textit{#1}}%
 \newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.266666666666667,0.266666666666667,0.266666666666667}{#1}}%
-
-\usepackage{color}%
- 
-\newsavebox{\hlnormalsizeboxclosebrace}%
-\newsavebox{\hlnormalsizeboxopenbrace}%
-\newsavebox{\hlnormalsizeboxbackslash}%
-\newsavebox{\hlnormalsizeboxlessthan}%
-\newsavebox{\hlnormalsizeboxgreaterthan}%
-\newsavebox{\hlnormalsizeboxdollar}%
-\newsavebox{\hlnormalsizeboxunderscore}%
-\newsavebox{\hlnormalsizeboxand}%
-\newsavebox{\hlnormalsizeboxhash}%
-\newsavebox{\hlnormalsizeboxat}%
-\newsavebox{\hlnormalsizeboxpercent}% 
-\newsavebox{\hlnormalsizeboxhat}%
-\newsavebox{\hlnormalsizeboxsinglequote}%
-\newsavebox{\hlnormalsizeboxbacktick}%
-
-\setbox\hlnormalsizeboxopenbrace=\hbox{\begin{normalsize}\verb.{.\end{normalsize}}%
-\setbox\hlnormalsizeboxclosebrace=\hbox{\begin{normalsize}\verb.}.\end{normalsize}}%
-\setbox\hlnormalsizeboxlessthan=\hbox{\begin{normalsize}\verb.<.\end{normalsize}}%
-\setbox\hlnormalsizeboxdollar=\hbox{\begin{normalsize}\verb.$.\end{normalsize}}%
-\setbox\hlnormalsizeboxunderscore=\hbox{\begin{normalsize}\verb._.\end{normalsize}}%
-\setbox\hlnormalsizeboxand=\hbox{\begin{normalsize}\verb.&.\end{normalsize}}%
-\setbox\hlnormalsizeboxhash=\hbox{\begin{normalsize}\verb.#.\end{normalsize}}%
-\setbox\hlnormalsizeboxat=\hbox{\begin{normalsize}\verb.@.\end{normalsize}}%
-\setbox\hlnormalsizeboxbackslash=\hbox{\begin{normalsize}\verb.\.\end{normalsize}}%
-\setbox\hlnormalsizeboxgreaterthan=\hbox{\begin{normalsize}\verb.>.\end{normalsize}}%
-\setbox\hlnormalsizeboxpercent=\hbox{\begin{normalsize}\verb.%.\end{normalsize}}%
-\setbox\hlnormalsizeboxhat=\hbox{\begin{normalsize}\verb.^.\end{normalsize}}%
-\setbox\hlnormalsizeboxsinglequote=\hbox{\begin{normalsize}\verb.'.\end{normalsize}}%
-\setbox\hlnormalsizeboxbacktick=\hbox{\begin{normalsize}\verb.`.\end{normalsize}}%
-\setbox\hlnormalsizeboxhat=\hbox{\begin{normalsize}\verb.^.\end{normalsize}}%
-
-
-
-\newsavebox{\hltinyboxclosebrace}%
-\newsavebox{\hltinyboxopenbrace}%
-\newsavebox{\hltinyboxbackslash}%
-\newsavebox{\hltinyboxlessthan}%
-\newsavebox{\hltinyboxgreaterthan}%
-\newsavebox{\hltinyboxdollar}%
-\newsavebox{\hltinyboxunderscore}%
-\newsavebox{\hltinyboxand}%
-\newsavebox{\hltinyboxhash}%
-\newsavebox{\hltinyboxat}%
-\newsavebox{\hltinyboxpercent}% 
-\newsavebox{\hltinyboxhat}%
-\newsavebox{\hltinyboxsinglequote}%
-\newsavebox{\hltinyboxbacktick}%
-
-\setbox\hltinyboxopenbrace=\hbox{\begin{tiny}\verb.{.\end{tiny}}%
-\setbox\hltinyboxclosebrace=\hbox{\begin{tiny}\verb.}.\end{tiny}}%
-\setbox\hltinyboxlessthan=\hbox{\begin{tiny}\verb.<.\end{tiny}}%
-\setbox\hltinyboxdollar=\hbox{\begin{tiny}\verb.$.\end{tiny}}%
-\setbox\hltinyboxunderscore=\hbox{\begin{tiny}\verb._.\end{tiny}}%
-\setbox\hltinyboxand=\hbox{\begin{tiny}\verb.&.\end{tiny}}%
-\setbox\hltinyboxhash=\hbox{\begin{tiny}\verb.#.\end{tiny}}%
-\setbox\hltinyboxat=\hbox{\begin{tiny}\verb.@.\end{tiny}}%
-\setbox\hltinyboxbackslash=\hbox{\begin{tiny}\verb.\.\end{tiny}}%
-\setbox\hltinyboxgreaterthan=\hbox{\begin{tiny}\verb.>.\end{tiny}}%
-\setbox\hltinyboxpercent=\hbox{\begin{tiny}\verb.%.\end{tiny}}%
-\setbox\hltinyboxhat=\hbox{\begin{tiny}\verb.^.\end{tiny}}%
-\setbox\hltinyboxsinglequote=\hbox{\begin{tiny}\verb.'.\end{tiny}}%
-\setbox\hltinyboxbacktick=\hbox{\begin{tiny}\verb.`.\end{tiny}}%
-\setbox\hltinyboxhat=\hbox{\begin{tiny}\verb.^.\end{tiny}}%
-
-
-
-\newsavebox{\hlscriptsizeboxclosebrace}%
-\newsavebox{\hlscriptsizeboxopenbrace}%
-\newsavebox{\hlscriptsizeboxbackslash}%
-\newsavebox{\hlscriptsizeboxlessthan}%
-\newsavebox{\hlscriptsizeboxgreaterthan}%
-\newsavebox{\hlscriptsizeboxdollar}%
-\newsavebox{\hlscriptsizeboxunderscore}%
-\newsavebox{\hlscriptsizeboxand}%
-\newsavebox{\hlscriptsizeboxhash}%
-\newsavebox{\hlscriptsizeboxat}%
-\newsavebox{\hlscriptsizeboxpercent}% 
-\newsavebox{\hlscriptsizeboxhat}%
-\newsavebox{\hlscriptsizeboxsinglequote}%
-\newsavebox{\hlscriptsizeboxbacktick}%
-
-\setbox\hlscriptsizeboxopenbrace=\hbox{\begin{scriptsize}\verb.{.\end{scriptsize}}%
-\setbox\hlscriptsizeboxclosebrace=\hbox{\begin{scriptsize}\verb.}.\end{scriptsize}}%
-\setbox\hlscriptsizeboxlessthan=\hbox{\begin{scriptsize}\verb.<.\end{scriptsize}}%
-\setbox\hlscriptsizeboxdollar=\hbox{\begin{scriptsize}\verb.$.\end{scriptsize}}%
-\setbox\hlscriptsizeboxunderscore=\hbox{\begin{scriptsize}\verb._.\end{scriptsize}}%
-\setbox\hlscriptsizeboxand=\hbox{\begin{scriptsize}\verb.&.\end{scriptsize}}%
-\setbox\hlscriptsizeboxhash=\hbox{\begin{scriptsize}\verb.#.\end{scriptsize}}%
-\setbox\hlscriptsizeboxat=\hbox{\begin{scriptsize}\verb.@.\end{scriptsize}}%
-\setbox\hlscriptsizeboxbackslash=\hbox{\begin{scriptsize}\verb.\.\end{scriptsize}}%
-\setbox\hlscriptsizeboxgreaterthan=\hbox{\begin{scriptsize}\verb.>.\end{scriptsize}}%
-\setbox\hlscriptsizeboxpercent=\hbox{\begin{scriptsize}\verb.%.\end{scriptsize}}%
-\setbox\hlscriptsizeboxhat=\hbox{\begin{scriptsize}\verb.^.\end{scriptsize}}%
-\setbox\hlscriptsizeboxsinglequote=\hbox{\begin{scriptsize}\verb.'.\end{scriptsize}}%
-\setbox\hlscriptsizeboxbacktick=\hbox{\begin{scriptsize}\verb.`.\end{scriptsize}}%
-\setbox\hlscriptsizeboxhat=\hbox{\begin{scriptsize}\verb.^.\end{scriptsize}}%
-
-
-
-\newsavebox{\hlfootnotesizeboxclosebrace}%
-\newsavebox{\hlfootnotesizeboxopenbrace}%
-\newsavebox{\hlfootnotesizeboxbackslash}%
-\newsavebox{\hlfootnotesizeboxlessthan}%
-\newsavebox{\hlfootnotesizeboxgreaterthan}%
-\newsavebox{\hlfootnotesizeboxdollar}%
-\newsavebox{\hlfootnotesizeboxunderscore}%
-\newsavebox{\hlfootnotesizeboxand}%
-\newsavebox{\hlfootnotesizeboxhash}%
-\newsavebox{\hlfootnotesizeboxat}%
-\newsavebox{\hlfootnotesizeboxpercent}% 
-\newsavebox{\hlfootnotesizeboxhat}%
-\newsavebox{\hlfootnotesizeboxsinglequote}%
-\newsavebox{\hlfootnotesizeboxbacktick}%
-
-\setbox\hlfootnotesizeboxopenbrace=\hbox{\begin{footnotesize}\verb.{.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxclosebrace=\hbox{\begin{footnotesize}\verb.}.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxlessthan=\hbox{\begin{footnotesize}\verb.<.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxdollar=\hbox{\begin{footnotesize}\verb.$.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxunderscore=\hbox{\begin{footnotesize}\verb._.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxand=\hbox{\begin{footnotesize}\verb.&.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxhash=\hbox{\begin{footnotesize}\verb.#.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxat=\hbox{\begin{footnotesize}\verb.@.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxbackslash=\hbox{\begin{footnotesize}\verb.\.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxgreaterthan=\hbox{\begin{footnotesize}\verb.>.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxpercent=\hbox{\begin{footnotesize}\verb.%.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxhat=\hbox{\begin{footnotesize}\verb.^.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxsinglequote=\hbox{\begin{footnotesize}\verb.'.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxbacktick=\hbox{\begin{footnotesize}\verb.`.\end{footnotesize}}%
-\setbox\hlfootnotesizeboxhat=\hbox{\begin{footnotesize}\verb.^.\end{footnotesize}}%
-
-
-
-\newsavebox{\hlsmallboxclosebrace}%
-\newsavebox{\hlsmallboxopenbrace}%
-\newsavebox{\hlsmallboxbackslash}%
-\newsavebox{\hlsmallboxlessthan}%
-\newsavebox{\hlsmallboxgreaterthan}%
-\newsavebox{\hlsmallboxdollar}%
-\newsavebox{\hlsmallboxunderscore}%
-\newsavebox{\hlsmallboxand}%
-\newsavebox{\hlsmallboxhash}%
-\newsavebox{\hlsmallboxat}%
-\newsavebox{\hlsmallboxpercent}% 
-\newsavebox{\hlsmallboxhat}%
-\newsavebox{\hlsmallboxsinglequote}%
-\newsavebox{\hlsmallboxbacktick}%
-
-\setbox\hlsmallboxopenbrace=\hbox{\begin{small}\verb.{.\end{small}}%
-\setbox\hlsmallboxclosebrace=\hbox{\begin{small}\verb.}.\end{small}}%
-\setbox\hlsmallboxlessthan=\hbox{\begin{small}\verb.<.\end{small}}%
-\setbox\hlsmallboxdollar=\hbox{\begin{small}\verb.$.\end{small}}%
-\setbox\hlsmallboxunderscore=\hbox{\begin{small}\verb._.\end{small}}%
-\setbox\hlsmallboxand=\hbox{\begin{small}\verb.&.\end{small}}%
-\setbox\hlsmallboxhash=\hbox{\begin{small}\verb.#.\end{small}}%
-\setbox\hlsmallboxat=\hbox{\begin{small}\verb.@.\end{small}}%
-\setbox\hlsmallboxbackslash=\hbox{\begin{small}\verb.\.\end{small}}%
-\setbox\hlsmallboxgreaterthan=\hbox{\begin{small}\verb.>.\end{small}}%
-\setbox\hlsmallboxpercent=\hbox{\begin{small}\verb.%.\end{small}}%
-\setbox\hlsmallboxhat=\hbox{\begin{small}\verb.^.\end{small}}%
-\setbox\hlsmallboxsinglequote=\hbox{\begin{small}\verb.'.\end{small}}%
-\setbox\hlsmallboxbacktick=\hbox{\begin{small}\verb.`.\end{small}}%
-\setbox\hlsmallboxhat=\hbox{\begin{small}\verb.^.\end{small}}%
-
-
-
-\newsavebox{\hllargeboxclosebrace}%
-\newsavebox{\hllargeboxopenbrace}%
-\newsavebox{\hllargeboxbackslash}%
-\newsavebox{\hllargeboxlessthan}%
-\newsavebox{\hllargeboxgreaterthan}%
-\newsavebox{\hllargeboxdollar}%
-\newsavebox{\hllargeboxunderscore}%
-\newsavebox{\hllargeboxand}%
-\newsavebox{\hllargeboxhash}%
-\newsavebox{\hllargeboxat}%
-\newsavebox{\hllargeboxpercent}% 
-\newsavebox{\hllargeboxhat}%
-\newsavebox{\hllargeboxsinglequote}%
-\newsavebox{\hllargeboxbacktick}%
-
-\setbox\hllargeboxopenbrace=\hbox{\begin{large}\verb.{.\end{large}}%
-\setbox\hllargeboxclosebrace=\hbox{\begin{large}\verb.}.\end{large}}%
-\setbox\hllargeboxlessthan=\hbox{\begin{large}\verb.<.\end{large}}%
-\setbox\hllargeboxdollar=\hbox{\begin{large}\verb.$.\end{large}}%
-\setbox\hllargeboxunderscore=\hbox{\begin{large}\verb._.\end{large}}%
-\setbox\hllargeboxand=\hbox{\begin{large}\verb.&.\end{large}}%
-\setbox\hllargeboxhash=\hbox{\begin{large}\verb.#.\end{large}}%
-\setbox\hllargeboxat=\hbox{\begin{large}\verb.@.\end{large}}%
-\setbox\hllargeboxbackslash=\hbox{\begin{large}\verb.\.\end{large}}%
-\setbox\hllargeboxgreaterthan=\hbox{\begin{large}\verb.>.\end{large}}%
-\setbox\hllargeboxpercent=\hbox{\begin{large}\verb.%.\end{large}}%
-\setbox\hllargeboxhat=\hbox{\begin{large}\verb.^.\end{large}}%
-\setbox\hllargeboxsinglequote=\hbox{\begin{large}\verb.'.\end{large}}%
-\setbox\hllargeboxbacktick=\hbox{\begin{large}\verb.`.\end{large}}%
-\setbox\hllargeboxhat=\hbox{\begin{large}\verb.^.\end{large}}%
-
-
-
-\newsavebox{\hlLargeboxclosebrace}%
-\newsavebox{\hlLargeboxopenbrace}%
-\newsavebox{\hlLargeboxbackslash}%
-\newsavebox{\hlLargeboxlessthan}%
-\newsavebox{\hlLargeboxgreaterthan}%
-\newsavebox{\hlLargeboxdollar}%
-\newsavebox{\hlLargeboxunderscore}%
-\newsavebox{\hlLargeboxand}%
-\newsavebox{\hlLargeboxhash}%
-\newsavebox{\hlLargeboxat}%
-\newsavebox{\hlLargeboxpercent}% 
-\newsavebox{\hlLargeboxhat}%
-\newsavebox{\hlLargeboxsinglequote}%
-\newsavebox{\hlLargeboxbacktick}%
-
-\setbox\hlLargeboxopenbrace=\hbox{\begin{Large}\verb.{.\end{Large}}%
-\setbox\hlLargeboxclosebrace=\hbox{\begin{Large}\verb.}.\end{Large}}%
-\setbox\hlLargeboxlessthan=\hbox{\begin{Large}\verb.<.\end{Large}}%
-\setbox\hlLargeboxdollar=\hbox{\begin{Large}\verb.$.\end{Large}}%
-\setbox\hlLargeboxunderscore=\hbox{\begin{Large}\verb._.\end{Large}}%
-\setbox\hlLargeboxand=\hbox{\begin{Large}\verb.&.\end{Large}}%
-\setbox\hlLargeboxhash=\hbox{\begin{Large}\verb.#.\end{Large}}%
-\setbox\hlLargeboxat=\hbox{\begin{Large}\verb.@.\end{Large}}%
-\setbox\hlLargeboxbackslash=\hbox{\begin{Large}\verb.\.\end{Large}}%
-\setbox\hlLargeboxgreaterthan=\hbox{\begin{Large}\verb.>.\end{Large}}%
-\setbox\hlLargeboxpercent=\hbox{\begin{Large}\verb.%.\end{Large}}%
-\setbox\hlLargeboxhat=\hbox{\begin{Large}\verb.^.\end{Large}}%
-\setbox\hlLargeboxsinglequote=\hbox{\begin{Large}\verb.'.\end{Large}}%
-\setbox\hlLargeboxbacktick=\hbox{\begin{Large}\verb.`.\end{Large}}%
-\setbox\hlLargeboxhat=\hbox{\begin{Large}\verb.^.\end{Large}}%
-
-
-
-\newsavebox{\hlLARGEboxclosebrace}%
-\newsavebox{\hlLARGEboxopenbrace}%
-\newsavebox{\hlLARGEboxbackslash}%
-\newsavebox{\hlLARGEboxlessthan}%
-\newsavebox{\hlLARGEboxgreaterthan}%
-\newsavebox{\hlLARGEboxdollar}%
-\newsavebox{\hlLARGEboxunderscore}%
-\newsavebox{\hlLARGEboxand}%
-\newsavebox{\hlLARGEboxhash}%
-\newsavebox{\hlLARGEboxat}%
-\newsavebox{\hlLARGEboxpercent}% 
-\newsavebox{\hlLARGEboxhat}%
-\newsavebox{\hlLARGEboxsinglequote}%
-\newsavebox{\hlLARGEboxbacktick}%
-
-\setbox\hlLARGEboxopenbrace=\hbox{\begin{LARGE}\verb.{.\end{LARGE}}%
-\setbox\hlLARGEboxclosebrace=\hbox{\begin{LARGE}\verb.}.\end{LARGE}}%
-\setbox\hlLARGEboxlessthan=\hbox{\begin{LARGE}\verb.<.\end{LARGE}}%
-\setbox\hlLARGEboxdollar=\hbox{\begin{LARGE}\verb.$.\end{LARGE}}%
-\setbox\hlLARGEboxunderscore=\hbox{\begin{LARGE}\verb._.\end{LARGE}}%
-\setbox\hlLARGEboxand=\hbox{\begin{LARGE}\verb.&.\end{LARGE}}%
-\setbox\hlLARGEboxhash=\hbox{\begin{LARGE}\verb.#.\end{LARGE}}%
-\setbox\hlLARGEboxat=\hbox{\begin{LARGE}\verb.@.\end{LARGE}}%
-\setbox\hlLARGEboxbackslash=\hbox{\begin{LARGE}\verb.\.\end{LARGE}}%
-\setbox\hlLARGEboxgreaterthan=\hbox{\begin{LARGE}\verb.>.\end{LARGE}}%
-\setbox\hlLARGEboxpercent=\hbox{\begin{LARGE}\verb.%.\end{LARGE}}%
-\setbox\hlLARGEboxhat=\hbox{\begin{LARGE}\verb.^.\end{LARGE}}%
-\setbox\hlLARGEboxsinglequote=\hbox{\begin{LARGE}\verb.'.\end{LARGE}}%
-\setbox\hlLARGEboxbacktick=\hbox{\begin{LARGE}\verb.`.\end{LARGE}}%
-\setbox\hlLARGEboxhat=\hbox{\begin{LARGE}\verb.^.\end{LARGE}}%
-
-
-
-\newsavebox{\hlhugeboxclosebrace}%
-\newsavebox{\hlhugeboxopenbrace}%
-\newsavebox{\hlhugeboxbackslash}%
-\newsavebox{\hlhugeboxlessthan}%
-\newsavebox{\hlhugeboxgreaterthan}%
-\newsavebox{\hlhugeboxdollar}%
-\newsavebox{\hlhugeboxunderscore}%
-\newsavebox{\hlhugeboxand}%
-\newsavebox{\hlhugeboxhash}%
-\newsavebox{\hlhugeboxat}%
-\newsavebox{\hlhugeboxpercent}% 
-\newsavebox{\hlhugeboxhat}%
-\newsavebox{\hlhugeboxsinglequote}%
-\newsavebox{\hlhugeboxbacktick}%
-
-\setbox\hlhugeboxopenbrace=\hbox{\begin{huge}\verb.{.\end{huge}}%
-\setbox\hlhugeboxclosebrace=\hbox{\begin{huge}\verb.}.\end{huge}}%
-\setbox\hlhugeboxlessthan=\hbox{\begin{huge}\verb.<.\end{huge}}%
-\setbox\hlhugeboxdollar=\hbox{\begin{huge}\verb.$.\end{huge}}%
-\setbox\hlhugeboxunderscore=\hbox{\begin{huge}\verb._.\end{huge}}%
-\setbox\hlhugeboxand=\hbox{\begin{huge}\verb.&.\end{huge}}%
-\setbox\hlhugeboxhash=\hbox{\begin{huge}\verb.#.\end{huge}}%
-\setbox\hlhugeboxat=\hbox{\begin{huge}\verb.@.\end{huge}}%
-\setbox\hlhugeboxbackslash=\hbox{\begin{huge}\verb.\.\end{huge}}%
-\setbox\hlhugeboxgreaterthan=\hbox{\begin{huge}\verb.>.\end{huge}}%
-\setbox\hlhugeboxpercent=\hbox{\begin{huge}\verb.%.\end{huge}}%
-\setbox\hlhugeboxhat=\hbox{\begin{huge}\verb.^.\end{huge}}%
-\setbox\hlhugeboxsinglequote=\hbox{\begin{huge}\verb.'.\end{huge}}%
-\setbox\hlhugeboxbacktick=\hbox{\begin{huge}\verb.`.\end{huge}}%
-\setbox\hlhugeboxhat=\hbox{\begin{huge}\verb.^.\end{huge}}%
-
-
-
-\newsavebox{\hlHugeboxclosebrace}%
-\newsavebox{\hlHugeboxopenbrace}%
-\newsavebox{\hlHugeboxbackslash}%
-\newsavebox{\hlHugeboxlessthan}%
-\newsavebox{\hlHugeboxgreaterthan}%
-\newsavebox{\hlHugeboxdollar}%
-\newsavebox{\hlHugeboxunderscore}%
-\newsavebox{\hlHugeboxand}%
-\newsavebox{\hlHugeboxhash}%
-\newsavebox{\hlHugeboxat}%
-\newsavebox{\hlHugeboxpercent}% 
-\newsavebox{\hlHugeboxhat}%
-\newsavebox{\hlHugeboxsinglequote}%
-\newsavebox{\hlHugeboxbacktick}%
-
-\setbox\hlHugeboxopenbrace=\hbox{\begin{Huge}\verb.{.\end{Huge}}%
-\setbox\hlHugeboxclosebrace=\hbox{\begin{Huge}\verb.}.\end{Huge}}%
-\setbox\hlHugeboxlessthan=\hbox{\begin{Huge}\verb.<.\end{Huge}}%
-\setbox\hlHugeboxdollar=\hbox{\begin{Huge}\verb.$.\end{Huge}}%
-\setbox\hlHugeboxunderscore=\hbox{\begin{Huge}\verb._.\end{Huge}}%
-\setbox\hlHugeboxand=\hbox{\begin{Huge}\verb.&.\end{Huge}}%
-\setbox\hlHugeboxhash=\hbox{\begin{Huge}\verb.#.\end{Huge}}%
-\setbox\hlHugeboxat=\hbox{\begin{Huge}\verb.@.\end{Huge}}%
-\setbox\hlHugeboxbackslash=\hbox{\begin{Huge}\verb.\.\end{Huge}}%
-\setbox\hlHugeboxgreaterthan=\hbox{\begin{Huge}\verb.>.\end{Huge}}%
-\setbox\hlHugeboxpercent=\hbox{\begin{Huge}\verb.%.\end{Huge}}%
-\setbox\hlHugeboxhat=\hbox{\begin{Huge}\verb.^.\end{Huge}}%
-\setbox\hlHugeboxsinglequote=\hbox{\begin{Huge}\verb.'.\end{Huge}}%
-\setbox\hlHugeboxbacktick=\hbox{\begin{Huge}\verb.`.\end{Huge}}%
-\setbox\hlHugeboxhat=\hbox{\begin{Huge}\verb.^.\end{Huge}}%
- 
-
-\def\urltilda{\kern -.15em\lower .7ex\hbox{\~{}}\kern .04em}%
-
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.16,0.16,1}{#1}}
-\newcommand{\hlesc}[1]{\textcolor[rgb]{1,0,1}{#1}}
-\newcommand{\hlstr}[1]{\textcolor[rgb]{1,0,0}{#1}}
-\newcommand{\hldstr}[1]{\textcolor[rgb]{0.51,0.51,0}{#1}}
-\newcommand{\hlslc}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
-\newcommand{\hldir}[1]{\textcolor[rgb]{0,0.51,0}{#1}}
-\newcommand{\hlsym}[1]{\textcolor[rgb]{0,0,0}{#1}}
-\newcommand{\hlline}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0,0,0}{\bf{#1}}}
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.51,0,0}{#1}}
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0,0,0}{\bf{#1}}}
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0,0,0.51}{#1}}
-
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
 
 \usepackage{framed}
 \makeatletter
 \newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
  \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
  \colorbox{shadecolor}{##1}\hskip-\fboxsep
      % There is no \\@totalrightmargin, so:
@@ -387,12 +43,17 @@
  \MakeFramed {\advance\hsize-\width
    \@totalleftmargin\z@ \linewidth\hsize
    \@setminipage}}%
- {\par\unskip\endMakeFramed}
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
 \makeatother
 
 \definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
+\usepackage{alltt}
 %\VignetteIndexEntry{RcppOctave}
 %\VignetteDepends{knitr,bibtex}
 %\VignetteCompiler{knitr}
@@ -424,6 +85,8 @@
 % add preamble from pkgmaker
 
 %%%% PKGMAKER COMMANDS %%%%%%
+\usepackage{xspace}
+
 % R
 \let\proglang=\textit
 \let\code=\texttt 
@@ -441,18 +104,22 @@
 \def\@@CRANpkg#1{\href{http://cran.r-project.org/package=#1}{\pkgname{#1}} package\footnote{\CRANurl{#1}}}
 \makeatother
 %% citeCRANpkg
-\newcommand{\citeCRANpkg}[1]{\CRANpkg{#1}~\cite{#1}}
+\makeatletter
+\def\citeCRANpkg{\@ifstar\@citeCRANpkg\@@citeCRANpkg}
+\def\@citeCRANpkg#1{\CRANpkg{#1}\cite*{Rpackage:#1}}
+\def\@@citeCRANpkg#1{\CRANpkg{#1}~\cite{Rpackage:#1}}
+\makeatother
 \newcommand{\CRANnmf}{\href{http://cran.r-project.org/package=NMF}{CRAN}}
 \newcommand{\CRANnmfURL}{\url{http://cran.r-project.org/package=NMF}}
 
 % Bioconductor
 \newcommand{\BioCurl}[1]{\url{http://www.bioconductor.org/packages/release/bioc/html/#1.html}}
 \newcommand{\BioCpkg}[1]{\href{http://www.bioconductor.org/packages/release/bioc/html/#1.html}{\pkgname{#1}} package\footnote{\BioCurl{#1}}}
-\newcommand{\citeBioCpkg}[1]{\BioCpkg{#1}~\cite{#1}}
+\newcommand{\citeBioCpkg}[1]{\BioCpkg{#1}~\cite{Rpackage:#1}}
 % Bioconductor annotation
 \newcommand{\BioCAnnurl}[1]{\url{http://www.bioconductor.org/packages/release/data/annotation/html/#1.html}}
 \newcommand{\BioCAnnpkg}[1]{\href{http://www.bioconductor.org/packages/release/data/annotation/html/#1.html}{\Rcode{#1}} annotation package\footnote{\BioCAnnurl{#1}}}
-\newcommand{\citeBioCAnnpkg}[1]{\BioCAnnpkg{#1}~\cite{#1}}
+\newcommand{\citeBioCAnnpkg}[1]{\BioCAnnpkg{#1}~\cite{Rpackage:#1}}
 
 % GEO
 \newcommand{\GEOurl}[1]{\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=#1}{#1}\xspace}
@@ -471,7 +138,7 @@
 \usepackage[minnames=1,maxnames=2]{biblatex}
 \AtEveryCitekey{\clearfield{url}}
 
-\bibliography{/tmp/tmp.0EorDmYDx8/RcppOctave/REFERENCES}
+\bibliography{/tmp/tmp.qqatIR9xcG/RcppOctave/REFERENCES}
 
 
 
@@ -491,8 +158,8 @@
 
 \author{Renaud Gaujoux}
 \title{\pkgname{RcppOctave}: Seamless Interface to Octave -- and Matlab}
-\date{\Rpkg{RcppOctave} -- Version 0.8.5
-[June 25, 2012]\footnote{This vignette was built using \octave
+\date{\Rpkg{RcppOctave} -- Version 0.8.10
+[December  3, 2012]\footnote{This vignette was built using \octave
 3.6.1}}
 \begin{document}
 \maketitle
@@ -611,38 +278,30 @@ Calling any \octave function is then as simple as:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}version"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"version"})
+\end{alltt}
 \begin{verbatim}
 ## [1] "3.6.1"
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}sqrt"{}}\hlkeyword{,}{\ }\hlnumber{10}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"sqrt"}, 10)
+\end{alltt}
 \begin{verbatim}
 ## [1] 3.162
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}eye"{}}\hlkeyword{,}{\ }\hlnumber{3}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"eye"}, 3)
+\end{alltt}
 \begin{verbatim}
 ##      [,1] [,2] [,3]
 ## [1,]    1    0    0
 ## [2,]    0    1    0
 ## [3,]    0    0    1
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}eye"{}}\hlkeyword{,}{\ }\hlnumber{3}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"eye"}, 3, 2)
+\end{alltt}
 \begin{verbatim}
 ##      [,1] [,2]
 ## [1,]    1    0
@@ -742,14 +401,12 @@ These definitions can be loaded in the \octave session via the function
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }source{\ }example{\ }function{\ }definitions{\ }from{\ }RcppOctave{\ }installation}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{sourceExamples}\hlkeyword{(}\hlstring{"{}ex\usebox{\hlnormalsizeboxunderscore}functions.m"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }several{\ }functions{\ }are{\ }now{\ }defined}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}ls}\hlkeyword{(}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# source example function definitions from RcppOctave installation}
+\hlfunctioncall{sourceExamples}(\hlstring{"ex_functions.m"})
+\hlcomment{# several functions are now defined}
+\hlfunctioncall{o_ls}()
+\end{alltt}
 \begin{verbatim}
 ## [1] "fun1"          "fun2"          "fun_noargout"  "fun_varargin" 
 ## [5] "fun_varargout"
@@ -766,53 +423,44 @@ functionalities:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }single{\ }output{\ }value}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun1"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# single output value}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun1"})
+\end{alltt}
 \begin{verbatim}
-## [1] 0.5666 0.5789 0.1916 0.1920
+## [1] 0.77546 0.07163 0.87876 0.25949
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }3{\ }output{\ }values}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun2"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# 3 output values}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun2"})
+\end{alltt}
 \begin{verbatim}
 ## $a
-## [1] 0.8270 0.8484 0.8407 0.6481
+## [1] 0.5855 0.8808 0.8860 0.5967
 ## 
 ## $b
 ##        [,1]   [,2]   [,3]
-## [1,] 0.8738 0.5066 0.6229
-## [2,] 0.2032 0.2720 0.0369
+## [1,] 0.6168 0.6278 0.2251
+## [2,] 0.3324 0.2875 0.1174
 ## 
 ## $c
 ## [1] "some text"
-## 
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }no{\ }output{\ }value}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}noargout"{}}\hlkeyword{,}{\ }\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}noargout"{}}\hlkeyword{,}{\ }\hlstring{"{}abc"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }variable{\ }number{\ }of{\ }arguments}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}varargin"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+\hlcomment{# no output value}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_noargout"}, 1)
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_noargout"}, \hlstring{"abc"})
+
+\hlcomment{# variable number of arguments}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargin"})
+\end{alltt}
 \begin{verbatim}
 ## [1] 0
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}varargin"{}}\hlkeyword{,}{\ }\hlnumber{1}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{,}{\ }\hlnumber{3}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargin"}, 1, 2, 3)
+\end{alltt}
 \begin{verbatim}
 ## [1] 6
 \end{verbatim}
@@ -829,11 +477,9 @@ The other types of computations can be obtained using argument \code{argout}:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}varargout"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"})
+\end{alltt}
 \begin{verbatim}
 ## $u
 ## [1] 10
@@ -843,25 +489,19 @@ The other types of computations can be obtained using argument \code{argout}:
 ## 
 ## $v
 ## [1] 30
-## 
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}varargout"{}}\hlkeyword{,}{\ }\hlargument{argout}{\ }\hlargument{=}{\ }\hlnumber{1}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"}, argout = 1)
+\end{alltt}
 \begin{verbatim}
 ## [1] 1
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}fun\usebox{\hlnormalsizeboxunderscore}varargout"{}}\hlkeyword{,}{\ }\hlargument{argout}{\ }\hlargument{=}{\ }\hlnumber{2}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
-\begin{verbatim}
-## Error: RcppOctave - error in Octave function `fun_varargout`.
-\end{verbatim}
-\end{kframe}
+\begin{alltt}
+\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"}, argout = 2)
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave - error in Octave function `fun\_varargout`.}}\end{kframe}
 \end{knitrout}
 
 
@@ -874,23 +514,19 @@ defined for the complete output, as these may not be relevant anymore:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }single{\ }output{\ }variable:{\ }result{\ }is{\ }S}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}svd"{}}\hlkeyword{,}{\ }\hlfunctioncall{matrix}\hlkeyword{(}\hlnumber{1}\hlkeyword{:}\hlnumber{4}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# single output variable: result is S}
+\hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2))
+\end{alltt}
 \begin{verbatim}
 ##       [,1]
 ## [1,] 5.465
 ## [2,] 0.366
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }3{\ }output{\ }variables:{\ }results{\ }is{\ }[U,S,V]}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}svd"{}}\hlkeyword{,}{\ }\hlfunctioncall{matrix}\hlkeyword{(}\hlnumber{1}\hlkeyword{:}\hlnumber{4}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{argout}{\ }\hlargument{=}{\ }\hlnumber{3}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# 3 output variables: results is [U,S,V]}
+\hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2), argout = 3)
+\end{alltt}
 \begin{verbatim}
 ## [[1]]
 ##         [,1]    [,2]
@@ -906,14 +542,11 @@ defined for the complete output, as these may not be relevant anymore:
 ##         [,1]    [,2]
 ## [1,] -0.4046  0.9145
 ## [2,] -0.9145 -0.4046
-## 
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }specify{\ }output{\ }names{\ }(and{\ }therefore{\ }number{\ }of{\ }output{\ }variables)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{.CallOctave}\hlkeyword{(}\hlstring{"{}svd"{}}\hlkeyword{,}{\ }\hlfunctioncall{matrix}\hlkeyword{(}\hlnumber{1}\hlkeyword{:}\hlnumber{4}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{argout}{\ }\hlargument{=}{\ }\hlfunctioncall{c}\hlkeyword{(}\hlstring{"{}U"{}}\hlkeyword{,}{\ }\hlstring{"{}S"{}}\hlkeyword{,}{\ }\hlstring{"{}V"{}}\hlkeyword{)}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# specify output \hlfunctioncall{names} (and therefore number of output variables)}
+\hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2), argout = \hlfunctioncall{c}(\hlstring{"U"}, \hlstring{"S"}, \hlstring{"V"}))
+\end{alltt}
 \begin{verbatim}
 ## $U
 ##         [,1]    [,2]
@@ -929,7 +562,6 @@ defined for the complete output, as these may not be relevant anymore:
 ##         [,1]    [,2]
 ## [1,] -0.4046  0.9145
 ## [2,] -0.9145 -0.4046
-## 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -950,51 +582,41 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O
+\end{alltt}
 \begin{verbatim}
 ##  <Octave Interface>
 ##  - Use `$x` to call Octave function or get variable x.
 ##  - Use `$x <- val` to assign a value val to the Octave variable x.
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{version}\hlkeyword{(}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O$\hlfunctioncall{version}()
+\end{alltt}
 \begin{verbatim}
 ## [1] "3.6.1"
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{eye}\hlkeyword{(}\hlnumber{3}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O$\hlfunctioncall{eye}(3)
+\end{alltt}
 \begin{verbatim}
 ##      [,1] [,2] [,3]
 ## [1,]    1    0    0
 ## [2,]    0    1    0
 ## [3,]    0    0    1
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{svd}\hlkeyword{(}\hlfunctioncall{matrix}\hlkeyword{(}\hlnumber{1}\hlkeyword{:}\hlnumber{4}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O$\hlfunctioncall{svd}(\hlfunctioncall{matrix}(1:4, 2))
+\end{alltt}
 \begin{verbatim}
 ##       [,1]
 ## [1,] 5.465
 ## [2,] 0.366
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }argout{\ }can{\ }still{\ }be{\ }specified}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{svd}\hlkeyword{(}\hlfunctioncall{matrix}\hlkeyword{(}\hlnumber{1}\hlkeyword{:}\hlnumber{4}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{argout}{\ }\hlargument{=}{\ }\hlnumber{3}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# argout can still be specified}
+.O$\hlfunctioncall{svd}(\hlfunctioncall{matrix}(1:4, 2), argout = 3)
+\end{alltt}
 \begin{verbatim}
 ## [[1]]
 ##         [,1]    [,2]
@@ -1010,7 +632,6 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 ##         [,1]    [,2]
 ## [1,] -0.4046  0.9145
 ## [2,] -0.9145 -0.4046
-## 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1024,38 +645,31 @@ embedded session:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }a{\ }variable}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{myvar}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlnumber{1}\hlkeyword{:}\hlnumber{5}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }retrieve{\ }value}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{myvar}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# define a variable}
+.O$myvar <- 1:5
+\hlcomment{# retrieve value}
+.O$myvar
+\end{alltt}
 \begin{verbatim}
 ## [1] 1 2 3 4 5
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }assign{\ }and{\ }retrieve{\ }new{\ }value}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{myvar}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlnumber{10}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{myvar}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# assign and retrieve new value}
+.O$myvar <- 10
+.O$myvar
+\end{alltt}
 \begin{verbatim}
 ## [1] 10
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }remove}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{myvar}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }NULL\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{myvar}\mbox{}
-\normalfont
-\end{flushleft}
-\begin{verbatim}
-## Error: RcppOctave::o_get - Could not find an Octave object named 'myvar'.
-\end{verbatim}
-\end{kframe}
+\begin{alltt}
+\hlcomment{# remove}
+.O$myvar <- NULL
+.O$myvar
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'myvar'.}}\end{kframe}
 \end{knitrout}
 
 
@@ -1064,21 +678,17 @@ As illustrated above, \octave functions can be called through the
 \code{.O} object, by passing specifying its arguments as a function call:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }density{\ }of{\ }x=5{\ }for{\ }Poisson(2)}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{poisspdf}\hlkeyword{(}\hlnumber{5}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# density of x=5 for \hlfunctioncall{Poisson}(2)}
+.O$\hlfunctioncall{poisspdf}(5, 2)
+\end{alltt}
 \begin{verbatim}
 ## [1] 0.03609
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }E.g.{\ }compare{\ }with{\ }R{\ }own{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{dpois}\hlkeyword{(}\hlnumber{5}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# E.g. compare with R own function}
+\hlfunctioncall{dpois}(5, 2)
+\end{alltt}
 \begin{verbatim}
 ## [1] 0.03609
 \end{verbatim}
@@ -1091,22 +701,18 @@ variables, and called in subsequent statements:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }retrieve{\ }Octave{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{f}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{poisspdf}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{show}\hlkeyword{(}\hlsymbol{f}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# retrieve Octave function}
+f <- .O$poisspdf
+\hlfunctioncall{show}(f)
+\end{alltt}
 \begin{verbatim}
 ## <OctaveFunction::`poisspdf`>
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }call{\ }(in{\ }Octave)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{f}\hlkeyword{(}\hlnumber{5}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# \hlfunctioncall{call} (in Octave)}
+\hlfunctioncall{f}(5, 2)
+\end{alltt}
 \begin{verbatim}
 ## [1] 0.03609
 \end{verbatim}
@@ -1147,17 +753,15 @@ Variables may be assigned or retrieved individually in separate calls to
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }ASSIGN}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}assign}\hlkeyword{(}\hlargument{a}{\ }\hlargument{=}{\ }\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}assign}\hlkeyword{(}\hlargument{a}{\ }\hlargument{=}{\ }\hlnumber{10}\hlkeyword{,}{\ }\hlargument{b}{\ }\hlargument{=}{\ }\hlnumber{20}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}assign}\hlkeyword{(}\hlfunctioncall{list}\hlkeyword{(}\hlargument{a}{\ }\hlargument{=}{\ }\hlnumber{5}\hlkeyword{,}{\ }\hlargument{b}{\ }\hlargument{=}{\ }\hlnumber{6}\hlkeyword{,}{\ }\hlargument{aaa}{\ }\hlargument{=}{\ }\hlnumber{7}\hlkeyword{,}{\ }\hlargument{aab}{\ }\hlargument{=}{\ }\hlfunctioncall{list}\hlkeyword{(}\hlnumber{1}\hlkeyword{,}{\ }\hlnumber{2}\hlkeyword{,}{\ }\hlnumber{3}\hlkeyword{)}\hlkeyword{)}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }GET{\ }get{\ }all{\ }variables}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{str}\hlkeyword{(}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlkeyword{)}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{## ASSIGN}
+\hlfunctioncall{o_assign}(a = 1)
+\hlfunctioncall{o_assign}(a = 10, b = 20)
+\hlfunctioncall{o_assign}(\hlfunctioncall{list}(a = 5, b = 6, aaa = 7, aab = \hlfunctioncall{list}(1, 2, 3)))
+
+\hlcomment{## GET get all variables}
+\hlfunctioncall{str}(\hlfunctioncall{o_get}())
+\end{alltt}
 \begin{verbatim}
 ## List of 4
 ##  $ a  : num 5
@@ -1168,68 +772,51 @@ Variables may be assigned or retrieved individually in separate calls to
 ##   ..$ : num 3
 ##  $ b  : num 6
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }selected{\ }variables}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlstring{"{}a"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# selected variables}
+\hlfunctioncall{o_get}(\hlstring{"a"})
+\end{alltt}
 \begin{verbatim}
 ## [1] 5
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlstring{"{}a"{}}\hlkeyword{,}{\ }\hlstring{"{}b"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_get}(\hlstring{"a"}, \hlstring{"b"})
+\end{alltt}
 \begin{verbatim}
 ## $a
 ## [1] 5
 ## 
 ## $b
 ## [1] 6
-## 
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }rename{\ }on{\ }the{\ }fly}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlargument{c}{\ }\hlargument{=}{\ }\hlstring{"{}a"{}}\hlkeyword{,}{\ }\hlargument{d}{\ }\hlargument{=}{\ }\hlstring{"{}b"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# rename on the fly}
+\hlfunctioncall{o_get}(c = \hlstring{"a"}, d = \hlstring{"b"})
+\end{alltt}
 \begin{verbatim}
 ## $c
 ## [1] 5
 ## 
 ## $d
 ## [1] 6
-## 
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }o\usebox{\hlnormalsizeboxunderscore}get{\ }throw{\ }an{\ }error{\ }for{\ }objects{\ }that{\ }do{\ }not{\ }exist}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlstring{"{}xxxxx"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
-\begin{verbatim}
-## Error: RcppOctave::o_get - Could not find an Octave object named 'xxxxx'.
-\end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }but{\ }suggests{\ }potential{\ }matches}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlstring{"{}aa"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
-\begin{verbatim}
-## Error: RcppOctave::o_get - Could not find an Octave object named 'aa'.
-## Match(es): aaa aab
-\end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }get{\ }a{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{f}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlstring{"{}svd"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{show}\hlkeyword{(}\hlsymbol{f}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# o_get throw an error for objects that do not exist}
+\hlfunctioncall{o_get}(\hlstring{"xxxxx"})
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'xxxxx'.}}\begin{alltt}
+\hlcomment{# but suggests potential matches}
+\hlfunctioncall{o_get}(\hlstring{"aa"})
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'aa'.\\\#\#        Match(es): aaa aab}}\begin{alltt}
+\hlcomment{# get a function}
+f <- \hlfunctioncall{o_get}(\hlstring{"svd"})
+\hlfunctioncall{show}(f)
+\end{alltt}
 \begin{verbatim}
 ## <OctaveFunction::`svd`>
 \end{verbatim}
@@ -1244,112 +831,88 @@ can also evaluate a list of statements sequentially:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }assign{\ }variable{\ }\usebox{\hlnormalsizeboxsinglequote}a\usebox{\hlnormalsizeboxsinglequote}}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}a=1"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# assign variable \hlstring{'a'}}
+\hlfunctioncall{o_eval}(\hlstring{"a=1"})
+\end{alltt}
 \begin{verbatim}
 ## [1] 1
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}a"{}}\hlkeyword{)}{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }or{\ }.O\usebox{\hlnormalsizeboxdollar}a}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_eval}(\hlstring{"a"})  # or .O$a
+\end{alltt}
 \begin{verbatim}
 ## [1] 1
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}a=svd(rand(3))"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_eval}(\hlstring{"a=\hlfunctioncall{svd}(\hlfunctioncall{rand}(3))"})
+\end{alltt}
 \begin{verbatim}
-##          [,1]
-## [1,] 1.430548
-## [2,] 0.402496
-## [3,] 0.003649
+##        [,1]
+## [1,] 1.6371
+## [2,] 0.8163
+## [3,] 0.2151
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{a}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O$a
+\end{alltt}
 \begin{verbatim}
-##          [,1]
-## [1,] 1.430548
-## [2,] 0.402496
-## [3,] 0.003649
+##        [,1]
+## [1,] 1.6371
+## [2,] 0.8163
+## [3,] 0.2151
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }eval{\ }a{\ }list{\ }of{\ }statements}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{l}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}a=rand(1,{\ }2)"{}}\hlkeyword{,}{\ }\hlstring{"{}b=randn(1,{\ }2)"{}}\hlkeyword{,}{\ }\hlstring{"{}rand(1,{\ }3)"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{l}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# eval a list of statements}
+l <- \hlfunctioncall{o_eval}(\hlstring{"a=\hlfunctioncall{rand}(1, 2)"}, \hlstring{"b=\hlfunctioncall{randn}(1, 2)"}, \hlstring{"\hlfunctioncall{rand}(1, 3)"})
+l
+\end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.4503 0.3480
+## [1] 0.20968 0.06737
 ## 
 ## [[2]]
-## [1] -0.7227 -1.6021
+## [1] -0.402  1.561
 ## 
 ## [[3]]
-## [1] 0.2188 0.8346 0.2441
-## 
+## [1] 0.2950 0.8345 0.2275
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }variables{\ }\usebox{\hlnormalsizeboxsinglequote}a\usebox{\hlnormalsizeboxsinglequote}{\ }and{\ }\usebox{\hlnormalsizeboxsinglequote}b\usebox{\hlnormalsizeboxsinglequote}{\ }were{\ }assigned{\ }the{\ }new{\ }values}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlfunctioncall{list}\hlkeyword{(}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{a}\hlkeyword{,}{\ }\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{b}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{l}\hlkeyword{[}\hlnumber{1}\hlkeyword{:}\hlnumber{2}\hlkeyword{]}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# variables \hlstring{'a'} and \hlstring{'b'} were assigned the new values}
+\hlfunctioncall{identical}(\hlfunctioncall{list}(.O$a, .O$b), l[1:2])
+\end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }multiple{\ }statements{\ }are{\ }not{\ }supported{\ }by{\ }o\usebox{\hlnormalsizeboxunderscore}eval}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}a=1;{\ }b=2"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+\hlcomment{# multiple statements are not supported by o_eval}
+\hlfunctioncall{o_eval}(\hlstring{"a=1; b=2"})
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave - error in Octave function `eval`.}}\begin{alltt}
+.O$a
+\end{alltt}
 \begin{verbatim}
-## Error: RcppOctave - error in Octave function `eval`.
+## [1] 0.20968 0.06737
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{a}\mbox{}
-\normalfont
-\end{flushleft}
-\begin{verbatim}
-## [1] 0.4503 0.3480
-\end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }argument{\ }CATCH{\ }allows{\ }for{\ }recovering{\ }from{\ }errors{\ }in{\ }statement}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}a=usage(\usebox{\hlnormalsizeboxsinglequote}ERROR:{\ }stop{\ }here\usebox{\hlnormalsizeboxsinglequote})"{}}\hlkeyword{,}{\ }\hlargument{CATCH}{\ }\hlargument{=}{\ }\hlstring{"{}c=3"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# argument CATCH allows for recovering from errors in statement}
+\hlfunctioncall{o_eval}(\hlstring{"a=\hlfunctioncall{usage}(\hlstring{'ERROR: stop here'})"}, CATCH = \hlstring{"c=3"})
+\end{alltt}
 \begin{verbatim}
 ## [1] 3
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{a}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O$a
+\end{alltt}
 \begin{verbatim}
-## [1] 0.4503 0.3480
+## [1] 0.20968 0.06737
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{c}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+.O$c
+\end{alltt}
 \begin{verbatim}
 ## [1] 3
 \end{verbatim}
@@ -1377,24 +940,20 @@ of its installation:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }clear{\ }all{\ }session}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}clear}\hlkeyword{(}\hlargument{all}{\ }\hlargument{=}{\ }\hlnumber{TRUE}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}ls}\hlkeyword{(}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# clear all session}
+\hlfunctioncall{o_clear}(all = TRUE)
+\hlfunctioncall{o_ls}()
+\end{alltt}
 \begin{verbatim}
 ## character(0)
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }source{\ }example{\ }file{\ }from{\ }RcppOctave{\ }installation}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{mfile}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{system.file}\hlkeyword{(}\hlstring{"{}scripts/ex\usebox{\hlnormalsizeboxunderscore}source.m"{}}\hlkeyword{,}{\ }\hlargument{package}{\ }\hlargument{=}{\ }\hlstring{"{}RcppOctave"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{cat}\hlkeyword{(}\hlfunctioncall{readLines}\hlkeyword{(}\hlsymbol{mfile}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{sep}{\ }\hlargument{=}{\ }\hlstring{"{}\usebox{\hlnormalsizeboxbackslash}n"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+\hlcomment{# source example file from RcppOctave installation}
+mfile <- \hlfunctioncall{system.file}(\hlstring{"scripts/ex_source.m"}, package = \hlstring{"RcppOctave"})
+\hlfunctioncall{cat}(\hlfunctioncall{readLines}(mfile), sep = \hlstring{"\textbackslash{}n"})
+\end{alltt}
 \begin{verbatim}
 ## % Example m-file to illustrate the usage of the function o_source
 ## %
@@ -1409,16 +968,13 @@ of its installation:
 ## function [res] = abc(x, y, z)
 ## 	res = x + y + z; 
 ## end
-## 
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlsymbol{mfile}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }Now{\ }objects{\ }\usebox{\hlnormalsizeboxsinglequote}a\usebox{\hlnormalsizeboxsinglequote},{\ }\usebox{\hlnormalsizeboxsinglequote}b\usebox{\hlnormalsizeboxsinglequote},{\ }and{\ }\usebox{\hlnormalsizeboxsinglequote}c\usebox{\hlnormalsizeboxsinglequote}{\ }as{\ }well{\ }as{\ }the{\ }function{\ }\usebox{\hlnormalsizeboxsinglequote}abc\usebox{\hlnormalsizeboxsinglequote}{\ }should{\ }be}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }defined:}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}ls}\hlkeyword{(}\hlargument{long}{\ }\hlargument{=}{\ }\hlnumber{TRUE}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_source}(mfile)
+\hlcomment{# Now objects \hlstring{'a'}, \hlstring{'b'}, and \hlstring{'c'} as well as the function \hlstring{'abc'} should be}
+\hlcomment{# defined:}
+\hlfunctioncall{o_ls}(long = TRUE)
+\end{alltt}
 \begin{verbatim}
 ##  <Octave session: 4 object(s)>
 ##  name size bytes    class global sparse complex nesting persistent
@@ -1427,20 +983,16 @@ of its installation:
 ##     c  1x1     8   double  FALSE  FALSE   FALSE       1      FALSE
 ##   abc   NA    NA function   TRUE     NA      NA       1         NA
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}abc(2,{\ }4,{\ }6)"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{#}
+\hlfunctioncall{o_eval}(\hlstring{"\hlfunctioncall{abc}(2, 4, 6)"})
+\end{alltt}
 \begin{verbatim}
 ## [1] 12
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}eval}\hlkeyword{(}\hlstring{"{}abc(a,{\ }b,{\ }c)"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_eval}(\hlstring{"\hlfunctioncall{abc}(a, b, c)"})
+\end{alltt}
 \begin{verbatim}
 ## [1] 6
 \end{verbatim}
@@ -1454,20 +1006,17 @@ directly passed from the \R console as character strings via its argument
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlargument{text}{\ }\hlargument{=}{\ }\hlstring{"{}clear{\ }a{\ }b{\ }c;{\ }a=100;{\ }a*sin(123)"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }last{\ }statement{\ }is{\ }stored{\ }in{\ }automatic{\ }variable{\ }\usebox{\hlnormalsizeboxsinglequote}ans\usebox{\hlnormalsizeboxsinglequote}}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}get}\hlkeyword{(}\hlstring{"{}a"{}}\hlkeyword{,}{\ }\hlstring{"{}ans"{}}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_source}(text = \hlstring{"clear a b c; a=100; a*\hlfunctioncall{sin}(123)"})
+\hlcomment{# last statement is stored in automatic variable \hlstring{'ans'}}
+\hlfunctioncall{o_get}(\hlstring{"a"}, \hlstring{"ans"})
+\end{alltt}
 \begin{verbatim}
 ## $a
 ## [1] 100
 ## 
 ## $ans
 ## [1] -45.99
-## 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1485,33 +1034,27 @@ in a similar way \code{whos} does (see \code{?o\_who}).
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}ls}\hlkeyword{(}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_ls}()
+\end{alltt}
 \begin{verbatim}
 ## [1] "a"   "abc"
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}ls}\hlkeyword{(}\hlargument{long}{\ }\hlargument{=}{\ }\hlnumber{TRUE}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_ls}(long = TRUE)
+\end{alltt}
 \begin{verbatim}
 ##  <Octave session: 2 object(s)>
 ##  name size bytes    class global sparse complex nesting persistent
 ##     a  1x1     8   double  FALSE  FALSE   FALSE       1      FALSE
 ##   abc   NA    NA function   TRUE     NA      NA       1         NA
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }clear{\ }all{\ }(variables{\ }+{\ }functions)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}clear}\hlkeyword{(}\hlargument{all}{\ }\hlargument{=}{\ }\hlnumber{TRUE}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}ls}\hlkeyword{(}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+\hlcomment{# clear \hlfunctioncall{all} (variables + functions)}
+\hlfunctioncall{o_clear}(all = TRUE)
+\hlfunctioncall{o_ls}()
+\end{alltt}
 \begin{verbatim}
 ## character(0)
 \end{verbatim}
@@ -1534,11 +1077,9 @@ Hence, to access the manpage for a given function one types for example the
 following, which displays using the \R function \code{file.show}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}help}\hlkeyword{(}\hlsymbol{std}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_help}(std)
+\end{alltt}
 \end{kframe}
 \end{knitrout}
 
@@ -1548,11 +1089,9 @@ opens the documentation using the GNU Info browser\footnote{At least on
 Linux machines.}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}doc}\hlkeyword{(}\hlsymbol{poisson}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{o_doc}(poisson)
+\end{alltt}
 \end{kframe}
 \end{knitrout}
 
@@ -1584,52 +1123,45 @@ following code, which defines a wrapper functions to format the output of
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlsymbol{o\usebox{\hlnormalsizeboxunderscore}svd}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{x}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }ask{\ }for{\ }the{\ }complete{\ }decomposition}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{res}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{svd}\hlkeyword{(}\hlsymbol{x}\hlkeyword{,}{\ }\hlargument{argout}{\ }\hlargument{=}{\ }\hlfunctioncall{c}\hlkeyword{(}\hlstring{"{}u"{}}\hlkeyword{,}{\ }\hlstring{"{}d"{}}\hlkeyword{,}{\ }\hlstring{"{}v"{}}\hlkeyword{)}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }reformat/reorder{\ }result}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{res}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{d}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{diag}\hlkeyword{(}\hlsymbol{res}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{d}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{res}\hlkeyword{[}\hlfunctioncall{c}\hlkeyword{(}\hlnumber{2}\hlkeyword{,}{\ }\hlnumber{1}\hlkeyword{,}{\ }\hlnumber{3}\hlkeyword{)}\hlkeyword{]}\hspace*{\fill}\\
-\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }random{\ }data}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{X}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{matrix}\hlkeyword{(}\hlfunctioncall{runif}\hlkeyword{(}\hlnumber{25}\hlkeyword{)}\hlkeyword{,}{\ }\hlnumber{5}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }run{\ }SVD{\ }in{\ }R}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{svd.R}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{svd}\hlkeyword{(}\hlsymbol{X}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }run{\ }SVD{\ }in{\ }Octave}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{svd.O}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}svd}\hlkeyword{(}\hlsymbol{X}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{str}\hlkeyword{(}\hlsymbol{svd.O}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+o_svd <- \hlfunctioncall{function}(x) \{
+    \hlcomment{# ask for the complete decomposition}
+    res <- .O$\hlfunctioncall{svd}(x, argout = \hlfunctioncall{c}(\hlstring{"u"}, \hlstring{"d"}, \hlstring{"v"}))
+    \hlcomment{# reformat/reorder result}
+    res$d <- \hlfunctioncall{diag}(res$d)
+    res[\hlfunctioncall{c}(2, 1, 3)]
+\}
+
+\hlcomment{# define random data}
+X <- \hlfunctioncall{matrix}(\hlfunctioncall{runif}(25), 5)
+
+\hlcomment{# run SVD in R}
+svd.R <- \hlfunctioncall{svd}(X)
+\hlcomment{# run SVD in Octave}
+svd.O <- \hlfunctioncall{o_svd}(X)
+\hlfunctioncall{str}(svd.O)
+\end{alltt}
 \begin{verbatim}
 ## List of 3
-##  $ d: num [1:5] 2.233 0.713 0.579 0.354 0.207
-##  $ u: num [1:5, 1:5] -0.244 -0.323 -0.406 -0.641 -0.51 ...
-##  $ v: num [1:5, 1:5] -0.5 -0.452 -0.304 -0.444 -0.507 ...
+##  $ d: num [1:5] 3.1092 1.1821 0.6423 0.3121 0.0474
+##  $ u: num [1:5, 1:5] -0.509 -0.52 -0.434 -0.487 -0.212 ...
+##  $ v: num [1:5, 1:5] -0.436 -0.251 -0.565 -0.407 -0.512 ...
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }check{\ }results}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{all.equal}\hlkeyword{(}\hlsymbol{svd.R}\hlkeyword{,}{\ }\hlsymbol{svd.O}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# check results}
+\hlfunctioncall{all.equal}(svd.R, svd.O)
+\end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }but{\ }not{\ }exactly{\ }identical}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{all.equal}\hlkeyword{(}\hlsymbol{svd.R}\hlkeyword{,}{\ }\hlsymbol{svd.O}\hlkeyword{,}{\ }\hlargument{tol}{\ }\hlargument{=}{\ }\hlnumber{10}\hlkeyword{\usebox{\hlnormalsizeboxhat}}\hlkeyword{-}\hlnumber{16}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlcomment{# but not exactly identical}
+\hlfunctioncall{all.equal}(svd.R, svd.O, tol = 10^-16)
+\end{alltt}
 \begin{verbatim}
-## [1] "Component 1: Mean relative difference: 2.106e-16"
-## [2] "Component 2: Mean relative difference: 6.756e-16"
-## [3] "Component 3: Mean relative difference: 5.919e-16"
+## [1] "Component 2: Mean relative difference: 2.751e-16"
+## [2] "Component 3: Mean relative difference: 2.988e-16"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1651,46 +1183,42 @@ algorithms (e.g. simulations, MCMC-based estimations):
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlsymbol{Rf}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlkeyword{)}\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }{\ }{\ }{\ }{\ }\hlsymbol{x}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{matrix}\hlkeyword{(}\hlfunctioncall{runif}\hlkeyword{(}\hlnumber{100}\hlkeyword{)}\hlkeyword{,}{\ }\hlnumber{10}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }{\ }{\ }{\ }{\ }\hlsymbol{y}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{matrix}\hlkeyword{(}\hlfunctioncall{rnorm}\hlkeyword{(}\hlnumber{100}\hlkeyword{)}\hlkeyword{,}{\ }\hlnumber{10}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}{\ }{\ }{\ }{\ }{\ }{\ }{\ }{\ }\hlkeyword{(}\hlsymbol{x}{\ }\hlkeyword{*}{\ }\hlsymbol{y}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxpercent}*\usebox{\hlnormalsizeboxpercent}}{\ }\hlkeyword{(}\hlsymbol{x}{\ }\hlkeyword{/}{\ }\hlsymbol{y}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{Of}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }Octave{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlargument{text}\hlargument{=}\hlstring{"{}\hspace*{\fill}\\
-\hlstd{}function{\ }[res]{\ }={\ }test()\hspace*{\fill}\\
-\hlstd{}x{\ }={\ }rand(10);\hspace*{\fill}\\
-\hlstd{}y{\ }={\ }randn(10);\hspace*{\fill}\\
-\hlstd{}res{\ }={\ }(x{\ }.*{\ }y){\ }*{\ }(x{\ }./{\ }y);\hspace*{\fill}\\
-\hlstd{}end\hspace*{\fill}\\
-\hlstd{}"{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }return{\ }the{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{test}\hspace*{\fill}\\
-\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }run{\ }both{\ }computations{\ }with{\ }a{\ }common{\ }seed{\ }{\ }}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1234}\hlkeyword{)}\hlkeyword{;}{\ }\hlsymbol{res.R}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{Rf}\hlkeyword{(}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1234}\hlkeyword{)}\hlkeyword{;}{\ }\hlsymbol{res.O}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{Of}\hlkeyword{(}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }compare{\ }results}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlsymbol{res.R}\hlkeyword{,}{\ }\hlsymbol{res.O}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+Rf <- \hlfunctioncall{function}()\{
+	x <- \hlfunctioncall{matrix}(\hlfunctioncall{runif}(100), 10)
+	y <- \hlfunctioncall{matrix}(\hlfunctioncall{rnorm}(100), 10)
+	(x * y) %*% (x / y)
+\}
+
+Of <- \{
+\hlcomment{# define Octave function}
+\hlfunctioncall{o_source}(text="
+function [res] = \hlfunctioncall{test}()
+x = \hlfunctioncall{rand}(10);
+y = \hlfunctioncall{randn}(10);
+res = (x .* y) * (x ./ y);
+end
+")
+\hlcomment{# return the function}
+.O$test
+\}
+
+\hlcomment{# run both computations with a common seed  }
+\hlfunctioncall{set.seed}(1234); res.R <- \hlfunctioncall{Rf}()
+\hlfunctioncall{set.seed}(1234); res.O <- \hlfunctioncall{Of}()
+\hlcomment{# compare results}
+\hlfunctioncall{identical}(res.R, res.O)
+\end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
-\begin{flushleft}
-\ttfamily\noindent
-\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }not{\ }seeding{\ }the{\ }second{\ }computation{\ }would{\ }give{\ }different{\ }results}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1234}\hlkeyword{)}\hlkeyword{;}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlfunctioncall{Rf}\hlkeyword{(}\hlkeyword{)}\hlkeyword{,}{\ }\hlfunctioncall{Of}\hlkeyword{(}\hlkeyword{)}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+
+\hlcomment{# not seeding the second computation would give different results}
+\hlfunctioncall{set.seed}(1234);
+\hlfunctioncall{identical}(\hlfunctioncall{Rf}(), \hlfunctioncall{Of}())
+\end{alltt}
 \begin{verbatim}
 ## [1] FALSE
 \end{verbatim}
@@ -1722,7 +1250,7 @@ algorithms (e.g. simulations, MCMC-based estimations):
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-R version 2.15.0 (2012-03-30)
+R version 2.15.2 (2012-10-26)
 Platform: i686-pc-linux-gnu (32-bit)
 
 locale:
@@ -1737,12 +1265,12 @@ attached base packages:
 [1] methods   stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
-[1] RcppOctave_0.8.5 pkgmaker_0.6.5   codetools_0.2-8  Rcpp_0.9.10     
-[5] stringr_0.6      digest_0.5.2     knitr_0.6.1     
+[1] RcppOctave_0.8.10 pkgmaker_0.9.7    Rcpp_0.10.0       stringr_0.6.1    
+[5] digest_0.5.2      knitr_0.8        
 
 loaded via a namespace (and not attached):
-[1] evaluate_0.4.2  formatR_0.4     highlight_0.3.1 parser_0.0-14  
-[5] plyr_1.7.1      tools_2.15.0    xtable_1.7-0   
+[1] codetools_0.2-8 evaluate_0.4.2  formatR_0.6     plyr_1.7.1     
+[5] tools_2.15.2    xtable_1.7-0   
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

@@ -1,5 +1,6 @@
 
 
+
 \title{RcppOctave: Octave along with R}  %% just a draft title
 \author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
@@ -120,28 +121,46 @@ in R.
 TODO: Make true Gibbs sampler example
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}
-\ttfamily\noindent
-\hlfunctioncall{library}\hlkeyword{(}\hlsymbol{RcppOctave}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }R{\ }runif}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlsymbol{a}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{runif}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hspace*{\fill}\\
-\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }define{\ }octave{\ }function}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{o\usebox{\hlnormalsizeboxunderscore}source}\hlkeyword{(}\hlargument{text}\hlargument{=}\hlstring{"{}{}\hspace*{\fill}\\
-\hlstd{}function{\ }[x]{\ }={\ }orng(n)\hspace*{\fill}\\
-\hlstd{}	x{\ }={\ }rand(1,{\ }n);\hspace*{\fill}\\
-\hlstd{}end\hspace*{\fill}\\
-\hlstd{}"{}{}}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
-\hlstd{}\hlfunctioncall{identical}\hlkeyword{(}\hlsymbol{.O}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlfunctioncall{orng}\hlkeyword{(}\hlnumber{10}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{a}\hlkeyword{)}\mbox{}
-\normalfont
-\end{flushleft}
+\begin{alltt}
+\hlfunctioncall{library}(RcppOctave)
+
+\hlcomment{# R runif}
+\hlfunctioncall{set.seed}(1)
+a <- \hlfunctioncall{runif}(10)
+
+\hlcomment{# define octave function}
+\hlfunctioncall{o_source}(text="
+function [x] = \hlfunctioncall{orng}(n)
+	x = \hlfunctioncall{rand}(1, n);
+end
+")
+\hlfunctioncall{set.seed}(1)
+\hlfunctioncall{identical}(.O$\hlfunctioncall{orng}(10), a)
+\end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
-\end{kframe}
+\begin{alltt}
+
+\hlcomment{## similarly for Gamma:}
+\hlfunctioncall{o_source}(text="function [x] = \hlfunctioncall{orngg}(n)
+     x = \hlfunctioncall{randg}(1, n);
+end
+")
+\hlcomment{## returns a 500 x 500 matrix}
+\hlfunctioncall{set.seed}(42)
+\hlcomment{## same as \hlstring{'lightblue'} below so we have  \hlstring{'\hlfunctioncall{randg}(a, N)/b'} == \hlfunctioncall{rgamma}(a,b)}
+\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500),ncol=1))/2))
+\end{alltt}
+\end{kframe}\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng1} \begin{kframe}\begin{alltt}
+
+\hlcomment{## about the same in R:}
+\hlfunctioncall{set.seed}(42)
+\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,1)), ylim=\hlfunctioncall{c}(0,1.8))
+\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,2)), col=\hlstring{'gray'})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,1/2)), col=\hlstring{'lightblue'})
+\end{alltt}
+\end{kframe}\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng2} 
 \end{knitrout}
 
 

@@ -3,3 +3,7 @@ src/modules/*.oct
 src/modules/Makefile$
 vignettes/.*\.tex
 ^modules$
+RJwrapper
+\.sty$
+Rpackages.bib
+EddelbuettelGaujoux
