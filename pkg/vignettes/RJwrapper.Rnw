@@ -1,0 +1,8 @@
+\documentclass[10pt]{article}
+%\VignetteDepends{RcppOctave,rbenchmark}
+%\VignetteCompiler{knitr}
+\usepackage{url}
+\usepackage[colorlinks]{hyperref}
+
+\begin{document}
+\end{document}

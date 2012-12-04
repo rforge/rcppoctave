@@ -203,10 +203,8 @@ KalmanRfun <- function(pos) {
 }
 
 
-KalmanOctave <- function(pos) {
-    ## define Octave function
-    o_source(text="
-function [Y] = kalmanM(pos)
+## define Octave function
+KalmanOctave <- OctaveFunction("function [Y] = kalmanM(pos)
   dt=1;
   %% Initialize state transition matrix
   A=[ 1 0 dt 0 0 0;...     % [x  ]
@@ -242,8 +240,6 @@ function [Y] = kalmanM(pos)
   end                % of the function
 end
 ")
-    .O$kalmanM(pos)
-}
 
 FirstKalmanRC <- cmpfun(FirstKalmanR)
 KalmanRC <- cmpfun(KalmanR)

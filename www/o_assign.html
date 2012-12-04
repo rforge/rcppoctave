@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>o_assign. RcppOctave 0.8.10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class = "container">
+      <a class="brand" href="index.html">RcppOctave 0.8.10</a>
+      <div class="nav">
+        <ul class="nav">
+        <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
+       </ul>
+   	  </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Assign/Get Octave Variables</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>o_assign(...)
+
+o_assignin(...)
+
+o_get(..., unlist = TRUE, rm.ans = TRUE, pattern)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>...</dt>
+      <dd>variables to assign in Octave global context
+  for <code>o_assign</code> , or object names to retrieve from
+  Octave for <code>o_get</code>.</dd>
+      <dt>unlist</dt>
+      <dd>a logical that specifies it single
+  variables should be returned as a single value (default),
+  or as a list.</dd>
+      <dt>rm.ans</dt>
+      <dd>a logical that indicates if the automatic
+  Octave variable <code>ans</code> should be included in the
+  result. Default is not to include it unless otherwise
+  explicitly specified with this argument, or if it is part
+  of the requested variables in <code>...</code>. When present,
+  argument <code>rm.ans</code> is always honoured.</dd>
+      <dt>pattern</dt>
+      <dd>regular expression used to filter the
+  requested variable names. Only names matching the pattern
+  are returned.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p><code>o_assign</code> returns invisibly the names of the
+  assigned variables.</p>
+  
+      <p><code>o_get</code> returns a list of the retrieved
+  variable/object. If <code>unlist=TRUE</code> and a single --
+  not re-named -- variable/object is requested then only
+  its value is returned.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p><code>o_assign</code> assigns a variable in Octave.
+  <code>o_assignin</code> is an alias for <code>o_assign</code>.</p>
+  
+      <p><code>o_get</code> fetches Octave variables/functions and
+  possibly rename them on the fly with the provided
+  argument names when present. Functions are returned as
+  objects of class <code><a href='OctaveFunction-class.html'>OctaveFunction-class</a></code>,
+  that can be called subsequently (see the examples).</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p><code>o_assign</code> assigns the variables using the
+  arguments' names if present. Variables can also be
+  specified as a single named list or environment. Single
+  variable assignments can also be specified as
+  <code>o_assign('a', 10)</code>. See <em>Examples</em> for more
+  details.</p>
+  
+    </div>
+
+    <div class="Note">
+      <h2>Note</h2>
+      
+      <p>The function <code>o_get</code> is the equivalent of R
+  <code><a href='http://www.inside-r.org/r-doc/base/get'>get</a></code> function and is not related to the
+  Octave function <code>get</code> which returns graphics'
+  properties.</p>
+  
+    </div>
+
+    <div class="Octave Documentation for &lt;em&gt;assignin&lt;/em&gt;">
+      <h2>Octave Documentation for &lt;em&gt;assignin&lt;/em&gt;</h2>
+      
+      <p></p>
+  
+      <p><pre> -- Built-in Function:  assignin (CONTEXT, VARNAME, VALUE)
+     Assign VALUE to VARNAME in context CONTEXT, which may be either
+     `"base"' or `"caller"'.
+
+     See also: evalin
+
+
+</pre></p>
+  
+      <p></p>
+  
+      <p><em>[Generated from
+  Octave-3.6.1
+ on
+  2012-12-04 16:20:13
+]</em></p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>o_assign</li><li>o_assignin</li><li>o_get</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

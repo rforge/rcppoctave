@@ -576,7 +576,8 @@ print.Octave_whos <- function(x, ...){
 #' 
 #' @return a character vector or a list depending on the value of argument 
 #' \code{long}.
-
+#' 
+#' @import digest
 #' @family listoct
 #' @export
 #' @examples 
@@ -617,7 +618,7 @@ o_ls <- local({
 		ol <- o_completion_matches("")
 		# remove already known variables
 		ol <- ol[ !is.element(ol, varnames) ]
-		if( {hash <- digest::digest(ol)} != .cacheMD5 ){
+		if( {hash <- digest(ol)} != .cacheMD5 ){
 			.cacheMD5 <<- hash
 			# filter for functions
 			ecode <- sapply(ol, o_exist)

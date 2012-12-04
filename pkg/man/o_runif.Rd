@@ -16,17 +16,18 @@
   This function wraps a call to the standard Octave
   function \code{rand}, which is redefined by
   \code{RcppOctave} to call the R base function
-  \code{\link{runif}}. This enables to exactly reproduce
-  stochastic computations in R and Octave, without changing
-  the original Octave/Matlab code.
+  \code{\link[stats]{runif}}. This enables to exactly
+  reproduce stochastic computations in R and Octave,
+  without changing the original Octave/Matlab code.
 }
 \section{Difference with plain \code{runif}}{
-  Since calling \code{o_runif} or \code{\link{runif}} is
-  equivalent, this function may not be really useful for
-  the end user, and is defined for testing purposes
-  essentially. One possible advantage over plain
-  \code{\link{runif}} however, is that it can generate
-  random matrices, instead of only vectors (see examples).
+  Since calling \code{o_runif} or
+  \code{\link[stats]{runif}} is equivalent, this function
+  may not be really useful for the end user, and is defined
+  for testing purposes essentially. One possible advantage
+  over plain \code{\link[stats]{runif}} however, is that it
+  can generate random matrices, instead of only vectors
+  (see examples).
 }
 
 \section{Seeding}{

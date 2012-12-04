@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>o_help. RcppOctave 0.8.10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class = "container">
+      <a class="brand" href="index.html">RcppOctave 0.8.10</a>
+      <div class="nav">
+        <ul class="nav">
+        <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
+       </ul>
+   	  </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Accessing Octave Help and Documentation Pages</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>o_help(NAME, character.only = FALSE, show = interactive(), rd = FALSE)
+
+o_doc(FUNCTION_NAME)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>NAME</dt>
+      <dd>Octave symbol (e.g. command, function,
+  operator) passed to Octave function <code>help</code> to
+  retrieve the related documentation.</dd>
+      <dt>character.only</dt>
+      <dd>a logical indicating whether
+  <code>NAME</code> can be assumed to be a character string
+  (<code>TRUE</code>) or should be substituted with
+  <code><a href='http://www.inside-r.org/r-doc/base/substitute'>substitute</a></code> before using them (default).</dd>
+      <dt>show</dt>
+      <dd>logical that specifies if the help page
+  should be shown using the as R documentation file
+  (default), e.g. using a pager, or only returned as a
+  single string. Note that when <code>show=TRUE</code>, the
+  string is still returned but invisibly.</dd>
+      <dt>rd</dt>
+      <dd>a logical that specifies if the result should
+  be returned in a suitable way for including in Rd files.
+  If <code>TRUE</code>, it wraps the Octave documentation string
+  in Rd code that is rendered as in the Octave console.</dd>
+      <dt>FUNCTION_NAME</dt>
+      <dd>the name of the function from which
+  to show the documentation. See the relevant <em>Octave
+  Documentation</em> section below.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>this function is usually called for its side effect of
+  printing the help page on standard output (argument
+  <code>show=TRUE</code>), but it invisibly returns the help page
+  as a single character string.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p><code>o_help</code> retrieves the Octave help page associated
+  with a given symbol. By default the page is printed out,
+  but may also be silently retrieved or formatted for
+  direct inclusion in R documentation files (i.e. Rd
+  files).</p>
+  
+      <p><code>o_doc</code> displays documentation for the function
+  FUNCTION_NAME directly from an on-line version of the
+  printed manual, using the GNU Info browser. Type `q` to
+  quit the browser.</p>
+  
+    </div>
+
+    <div class="Octave Documentation for &lt;em&gt;help&lt;/em&gt;">
+      <h2>Octave Documentation for &lt;em&gt;help&lt;/em&gt;</h2>
+      
+      <p></p>
+  
+      <p><pre> -- Command:  help NAME
+ -- Command:  help `--list'
+     Display the help text for NAME.   For example, the command `help
+     help' prints a short message describing the `help' command.
+
+     Given the single argument `--list', list all operators, keywords,
+     built-in functions, and loadable functions available in the
+     current session of Octave.
+
+     If invoked without any arguments, `help' display instructions on
+     how to access help from the command line.
+
+     The help command can give you information about operators, but not
+     the comma and semicolons that are used as command separators.  To
+     get help for those, you must type `help comma' or `help semicolon'.
+
+     See also: doc, lookfor, which
+
+
+</pre></p>
+  
+      <p></p>
+  
+      <p><em>[Generated from
+  Octave-3.6.1
+ on
+  2012-12-04 16:20:14
+]</em></p>
+  
+    </div>
+
+    <div class="Octave Documentation for &lt;em&gt;doc&lt;/em&gt;">
+      <h2>Octave Documentation for &lt;em&gt;doc&lt;/em&gt;</h2>
+      
+      <p></p>
+  
+      <p><pre> -- Command:  doc FUNCTION_NAME
+     Display documentation for the function FUNCTION_NAME directly from
+     an on-line version of the printed manual, using the GNU Info
+     browser.  If invoked without any arguments, the manual is shown
+     from the beginning.
+
+     For example, the command `doc rand' starts the GNU Info browser at
+     the `rand' node in the on-line version of the manual.
+
+     Once the GNU Info browser is running, help for using it is
+     available using the command `C-h'.
+
+     See also: help
+
+
+</pre></p>
+  
+      <p></p>
+  
+      <p><em>[Generated from
+  Octave-3.6.1
+ on
+  2012-12-04 16:20:15
+]</em></p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>o_doc</li><li>o_help</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

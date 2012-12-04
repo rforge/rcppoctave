@@ -4,6 +4,8 @@
 # Creation: 21 Nov 2011
 ###############################################################################
 
+#' @import stringr
+NULL
 
 #' Compare Lists or Environments
 #' 

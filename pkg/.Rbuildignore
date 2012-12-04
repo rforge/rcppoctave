@@ -1,6 +1,10 @@
 src/libRrng
-src/modules/*.oct
+inst/modules/PKG_ADD
+inst/modules/.*\.oct
+src/modules/.*\.oct
 src/modules/Makefile$
+vignettes/figure
+vignettes/cache
 vignettes/.*\.tex
 ^modules$
 RJwrapper

@@ -1,5 +1,9 @@
 #' Interfacing R with Octave.
 #' 
+#' The primary goal is to facilitate the port of Matlab/Octave scripts to R. 
+#' The package enables to call any Octave functions from R and as well as browsing 
+#' their documentation, passing variables between R and Octave, using R core RNGs 
+#' in Octave, which ensure stochastic computations are also reproducible.
 #'
 #' \tabular{ll}{
 #' Package: \tab RcppOctave\cr
@@ -27,6 +31,7 @@
 #' .CallOctave('svd', matrix(1:9, 3))
 #' o_help('svd')
 #' 
+#' @useDynLib RcppOctave
 #' @import pkgmaker
 #' @seealso See \code{\link{.CallOctave}}, \code{\link{o_source}}, \code{\link{o_help}}
 NULL
@@ -111,7 +116,7 @@ OctaveConfig <- function(name, ..., reset=FALSE){
 	
 	# load compiled library normally or in devmode
 	if( !missing(libname) ) library.dynam(packageName(), pkgname, libname)
-	else compile_src() # compile source files and load
+#	else compile_src() # compile source files and load
 
 	# start Octave session
 	ostart()

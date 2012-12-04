@@ -138,7 +138,7 @@
 \usepackage[minnames=1,maxnames=2]{biblatex}
 \AtEveryCitekey{\clearfield{url}}
 
-\bibliography{/tmp/tmp.qqatIR9xcG/RcppOctave/REFERENCES}
+\bibliography{/tmp/tmp.rjIDRJhS6d/RcppOctave/REFERENCES}
 
 
 
@@ -158,8 +158,8 @@
 
 \author{Renaud Gaujoux}
 \title{\pkgname{RcppOctave}: Seamless Interface to Octave -- and Matlab}
-\date{\Rpkg{RcppOctave} -- Version 0.8.10
-[December  3, 2012]\footnote{This vignette was built using \octave
+\date{\Rpkg{RcppOctave} -- Version 0.8.11
+[December  4, 2012]\footnote{This vignette was built using \octave
 3.6.1}}
 \begin{document}
 \maketitle
@@ -428,7 +428,7 @@ functionalities:
 \hlfunctioncall{.CallOctave}(\hlstring{"fun1"})
 \end{alltt}
 \begin{verbatim}
-## [1] 0.77546 0.07163 0.87876 0.25949
+## [1] 0.3139 0.8400 0.1690 0.4361
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# 3 output values}
@@ -436,12 +436,12 @@ functionalities:
 \end{alltt}
 \begin{verbatim}
 ## $a
-## [1] 0.5855 0.8808 0.8860 0.5967
+## [1] 0.24647 0.54049 0.05556 0.84014
 ## 
 ## $b
 ##        [,1]   [,2]   [,3]
-## [1,] 0.6168 0.6278 0.2251
-## [2,] 0.3324 0.2875 0.1174
+## [1,] 0.2831 0.5811 0.1273
+## [2,] 0.3117 0.8001 0.5481
 ## 
 ## $c
 ## [1] "some text"
@@ -497,6 +497,7 @@ The other types of computations can be obtained using argument \code{argout}:
 ## [1] 1
 \end{verbatim}
 \begin{alltt}
+\hlcomment{# this should throw an error}
 \hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"}, argout = 2)
 \end{alltt}
 
@@ -849,18 +850,18 @@ can also evaluate a list of statements sequentially:
 \end{alltt}
 \begin{verbatim}
 ##        [,1]
-## [1,] 1.6371
-## [2,] 0.8163
-## [3,] 0.2151
+## [1,] 1.7281
+## [2,] 0.7640
+## [3,] 0.3416
 \end{verbatim}
 \begin{alltt}
 .O$a
 \end{alltt}
 \begin{verbatim}
 ##        [,1]
-## [1,] 1.6371
-## [2,] 0.8163
-## [3,] 0.2151
+## [1,] 1.7281
+## [2,] 0.7640
+## [3,] 0.3416
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# eval a list of statements}
@@ -869,13 +870,13 @@ l
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.20968 0.06737
+## [1] 0.7759 0.6677
 ## 
 ## [[2]]
-## [1] -0.402  1.561
+## [1] -0.2274 -1.8914
 ## 
 ## [[3]]
-## [1] 0.2950 0.8345 0.2275
+## [1] 0.9414 0.8146 0.8216
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# variables \hlstring{'a'} and \hlstring{'b'} were assigned the new values}
@@ -895,7 +896,7 @@ l
 .O$a
 \end{alltt}
 \begin{verbatim}
-## [1] 0.20968 0.06737
+## [1] 0.7759 0.6677
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# argument CATCH allows for recovering from errors in statement}
@@ -908,7 +909,7 @@ l
 .O$a
 \end{alltt}
 \begin{verbatim}
-## [1] 0.20968 0.06737
+## [1] 0.7759 0.6677
 \end{verbatim}
 \begin{alltt}
 .O$c
@@ -1144,9 +1145,9 @@ svd.O <- \hlfunctioncall{o_svd}(X)
 \end{alltt}
 \begin{verbatim}
 ## List of 3
-##  $ d: num [1:5] 3.1092 1.1821 0.6423 0.3121 0.0474
-##  $ u: num [1:5, 1:5] -0.509 -0.52 -0.434 -0.487 -0.212 ...
-##  $ v: num [1:5, 1:5] -0.436 -0.251 -0.565 -0.407 -0.512 ...
+##  $ d: num [1:5] 2.348 0.841 0.744 0.279 0.141
+##  $ u: num [1:5, 1:5] -0.568 -0.166 -0.448 -0.359 -0.566 ...
+##  $ v: num [1:5, 1:5] -0.39 -0.518 -0.482 -0.301 -0.507 ...
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# check results}
@@ -1160,8 +1161,8 @@ svd.O <- \hlfunctioncall{o_svd}(X)
 \hlfunctioncall{all.equal}(svd.R, svd.O, tol = 10^-16)
 \end{alltt}
 \begin{verbatim}
-## [1] "Component 2: Mean relative difference: 2.751e-16"
-## [2] "Component 3: Mean relative difference: 2.988e-16"
+## [1] "Component 2: Mean relative difference: 2.667e-16"
+## [2] "Component 3: Mean relative difference: 3.541e-16"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1265,12 +1266,11 @@ attached base packages:
 [1] methods   stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
-[1] RcppOctave_0.8.10 pkgmaker_0.9.7    Rcpp_0.10.0       stringr_0.6.1    
-[5] digest_0.5.2      knitr_0.8        
+[1] RcppOctave_0.8.11 pkgmaker_0.9.7    Rcpp_0.10.1       knitr_0.8        
 
 loaded via a namespace (and not attached):
-[1] codetools_0.2-8 evaluate_0.4.2  formatR_0.6     plyr_1.7.1     
-[5] tools_2.15.2    xtable_1.7-0   
+[1] codetools_0.2-8 digest_0.5.2    evaluate_0.4.3  formatR_0.6    
+[5] plyr_1.7.1      stringr_0.6.1   tools_2.15.2    xtable_1.7-0   
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

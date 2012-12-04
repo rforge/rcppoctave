@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>o_clear. RcppOctave 0.8.10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class = "container">
+      <a class="brand" href="index.html">RcppOctave 0.8.10</a>
+      <div class="nav">
+        <ul class="nav">
+        <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
+       </ul>
+   	  </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Deleting Octave Variables</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>o_clear(..., all = FALSE, options)
+
+o_rm(..., all = FALSE, options)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>...</dt>
+      <dd>names or pattern of the variables to delete,
+  as character strings.</dd>
+      <dt>all</dt>
+      <dd>a logical indicating whether all user-defined
+  objects should be deleted. See section <em>Octave
+  Documentation</em> for details.</dd>
+      <dt>options</dt>
+      <dd>options passed to Octave function
+  <code>clear</code>. See section <em>Octave Documentation</em>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>None</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Deletes variables from Octave global context.</p>
+  
+      <p>The function <code>o_rm</code> is an alias to <code>o_clear</code>.</p>
+  
+    </div>
+
+    <div class="Octave Documentation for &lt;em&gt;clear&lt;/em&gt;">
+      <h2>Octave Documentation for &lt;em&gt;clear&lt;/em&gt;</h2>
+      
+      <p></p>
+  
+      <p><pre> -- Command:  clear [options] pattern ...
+     Delete the names matching the given patterns from the symbol
+     table.  The pattern may contain the following special characters:
+
+    `?'
+          Match any single character.
+
+    `*'
+          Match zero or more characters.
+
+    `[ LIST ]'
+          Match the list of characters specified by LIST.  If the first
+          character is `!' or `^', match all characters except those
+          specified by LIST.  For example, the pattern `[a-zA-Z]' will
+          match all lowercase and uppercase alphabetic characters.
+
+     For example, the command
+
+          clear foo b*r
+
+     clears the name `foo' and all names that begin with the letter `b'
+     and end with the letter `r'.
+
+     If `clear' is called without any arguments, all user-defined
+     variables (local and global) are cleared from the symbol table.  If
+     `clear' is called with at least one argument, only the visible
+     names matching the arguments are cleared.  For example, suppose
+     you have defined a function `foo', and then hidden it by
+     performing the assignment `foo = 2'.  Executing the command `clear
+     foo' once will clear the variable definition and restore the
+     definition of `foo' as a function.  Executing `clear foo' a second
+     time will clear the function definition.
+
+     The following options are available in both long and short form
+    `-all, -a'
+          Clears all local and global user-defined variables and all
+          functions from the symbol table.
+
+    `-exclusive, -x'
+          Clears the variables that don't match the following pattern.
+
+    `-functions, -f'
+          Clears the function names and the built-in symbols names.
+
+    `-global, -g'
+          Clears the global symbol names.
+
+    `-variables, -v'
+          Clears the local variable names.
+
+    `-classes, -c'
+          Clears the class structure table and clears all objects.
+
+    `-regexp, -r'
+          The arguments are treated as regular expressions as any
+          variables that match will be cleared.
+     With the exception of `exclusive', all long options can be used
+     without the dash as well.
+
+</pre></p>
+  
+      <p></p>
+  
+      <p><em>[Generated from
+  Octave-3.6.1
+ on
+  2012-12-04 16:20:14
+]</em></p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>o_clear</li><li>o_rm</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

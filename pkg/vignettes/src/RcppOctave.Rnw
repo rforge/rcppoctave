@@ -271,6 +271,7 @@ The other types of computations can be obtained using argument \code{argout}:
 <<argout>>=
 .CallOctave('fun_varargout')
 .CallOctave('fun_varargout', argout=1)
+# this should throw an error
 .CallOctave('fun_varargout', argout=2)
 @
 

@@ -5,7 +5,11 @@ OCTINCLUDEDIR=@OCTINCLUDEDIR@
 OCTLIBDIR=@OCTLIBDIR@
 OCT_POST_3_4_0=@OCT_POST_3_4_0@
 
-OCT_MODULES_PATH="$(R_PACKAGE_DIR)/modules"
+ifndef R_PACKAGE_DIR
+OCT_MODULES_PATH=../../inst/modules
+else
+OCT_MODULES_PATH=$(R_PACKAGE_DIR)/modules
+endif
 
 PKG_LIBS = `"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" -e "Rcpp:::LdFlags()"` -L"$(OCTLIBDIR)" -l octinterp
 PKG_CPPFLAGS = `"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" -e "Rcpp:::CxxFlags()"` -DOCT_POST_3_4_0=$(OCT_POST_3_4_0) -I"$(OCTINCLUDEDIR)" -I"$(OCTINCLUDEDIR)/../" -I"$(OCTINCLUDEDIR)/octave"

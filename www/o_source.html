@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>o_source. RcppOctave 0.8.10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class = "container">
+      <a class="brand" href="index.html">RcppOctave 0.8.10</a>
+      <div class="nav">
+        <ul class="nav">
+        <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
+       </ul>
+   	  </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Sourcing Octave/Matlab Files</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>o_source(file = "", text = NULL, sep = ";\n")</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>file</dt>
+      <dd>the path to the Octave/Matlab source file --
+  typically with extension ".m".</dd>
+      <dt>text</dt>
+      <dd>a character vector containing <em>Octave</em>
+  statements, that are concatenated in a temporary file,
+  which is then sourced. This argument typically enables
+  the evaluation of multiple statements, as opposed to
+  single statement evaluation performed by
+  <code><a href='o_eval.html'>o_eval</a></code>.</dd>
+      <dt>sep</dt>
+      <dd>single character string added as suffix to
+  each element of <code>text</code>. The concatenation of all
+  suffixed element should form a valid <em>Octave</em>
+  block.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>None</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>This function sources an Octave file within the current
+  Octave session. The loaded functions are accessible by
+  subsequent calls of <code><a href='dot-CallOctave.html'>.CallOctave</a></code>.</p>
+  
+    </div>
+
+    <div class="Octave Documentation for &lt;em&gt;source&lt;/em&gt;">
+      <h2>Octave Documentation for &lt;em&gt;source&lt;/em&gt;</h2>
+      
+      <p></p>
+  
+      <p><pre> -- Built-in Function:  source (FILE)
+     Parse and execute the contents of FILE.  This is equivalent to
+     executing commands from a script file, but without requiring the
+     file to be named `FILE.m'.
+
+</pre></p>
+  
+      <p></p>
+  
+      <p><em>[Generated from
+  Octave-3.6.1
+ on
+  2012-12-04 16:20:16
+]</em></p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>o_source</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+  Other Octave_files: <code><a href='o_addpath.html'>o_addpath</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

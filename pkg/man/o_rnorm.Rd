@@ -13,9 +13,9 @@
   This function wraps a call to the standard Octave
   function \code{randn}, which is redefined by
   \code{RcppOctave} to call the R base function
-  \code{\link{rnorm}}. This enables to exactly reproduce
-  stochastic computations in R and Octave, without changing
-  the original Octave/Matlab code. See
+  \code{\link[stats]{rnorm}}. This enables to exactly
+  reproduce stochastic computations in R and Octave,
+  without changing the original Octave/Matlab code. See
   \code{\link{o_runif}} for more details.
 }
 \section{Octave Documentation for \emph{randn}}{

@@ -9,15 +9,15 @@
 #' 
 #' This function wraps a call to the standard Octave function \code{rand}, 
 #' which is redefined by \code{RcppOctave} to call the R base function 
-#' \code{\link{runif}}.
+#' \code{\link[stats]{runif}}.
 #' This enables to exactly reproduce stochastic computations in R and Octave, 
 #' without changing the original Octave/Matlab code.
 #' 
 #' @section Difference with plain \code{runif}:
-#' Since calling \code{o_runif} or \code{\link{runif}} is equivalent, this 
+#' Since calling \code{o_runif} or \code{\link[stats]{runif}} is equivalent, this 
 #' function may not be really useful for the end user, and is defined for 
 #' testing purposes essentially.
-#' One possible advantage over plain \code{\link{runif}} however, is that it 
+#' One possible advantage over plain \code{\link[stats]{runif}} however, is that it 
 #' can generate random matrices, instead of only vectors (see examples).
 #' 
 #' @section Seeding:
@@ -67,7 +67,7 @@ o_runif <- function(n, p=n){
 #' 
 #' This function wraps a call to the standard Octave function \code{randn}, 
 #' which is redefined by \code{RcppOctave} to call the R base function 
-#' \code{\link{rnorm}}.
+#' \code{\link[stats]{rnorm}}.
 #' This enables to exactly reproduce stochastic computations in R and Octave, 
 #' without changing the original Octave/Matlab code.
 #' See \code{\link{o_runif}} for more details.
@@ -99,7 +99,7 @@ o_rnorm <- function(n, p=n){
 #' 
 #' This function wraps a call to the standard Octave function \code{rande}, 
 #' which is redefined by \code{RcppOctave} to call the R base function 
-#' \code{\link{rexp}}.
+#' \code{\link[stats]{rexp}}.
 #' This enables to exactly reproduce stochastic computations in R and Octave, 
 #' without changing the original Octave/Matlab code.
 #' See \code{\link{o_runif}} for more details.
@@ -131,7 +131,7 @@ o_rexp <- function(n, p=n){
 #' 
 #' This function wraps a call to the standard Octave function \code{randg}, 
 #' which is redefined by \code{RcppOctave} to call the R base function 
-#' \code{\link{rgamma}}.
+#' \code{\link[stats]{rgamma}}.
 #' This enables to exactly reproduce stochastic computations in R and Octave, 
 #' without changing the original Octave/Matlab code.
 #' See \code{\link{o_runif}} for more details.

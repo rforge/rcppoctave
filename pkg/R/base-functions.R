@@ -146,18 +146,28 @@ o_version <- function(){
 #' @export
 #' @examples 
 #' 
+#' \dontshow{
+#' 	if( interactive() ){
+#' 		o_help <- function(..., show=FALSE){
+#' 			RcppOctave::o_help(..., show=show)
+#' 		}
+#' 	}
+#' }
+#' 
 #' o_help(print)
 #' o_help(rand)
 #' # or equivalently 
 #' o_help('rand')
 #' 
 #' # to include in Rd files, use argument rd=TRUE in an \Sexpr:
-#' # \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rand,rd=TRUE)}
+#' \dontrun{
+#'  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rand,rd=TRUE)}
+#' }
 #' 
 #' # to see the included Rd code
 #' o_help(rand, rd=TRUE)
 #' 
-o_help <- function(NAME, character.only = FALSE, show = TRUE, rd = FALSE){
+o_help <- function(NAME, character.only = FALSE, show = interactive(), rd = FALSE){
 	
 	# substitute NAME
 	if( !character.only )
