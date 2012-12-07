@@ -51,6 +51,7 @@ o_source(text=c("a=10;b=30;", "c=randn(1,5)", "d=4"))
 o_get('a','b','c', 'd')
 }
 \seealso{
-  Other Octave_files: \code{\link{o_addpath}}
+  Other Octave_files: \code{\link{o_addpath}},
+  \code{\link{o_inpath}}
 }
 

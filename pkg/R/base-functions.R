@@ -263,3 +263,39 @@ o_identity <- function(...){
 		.CallOctave('identity', dots[[1]])
 }
 
+#' \code{o_inpath} tells if a directory or files are in Octave path.
+#' 
+#' @rdname o_addpath
+#' @export
+#' @examples
+#' 
+#' o_addpath(tempdir())
+#' o_inpath(tempdir())
+#' o_inpath(tempfile())
+#'  
+o_inpath <- function(...){
+	p <- RcppOctave::.CallOctave('path')
+	p <- strsplit(p, ':')[[1]]
+	f <- file.path(...)
+	sapply(f, function(x){ any(sapply(file.path(p, x), file.exists)) | is.element(x, p)}) 
+}
+
+##' Installing An Octave Package
+##' 
+##' @param x path to a source package
+##' @param OPTIONS installation options
+##' 
+##' @templateVar name pkg
+##' @template OctaveDoc
+##' 
+##' @examples 
+##' \dontrun{
+##' o_install()
+##' }
+#o_install <- function(x, OPTIONS=NULL){
+#	if( !length(OPTIONS) )
+#		.CallOctave('pkg', 'install', x, argout=0)
+#	else
+#		.CallOctave('pkg', 'install', OPTIONS, x, argout=0)
+#	invisible()
+#}

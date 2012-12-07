@@ -64,7 +64,8 @@ it can of course also be used with RcppOctave.
 TODO: Few words about the example
 
 TODO: render code 'pretty' whith knitr which must have a Matlab filter too
-<<kalman, engine='highlight', hi.syntax='matlab', hi.output='LATEX', results='asis'>>=
+% <<kalman, engine='highlight', hi.syntax='matlab', hi.output='LATEX', results='asis'>>=
+\begin{verbatim}
 function Y = kalmanM(pos)
   dt=1;
   %% Initialize state transition matrix
@@ -101,7 +102,8 @@ function Y = kalmanM(pos)
     Y(idx, :) = H * x_est;
   end                % of the function
 end   % of the function
-@
+\end{verbatim}
+% @
 
 This function, along with several R implementations, is provided in the
 \pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion

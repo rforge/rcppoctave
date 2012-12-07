@@ -1,8 +1,11 @@
 \name{o_addpath}
 \alias{o_addpath}
+\alias{o_inpath}
 \title{Manipulating Octave Search Path}
 \usage{
   o_addpath(DIR1, ..., OPTION = "-begin")
+
+  o_inpath(...)
 }
 \arguments{
   \item{DIR1}{path specification to add to Octave search
@@ -19,6 +22,9 @@
 }
 \description{
   Adds a directory at the beginning of Octave search path.
+
+  \code{o_inpath} tells if a directory or files are in
+  Octave path.
 }
 \details{
   The .oct files present in directories from the search
@@ -45,6 +51,9 @@ o_addpath(system.file('scripts', package='RcppOctave'))
 #.CallOctave('fun1')
 
 # change the .oct file
+o_addpath(tempdir())
+o_inpath(tempdir())
+o_inpath(tempfile())
 }
 \seealso{
   Other Octave_files: \code{\link{o_source}}

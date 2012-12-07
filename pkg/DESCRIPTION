@@ -18,8 +18,8 @@ OS_type: unix
 Depends:
     methods,
     stats,
-    Rcpp (>= 0.9.4),
-    pkgmaker (>= 0.7.1)
+    Rcpp (>= 0.10.1),
+    pkgmaker (>= 0.10)
 Imports:
     digest,
     stringr,
