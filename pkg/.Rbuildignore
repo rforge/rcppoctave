@@ -5,6 +5,8 @@ src/modules/.*\.oct
 src/modules/Makefile$
 vignettes/figure
 vignettes/cache
+vignettes/vignette.mk
+vignettes/Rplots.pdf
 vignettes/.*\.tex
 ^modules$
 RJwrapper
