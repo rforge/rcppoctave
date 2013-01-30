@@ -4,12 +4,12 @@
 ifneq (${R_HOME},)
 RSCRIPT=$(R_HOME)/bin/Rscript
 else 
-RSCRIPT=`which R`script
+RSCRIPT=`echo R`script
 endif
 
 .PHONY: src/RJwrapper.Rnw
 
-MK=$(shell $(RSCRIPT) --vanilla -e "pkgmaker::vignetteMakefile(c('renaud','edd'), 'RcppOctave', skip='EddelbuettelGaujoux.Rnw')")
+MK=$(shell $(RSCRIPT) --vanilla -e "pkgmaker::vignetteMakefile('RcppOctave', skip='EddelbuettelGaujoux.Rnw')")
 
 include $(MK)
 
