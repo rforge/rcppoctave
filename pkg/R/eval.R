@@ -278,9 +278,9 @@ o_get <- function(..., unlist=TRUE, rm.ans = TRUE
 		
 		name <- vnames[[i]]
 		# check for an exact match
-		if( !o_exist(name) ){
+		onames <- o_completion_matches(name)
+		if( !name %in% onames ){
 			
-			onames <- o_completion_matches(name)
 			sugg <- 
 			if( length(onames) > 0L )
 				str_c("\n       Match(es): ", str_wrap(paste(onames, collapse=" "), exdent=18), "\n")
@@ -306,7 +306,7 @@ o_get <- function(..., unlist=TRUE, rm.ans = TRUE
 		ecode <- o_exist(name)
 		stopifnot( length(ecode) != 0 )
 		
-		if( ecode == 1 ){ # return the value of the variable
+		if( ecode == 1 || ecode==0 ){ # return the value of the variable
 			o_eval(name)
 		}else # wrap Octave functions into R wrappers
 			OctaveFunction(name)
