@@ -61,12 +61,15 @@ NULL
 #' OctaveConfig('lib')
 #' OctaveConfig('include')
 #' 
-OctaveConfig <- function(name, ..., reset=FALSE){
+OctaveConfig <- local({
+	# config cache
+	.OctaveConfig <- NULL
+	function(name, ..., reset=FALSE){
 	
 	# return the whole config list if no name is provided
-	if( missing(name) || reset ){
+	if( is.null(.OctaveConfig) || missing(name) || reset ){
 		# create the config list at first call
-		if( !exists('.OctaveConfig', packageEnv()) || reset ){
+		if( is.null(.OctaveConfig) || reset ){
 			conf <- list(lib=oconfig(c('LIBDIR', 'OCTLIBDIR'))
 						, include=oconfig(c('INCLUDEDIR', 'OCTINCLUDEDIR'))
 				)
@@ -74,7 +77,7 @@ OctaveConfig <- function(name, ..., reset=FALSE){
 			# add a configuration variable for the module path
 			conf$modules <- packagePath('modules')
 			
-			assign('.OctaveConfig', conf, packageEnv())
+			.OctaveConfig <<- conf
 		}
 		
 		if( missing(name) ) return(.OctaveConfig)
@@ -82,7 +85,8 @@ OctaveConfig <- function(name, ..., reset=FALSE){
 		
 	settings <- .OctaveConfig[[name]]
 	file.path(settings, ...)
-}
+	}
+})
 
 # Load/Unload Octave Libraries
 #' @importFrom utils file_test
