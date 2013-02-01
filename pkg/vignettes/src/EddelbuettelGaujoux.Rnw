@@ -3,7 +3,7 @@ knit_theme$set('acid')
 @
 
 \title{RcppOctave: Octave along with R}  %% just a draft title
-\author{by Renaud Gaujoux and Dirk Eddelbuettel}
+\author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
 \maketitle
 
@@ -193,6 +193,11 @@ lines(density(rgamma(25000,1,1/2)), col='lightblue')
 
 \bibliography{../inst/REFERENCES}
 
+\address{Dirk Eddelbuettel \\
+  %Affiliation\\
+  River Forest, IL\\
+  USA}\\
+\email{edd@debian.org}
 
 \address{Renaud Gaujoux \\
   Computational Biology \\
@@ -200,13 +205,6 @@ lines(density(rgamma(25000,1,1/2)), col='lightblue')
   Cape Town \\
   South Africa}\\
 \email{renaud@cbio.uct.ac.za}
-
-\address{Dirk Eddelbuettel \\
-  %Affiliation\\
-  River Forest, IL\\
-  USA}\\
-\email{edd@debian.org}
-
 
 %%% Local Variables:
 %%% mode: latex

@@ -347,7 +347,7 @@ variables, and called in subsequent statements:
 <<O_object_functions>>=
 # retrieve Octave function
 f <- .O$poisspdf
-show(f)
+f
 # call (in Octave)
 f(5, 2)
 @
@@ -403,7 +403,7 @@ o_get('xxxxx')
 o_get('aa')
 # get a function
 f <- o_get('svd')
-show(f)
+f
 @
 
 \subsubsection{Evaluate single statements}
