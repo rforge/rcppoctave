@@ -3,9 +3,7 @@
 
 \documentclass[a4paper]{report}
 
-% copied from highlight.sty
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}
-
+\usepackage{highlight}
 \usepackage{RJournal}
 \usepackage[round]{natbib}
 \bibliographystyle{abbrvnat}
@@ -29,7 +27,10 @@
 
 %% replace RJtemplate with your article
 \begin{article}
-  \SweaveInput{EddelbuettelGaujoux.Rnw}
+
+%% evaluate/include actual manuscript
+\Sexpr{knit_child(normalizePath('EddelbuettelGaujoux.Rnw'))}
+
 \end{article}
 
 \end{document}

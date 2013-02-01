@@ -2,7 +2,7 @@
 
 
 \title{RcppOctave: Octave along with R}  %% just a draft title
-\author{by Dirk Eddelbuettel and Renaud Gaujoux}
+\author{by Renaud Gaujoux and Dirk Eddelbuettel}
 
 \maketitle
 
@@ -55,46 +55,50 @@ it can of course also be used with RcppOctave.
 TODO: Few words about the example
 
 TODO: render code 'pretty' whith knitr which must have a Matlab filter too
-% <<kalman, engine='highlight', hi.syntax='matlab', hi.output='LATEX', results='asis'>>=
-\begin{verbatim}
-function Y = kalmanM(pos)
-  dt=1;
-  %% Initialize state transition matrix
-  A=[ 1 0 dt 0 0 0;...     % [x  ]
-     0 1 0 dt 0 0;...     % [y  ]
-     0 0 1 0 dt 0;...     % [Vx]
-     0 0 0 1 0 dt;...     % [Vy]
-     0 0 0 0 1 0 ;...     % [Ax]
-     0 0 0 0 0 1 ];       % [Ay]
-  % Initialize measurement matrix
-  H = [ 1 0 0 0 0 0; 0 1 0 0 0 0 ];
-  Q = eye(6);
-  R = 1000 * eye(2);
-  x_est = zeros(6, 1);
-  p_est = zeros(6, 6);
 
-  numPts = size(pos,1);
-  Y = zeros(numPts, 2);
+\noindent
+\ttfamily
+\hlstd{}\hlkwa{function\ }\hlstd{Y\ }\hlopt{=\ }\hlstd{kalmanM}\hlopt{(}\hlstd{pos}\hlopt{)}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{dt}\hlopt{=}\hlstd{}\hlnum{1}\hlstd{}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\%\%\ Initialize\ state\ transition\ matrix}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{A}\hlopt{={[}\ }\hlstd{}\hlnum{1\ 0\ }\hlstd{dt\ }\hlnum{0\ 0\ 0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}x}\hlstd{\ \ }\hlslc{{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 1\ 0\ }\hlstd{dt\ }\hlnum{0\ 0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}y}\hlstd{\ \ }\hlslc{{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 1\ 0\ }\hlstd{dt\ }\hlnum{0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Vx{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 1\ 0\ }\hlstd{dt}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Vy{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 0\ 1\ 0\ }\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Ax{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 0\ 0\ 1\ }\hlstd{}\hlopt{{]};}\hlstd{\ \ \ \ \ \ \ }\hlopt{}\hlstd{}\hlslc{\%\ {[}Ay{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\%\ Initialize\ measurement\ matrix}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{H\ }\hlopt{=\ {[}\ }\hlstd{}\hlnum{1\ 0\ 0\ 0\ 0\ 0}\hlstd{}\hlopt{;\ }\hlstd{}\hlnum{0\ 1\ 0\ 0\ 0\ 0\ }\hlstd{}\hlopt{{]};}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{Q\ }\hlopt{=\ }\hlstd{eye}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{R\ }\hlopt{=\ }\hlstd{}\hlnum{1000\ }\hlstd{}\hlopt{{*}\ }\hlstd{eye}\hlopt{(}\hlstd{}\hlnum{2}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{x\textunderscore est\ }\hlopt{=\ }\hlstd{zeros}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{p\textunderscore est\ }\hlopt{=\ }\hlstd{zeros}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{6}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{numPts\ }\hlopt{=\ }\hlstd{}\hlkwa{size}\hlstd{}\hlopt{(}\hlstd{pos}\hlopt{,}\hlstd{}\hlnum{1}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{Y\ }\hlopt{=\ }\hlstd{zeros}\hlopt{(}\hlstd{numPts}\hlopt{,\ }\hlstd{}\hlnum{2}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlopt{=\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\hlstd{numPts\hspace*{\fill}\\
+}\hlstd{\ \ \ \ }\hlstd{z\ }\hlopt{=\ }\hlstd{pos}\hlopt{(}\hlstd{idx}\hlopt{,\ :)}\hlstd{'}\hlopt{;}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\%\%\ Predicted\ state\ and\ covariance}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{x\textunderscore prd\ }\hlopt{=\ }\hlstd{A\ }\hlopt{{*}\ }\hlstd{x\textunderscore est}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{p\textunderscore prd\ }\hlopt{=\ }\hlstd{A\ }\hlopt{{*}\ }\hlstd{p\textunderscore est\ }\hlopt{{*}\ }\hlstd{A'\ }\hlopt{+\ }\hlstd{Q}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\%\%\ Estimation}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{S\ }\hlopt{=\ }\hlstd{H\ }\hlopt{{*}\ }\hlstd{p\textunderscore prd'\ }\hlopt{{*}\ }\hlstd{H'\ }\hlopt{+\ }\hlstd{R}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{B\ }\hlopt{=\ }\hlstd{H\ }\hlopt{{*}\ }\hlstd{p\textunderscore prd'}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{klm\textunderscore gain\ }\hlopt{=\ (}\hlstd{S\ $\backslash$\ B}\hlopt{)}\hlstd{'}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\%\%\ Estimated\ state\ and\ covariance}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{x\textunderscore est\ }\hlopt{=\ }\hlstd{x\textunderscore prd\ }\hlopt{+\ }\hlstd{klm\textunderscore gain\ }\hlopt{{*}\ (}\hlstd{z\ }\hlopt{{-}\ }\hlstd{H\ }\hlopt{{*}\ }\hlstd{x\textunderscore prd}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{p\textunderscore est\ }\hlopt{=\ }\hlstd{p\textunderscore prd\ }\hlopt{{-}\ }\hlstd{klm\textunderscore gain\ }\hlopt{{*}\ }\hlstd{H\ }\hlopt{{*}\ }\hlstd{p\textunderscore prd}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\%\%\ Compute\ the\ estimated\ measurements}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{Y}\hlopt{(}\hlstd{idx}\hlopt{,\ :)\ =\ }\hlstd{H\ }\hlopt{{*}\ }\hlstd{x\textunderscore est}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{end}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlkwa{}\hlstd{}\hlslc{\%\ of\ the\ function}\hspace*{\fill}\\
+\hlstd{}\hlkwa{end}\hlstd{\ \ \ }\hlkwa{}\hlstd{}\hlslc{\%\ of\ the\ function}\hlstd{}\hspace*{\fill}\\
+\mbox{}
+\normalfont
+\normalsize
 
-  for idx = 1:numPts
-    z = pos(idx, :)';
 
-    %% Predicted state and covariance
-    x_prd = A * x_est;
-    p_prd = A * p_est * A' + Q;
-    %% Estimation
-    S = H * p_prd' * H' + R;
-    B = H * p_prd';
-    klm_gain = (S \ B)';
-    %% Estimated state and covariance
-    x_est = x_prd + klm_gain * (z - H * x_prd);
-    p_est = p_prd - klm_gain * H * p_prd;
-    %% Compute the estimated measurements
-    Y(idx, :) = H * x_est;
-  end                % of the function
-end   % of the function
-\end{verbatim}
-% @
 
 This function, along with several R implementations, is provided in the
 \pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
@@ -187,10 +191,12 @@ end
 ")
 \hlcomment{## returns a 500 x 500 matrix}
 \hlfunctioncall{set.seed}(42)
-\hlcomment{## same as \hlstring{'lightblue'} below so we have  \hlstring{'\hlfunctioncall{randg}(a, N)/b'} == \hlfunctioncall{rgamma}(a,b)}
+\hlcomment{## same as 'lightblue' below so we have  'randg(a, N)/b' == rgamma(a,b)}
 \hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500),ncol=1))/2))
 \end{alltt}
-\end{kframe}\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng1} \begin{kframe}\begin{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng1} 
+\begin{kframe}\begin{alltt}
 
 \hlcomment{## about the same in R:}
 \hlfunctioncall{set.seed}(42)
@@ -198,20 +204,15 @@ end
 \hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,2)), col=\hlstring{'gray'})
 \hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,1/2)), col=\hlstring{'lightblue'})
 \end{alltt}
-\end{kframe}\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng2} 
-\end{knitrout}
+\end{kframe}
+\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng2} 
 
+\end{knitrout}
 
 
 
 \bibliography{../inst/REFERENCES}
 
-
-\address{Dirk Eddelbuettel \\
-  %Affiliation\\
-  River Forest, IL\\
-  USA}\\
-\email{edd@debian.org}
 
 \address{Renaud Gaujoux \\
   Computational Biology \\
@@ -219,6 +220,13 @@ end
   Cape Town \\
   South Africa}\\
 \email{renaud@cbio.uct.ac.za}
+
+\address{Dirk Eddelbuettel \\
+  %Affiliation\\
+  River Forest, IL\\
+  USA}\\
+\email{edd@debian.org}
+
 
 %%% Local Variables:
 %%% mode: latex

@@ -1,17 +1,20 @@
 <<setup, include=FALSE>>=
 knit_engines$set(highlight = function(options) {
-  f = file()
-  on.exit(close(f))
+  f = tempfile()
+  on.exit(unlink(f))
   writeLines(code <- options$code, f)
-  cmd = sprintf('highlight -S %s -O %s --no-doc %s', options$hi.syntax, options$hi.output, shQuote(f))
+  #cmd = sprintf('highlight -S %s -O %s --no-doc %s', options$hi.syntax, options$hi.output, shQuote(f))
+  cmd = sprintf('highlight %s --no-doc %s', options$engine.opts, shQuote(f))
+  str(cmd)
   out = if (options$eval) system(cmd, intern = TRUE) else ''
   options$echo = FALSE # do not echo source code
-  knitr:::engine_output(code, out, options)
+  knitr:::engine_output(options, code, out)
 })
+
 @
 
 \title{RcppOctave: Octave along with R}  %% just a draft title
-\author{by Dirk Eddelbuettel and Renaud Gaujoux}
+\author{by Renaud Gaujoux and Dirk Eddelbuettel}
 
 \maketitle
 
@@ -64,8 +67,8 @@ it can of course also be used with RcppOctave.
 TODO: Few words about the example
 
 TODO: render code 'pretty' whith knitr which must have a Matlab filter too
-% <<kalman, engine='highlight', hi.syntax='matlab', hi.output='LATEX', results='asis'>>=
-\begin{verbatim}
+
+<<kalman, engine='highlight', engine.opts='-e acid -S matlab -O latex', results='asis'>>=
 function Y = kalmanM(pos)
   dt=1;
   %% Initialize state transition matrix
@@ -102,8 +105,7 @@ function Y = kalmanM(pos)
     Y(idx, :) = H * x_est;
   end                % of the function
 end   % of the function
-\end{verbatim}
-% @
+@
 
 This function, along with several R implementations, is provided in the
 \pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
@@ -200,15 +202,8 @@ lines(density(rgamma(25000,1,1/2)), col='lightblue')
 @
 
 
-
 \bibliography{../inst/REFERENCES}
 
-
-\address{Dirk Eddelbuettel \\
-  %Affiliation\\
-  River Forest, IL\\
-  USA}\\
-\email{edd@debian.org}
 
 \address{Renaud Gaujoux \\
   Computational Biology \\
@@ -216,6 +211,13 @@ lines(density(rgamma(25000,1,1/2)), col='lightblue')
   Cape Town \\
   South Africa}\\
 \email{renaud@cbio.uct.ac.za}
+
+\address{Dirk Eddelbuettel \\
+  %Affiliation\\
+  River Forest, IL\\
+  USA}\\
+\email{edd@debian.org}
+
 
 %%% Local Variables:
 %%% mode: latex

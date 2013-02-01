@@ -58,8 +58,6 @@
 %\VignetteDepends{knitr,bibtex}
 %\VignetteCompiler{knitr}
 
-\usepackage{Sweave}
-
 
 
 
@@ -83,7 +81,6 @@
 \newcommand{\matlab}{Matlab$^\circledR$\xspace}
 
 % add preamble from pkgmaker
-
 %%%% PKGMAKER COMMANDS %%%%%%
 \usepackage{xspace}
 
@@ -133,13 +130,10 @@
 
 
 
-
 % REFERENCES
 \usepackage[minnames=1,maxnames=2]{biblatex}
 \AtEveryCitekey{\clearfield{url}}
-
-\bibliography{/tmp/tmp.rjIDRJhS6d/RcppOctave/REFERENCES}
-
+\bibliography{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/tmplib/RcppOctave/REFERENCES}
 
 
 \bibliography{Rpackages}
@@ -158,9 +152,9 @@
 
 \author{Renaud Gaujoux}
 \title{\pkgname{RcppOctave}: Seamless Interface to Octave -- and Matlab}
-\date{\Rpkg{RcppOctave} -- Version 0.8.11
-[December  4, 2012]\footnote{This vignette was built using \octave
-3.6.1}}
+\date{\Rpkg{RcppOctave} -- Version 0.8.14
+[February  1, 2013]\footnote{This vignette was built using \octave
+3.6.2}}
 \begin{document}
 \maketitle
 
@@ -282,7 +276,7 @@ Calling any \octave function is then as simple as:
 \hlfunctioncall{.CallOctave}(\hlstring{"version"})
 \end{alltt}
 \begin{verbatim}
-## [1] "3.6.1"
+## [1] "3.6.2"
 \end{verbatim}
 \begin{alltt}
 \hlfunctioncall{.CallOctave}(\hlstring{"sqrt"}, 10)
@@ -353,7 +347,6 @@ A sample m-file (i.e. a function definition file) is shipped with any
 some examples of different types of \octave functions:
 
 \begin{Verbatim}[frame=single]
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example file for the R package RcppOctave
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -393,7 +386,6 @@ end
 
 
 
-
 \end{Verbatim}
 
 These definitions can be loaded in the \octave session via the function
@@ -428,7 +420,7 @@ functionalities:
 \hlfunctioncall{.CallOctave}(\hlstring{"fun1"})
 \end{alltt}
 \begin{verbatim}
-## [1] 0.3139 0.8400 0.1690 0.4361
+## [1] 0.18941 0.05886 0.17885 0.73838
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# 3 output values}
@@ -436,12 +428,12 @@ functionalities:
 \end{alltt}
 \begin{verbatim}
 ## $a
-## [1] 0.24647 0.54049 0.05556 0.84014
+## [1] 0.4596 0.1363 0.3499 0.6120
 ## 
 ## $b
 ##        [,1]   [,2]   [,3]
-## [1,] 0.2831 0.5811 0.1273
-## [2,] 0.3117 0.8001 0.5481
+## [1,] 0.4809 0.1796 0.6098
+## [2,] 0.3079 0.5571 0.4431
 ## 
 ## $c
 ## [1] "some text"
@@ -502,7 +494,7 @@ The other types of computations can be obtained using argument \code{argout}:
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave - error in Octave function `fun\_varargout`.}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave - error in Octave function `fun\_varargout`.}}\end{kframe}
 \end{knitrout}
 
 
@@ -545,7 +537,7 @@ defined for the complete output, as these may not be relevant anymore:
 ## [2,] -0.9145 -0.4046
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# specify output \hlfunctioncall{names} (and therefore number of output variables)}
+\hlcomment{# specify output names (and therefore number of output variables)}
 \hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2), argout = \hlfunctioncall{c}(\hlstring{"U"}, \hlstring{"S"}, \hlstring{"V"}))
 \end{alltt}
 \begin{verbatim}
@@ -595,7 +587,7 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 .O$\hlfunctioncall{version}()
 \end{alltt}
 \begin{verbatim}
-## [1] "3.6.1"
+## [1] "3.6.2"
 \end{verbatim}
 \begin{alltt}
 .O$\hlfunctioncall{eye}(3)
@@ -666,11 +658,12 @@ embedded session:
 \begin{alltt}
 \hlcomment{# remove}
 .O$myvar <- NULL
+\hlcomment{# this should now throw an error since 'myvar' does not exist anymore}
 .O$myvar
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'myvar'.}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'myvar'.}}\end{kframe}
 \end{knitrout}
 
 
@@ -680,7 +673,7 @@ As illustrated above, \octave functions can be called through the
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# density of x=5 for \hlfunctioncall{Poisson}(2)}
+\hlcomment{# density of x=5 for Poisson(2)}
 .O$\hlfunctioncall{poisspdf}(5, 2)
 \end{alltt}
 \begin{verbatim}
@@ -711,7 +704,7 @@ f <- .O$poisspdf
 ## <OctaveFunction::`poisspdf`>
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# \hlfunctioncall{call} (in Octave)}
+\hlcomment{# call (in Octave)}
 \hlfunctioncall{f}(5, 2)
 \end{alltt}
 \begin{verbatim}
@@ -807,13 +800,13 @@ Variables may be assigned or retrieved individually in separate calls to
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'xxxxx'.}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'xxxxx'.}}\begin{alltt}
 \hlcomment{# but suggests potential matches}
 \hlfunctioncall{o_get}(\hlstring{"aa"})
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'aa'.\\\#\#        Match(es): aaa aab}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'aa'.\\\#\#\ \ \ \ \ \ \ \ Match(es): aaa aab}}\begin{alltt}
 \hlcomment{# get a function}
 f <- \hlfunctioncall{o_get}(\hlstring{"svd"})
 \hlfunctioncall{show}(f)
@@ -833,7 +826,7 @@ can also evaluate a list of statements sequentially:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# assign variable \hlstring{'a'}}
+\hlcomment{# assign variable 'a'}
 \hlfunctioncall{o_eval}(\hlstring{"a=1"})
 \end{alltt}
 \begin{verbatim}
@@ -850,18 +843,18 @@ can also evaluate a list of statements sequentially:
 \end{alltt}
 \begin{verbatim}
 ##        [,1]
-## [1,] 1.7281
-## [2,] 0.7640
-## [3,] 0.3416
+## [1,] 1.6362
+## [2,] 0.5114
+## [3,] 0.2377
 \end{verbatim}
 \begin{alltt}
 .O$a
 \end{alltt}
 \begin{verbatim}
 ##        [,1]
-## [1,] 1.7281
-## [2,] 0.7640
-## [3,] 0.3416
+## [1,] 1.6362
+## [2,] 0.5114
+## [3,] 0.2377
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# eval a list of statements}
@@ -870,16 +863,16 @@ l
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.7759 0.6677
+## [1] 0.3375 0.7049
 ## 
 ## [[2]]
-## [1] -0.2274 -1.8914
+## [1]  0.4963 -0.8670
 ## 
 ## [[3]]
-## [1] 0.9414 0.8146 0.8216
+## [1] 0.9764 0.3347 0.5776
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# variables \hlstring{'a'} and \hlstring{'b'} were assigned the new values}
+\hlcomment{# variables 'a' and 'b' were assigned the new values}
 \hlfunctioncall{identical}(\hlfunctioncall{list}(.O$a, .O$b), l[1:2])
 \end{alltt}
 \begin{verbatim}
@@ -892,11 +885,11 @@ l
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: RcppOctave - error in Octave function `eval`.}}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave - error in Octave function `eval`.}}\begin{alltt}
 .O$a
 \end{alltt}
 \begin{verbatim}
-## [1] 0.7759 0.6677
+## [1] 0.3375 0.7049
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# argument CATCH allows for recovering from errors in statement}
@@ -909,7 +902,7 @@ l
 .O$a
 \end{alltt}
 \begin{verbatim}
-## [1] 0.7759 0.6677
+## [1] 0.3375 0.7049
 \end{verbatim}
 \begin{alltt}
 .O$c
@@ -972,7 +965,7 @@ mfile <- \hlfunctioncall{system.file}(\hlstring{"scripts/ex_source.m"}, package 
 \end{verbatim}
 \begin{alltt}
 \hlfunctioncall{o_source}(mfile)
-\hlcomment{# Now objects \hlstring{'a'}, \hlstring{'b'}, and \hlstring{'c'} as well as the function \hlstring{'abc'} should be}
+\hlcomment{# Now objects 'a', 'b', and 'c' as well as the function 'abc' should be}
 \hlcomment{# defined:}
 \hlfunctioncall{o_ls}(long = TRUE)
 \end{alltt}
@@ -1009,7 +1002,7 @@ directly passed from the \R console as character strings via its argument
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlfunctioncall{o_source}(text = \hlstring{"clear a b c; a=100; a*\hlfunctioncall{sin}(123)"})
-\hlcomment{# last statement is stored in automatic variable \hlstring{'ans'}}
+\hlcomment{# last statement is stored in automatic variable 'ans'}
 \hlfunctioncall{o_get}(\hlstring{"a"}, \hlstring{"ans"})
 \end{alltt}
 \begin{verbatim}
@@ -1052,7 +1045,7 @@ in a similar way \code{whos} does (see \code{?o\_who}).
 \end{verbatim}
 \begin{alltt}
 
-\hlcomment{# clear \hlfunctioncall{all} (variables + functions)}
+\hlcomment{# clear all (variables + functions)}
 \hlfunctioncall{o_clear}(all = TRUE)
 \hlfunctioncall{o_ls}()
 \end{alltt}
@@ -1127,9 +1120,9 @@ following code, which defines a wrapper functions to format the output of
 \begin{alltt}
 
 o_svd <- \hlfunctioncall{function}(x) \{
-    \hlcomment{# ask for the complete decomposition}
+\hlcomment{    # ask for the complete decomposition}
     res <- .O$\hlfunctioncall{svd}(x, argout = \hlfunctioncall{c}(\hlstring{"u"}, \hlstring{"d"}, \hlstring{"v"}))
-    \hlcomment{# reformat/reorder result}
+\hlcomment{    # reformat/reorder result}
     res$d <- \hlfunctioncall{diag}(res$d)
     res[\hlfunctioncall{c}(2, 1, 3)]
 \}
@@ -1145,9 +1138,9 @@ svd.O <- \hlfunctioncall{o_svd}(X)
 \end{alltt}
 \begin{verbatim}
 ## List of 3
-##  $ d: num [1:5] 2.348 0.841 0.744 0.279 0.141
-##  $ u: num [1:5, 1:5] -0.568 -0.166 -0.448 -0.359 -0.566 ...
-##  $ v: num [1:5, 1:5] -0.39 -0.518 -0.482 -0.301 -0.507 ...
+##  $ d: num [1:5] 2.659 0.795 0.473 0.361 0.237
+##  $ u: num [1:5, 1:5] -0.37 -0.471 -0.51 -0.357 -0.503 ...
+##  $ v: num [1:5, 1:5] -0.373 -0.433 -0.479 -0.608 -0.272 ...
 \end{verbatim}
 \begin{alltt}
 \hlcomment{# check results}
@@ -1161,8 +1154,8 @@ svd.O <- \hlfunctioncall{o_svd}(X)
 \hlfunctioncall{all.equal}(svd.R, svd.O, tol = 10^-16)
 \end{alltt}
 \begin{verbatim}
-## [1] "Component 2: Mean relative difference: 2.667e-16"
-## [2] "Component 3: Mean relative difference: 3.541e-16"
+## [1] "Component 2: Mean relative difference: 3.184e-16"
+## [2] "Component 3: Mean relative difference: 3.002e-16"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1255,22 +1248,22 @@ R version 2.15.2 (2012-10-26)
 Platform: i686-pc-linux-gnu (32-bit)
 
 locale:
- [1] LC_CTYPE=en_ZA.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_ZA.UTF-8        LC_COLLATE=en_ZA.UTF-8    
- [5] LC_MONETARY=en_ZA.UTF-8    LC_MESSAGES=en_ZA.UTF-8   
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
  [7] LC_PAPER=C                 LC_NAME=C                 
  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_ZA.UTF-8 LC_IDENTIFICATION=C       
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] methods   stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
-[1] RcppOctave_0.8.11 pkgmaker_0.9.7    Rcpp_0.10.1       knitr_0.8        
+[1] RcppOctave_0.8.14 pkgmaker_0.11     Rcpp_0.10.2       knitr_1.0.5      
 
 loaded via a namespace (and not attached):
-[1] codetools_0.2-8 digest_0.5.2    evaluate_0.4.3  formatR_0.6    
-[5] plyr_1.7.1      stringr_0.6.1   tools_2.15.2    xtable_1.7-0   
+[1] codetools_0.2-8 digest_0.6.2    evaluate_0.4.3  formatR_0.7    
+[5] stringr_0.6.2   tools_2.15.2    xtable_1.7-0   
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

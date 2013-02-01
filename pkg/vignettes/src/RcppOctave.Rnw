@@ -3,8 +3,6 @@
 %\VignetteDepends{knitr,bibtex}
 %\VignetteCompiler{knitr}
 
-\usepackage{Sweave}
-
 <<echo=FALSE, include=FALSE>>=
 pkg <- 'RcppOctave'
 require( pkg, character.only=TRUE )
@@ -329,6 +327,7 @@ embedded session:
 .O$myvar
 # remove 
 .O$myvar <- NULL
+# this should now throw an error since 'myvar' does not exist anymore
 .O$myvar
 @
 

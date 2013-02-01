@@ -4,8 +4,8 @@ pkgmaker
 Rcpp
 stringr
 digest
-methods
 knitr
+methods
 stats
 graphics
 grDevices
