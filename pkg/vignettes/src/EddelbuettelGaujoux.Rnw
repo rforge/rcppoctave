@@ -1,16 +1,5 @@
 <<setup, include=FALSE>>=
-knit_engines$set(highlight = function(options) {
-  f = tempfile()
-  on.exit(unlink(f))
-  writeLines(code <- options$code, f)
-  #cmd = sprintf('highlight -S %s -O %s --no-doc %s', options$hi.syntax, options$hi.output, shQuote(f))
-  cmd = sprintf('highlight %s --no-doc %s', options$engine.opts, shQuote(f))
-  str(cmd)
-  out = if (options$eval) system(cmd, intern = TRUE) else ''
-  options$echo = FALSE # do not echo source code
-  knitr:::engine_output(options, code, out)
-})
-
+knit_theme$set('acid')
 @
 
 \title{RcppOctave: Octave along with R}  %% just a draft title

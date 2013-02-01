@@ -1,9 +1,6 @@
-codetools
 RcppOctave
 pkgmaker
 Rcpp
-stringr
-digest
 knitr
 methods
 stats
