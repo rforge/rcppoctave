@@ -106,15 +106,22 @@ o_addpath <- function(DIR1, ..., OPTION='-begin'){
 #' 
 #' Returns the version of Octave currently used by \code{RcppOctave}.
 #' 
-#' @return Octave version as a single character string
+#' @param version optional reference version to compare with.
+#' @return Octave version as a single character string or the result of 
+#' \code{\link[utils]{compareVersion}} if argument \code{version} is provided.
 #' 
 #' @export
+#' @importFrom utils compareVersion
 #' @examples
 #' 
 #' o_version()
+#' o_version("3.6.2")
+#' o_version("3.4")
 #' 
-o_version <- function(){
-	.CallOctave('version')
+o_version <- function(version){
+	v <- .CallOctave('version')
+	if( !missing(version) ) compareVersion(v, version)
+	else v
 }
 
 #' Accessing Octave Help and Documentation Pages
