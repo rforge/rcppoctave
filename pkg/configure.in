@@ -89,9 +89,19 @@ if test "${OCTAVE_CONFIG}" != ""; then
 else
     AC_MSG_ERROR([octave-config not found, is Octave installed?
     
-    On Debian/Ubuntu please check that the required packages are installed:
-    * For Octave 3.6: sudo apt-get install octave liboctave-dev
-    * For Octave 3.2.4: sudo apt-get install octave3.2 octave-headers
+    -> On Debian/Ubuntu please check that the required packages are installed:
+    
+      * For Octave 3.6 (works out of the box):
+        sudo apt-get install octave liboctave-dev
+        # install as usual in R
+        install.packages('RcppOctave')
+        
+      * For Octave 3.2.4 (requires extra step)
+        sudo apt-get install octave3.2 octave3.2-headers
+        # requires to ecplicitly export Octave lib directory 
+        export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:`octave-config -p OCTLIBDIR`
+        # install as usual in R
+        install.packages('RcppOctave')
     ])
 fi
 
