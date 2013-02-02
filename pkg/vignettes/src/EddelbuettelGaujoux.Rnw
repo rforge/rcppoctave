@@ -271,6 +271,9 @@ o_source(text="
 set.seed(42)
 ## 'flatten' 500x500 matrix into vector
 ## we have  'randg(a, N)/b' == rgamma(a,b)
+## CORRECTION:  set.seed(42); .O$gam(2,3)  
+##         ==   set.seed(42); rgamma(1,2,1,3)
+##         ==   set.seed(42); rgamma(1,2,1)*3
 x1 <- as.vector(matrix(.O$orngg(500), ncol=1))
 x2 <- as.vector(matrix(.O$orngg(500), ncol=1))/2
 x3 <- as.vector(matrix(.O$orngg(500), ncol=1))*2
