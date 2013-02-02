@@ -8,12 +8,13 @@
 
 \abstract{
   The \pkg{RcppOctave} package connects Octave to R, allowing R user to
-  access another numerical computing language from within R.  TODO: Expand
+  access another numerical computing language from within R.
+  \dirk{TODO: Expand}
 }
 
 \section{Introduction}
 
-Octave \citep{Eaton:2008} is an interactive language that is primarily
+Octave \citep{Octave:2012} is an interactive language that is primarily
 intended for numerical computations. It is mostly compatible with Matlab
 \citep{MATLAB:2010} and has found widespread adoption across different
 disciplines. This include domains in which Matlab has historically been
@@ -33,16 +34,17 @@ making a combination of both environments an even more compelling choice.
 This short paper illustrates the \pkg{RcppOctave} package by
 \cite{CRAN:RcppOctave} which implements an interface between both these
 environments.
+\dirk{TODO: Better split between intro and next section}
 
 \section{Octave}
 
-Octave \citep{Eaton:2008} is a powerful interactive language ``not unlike
-Matlab''. Octave can do arithmetic for real, complex or integer-valued
-scalars and matrices, solve sets of nonlinear algebraic equations, integrate
-functions over finite and infinite intervals, and integrate systems of
-ordinary differential and differential-algebraic equations.  Given the
-popularity of Matlab, Octave has always had a lot of appeal in fields in
-which Matlab is popular.
+Octave \citep{Octave:2012} is a powerful interactive language ``not unlike
+Matlab'' and described in detail by \citet{Eaton:2008}. Octave can do
+arithmetic for real, complex or integer-valued scalars and matrices, solve
+sets of nonlinear algebraic equations, integrate functions over finite and
+infinite intervals, and integrate systems of ordinary differential and
+differential-algebraic equations.  Given the popularity of Matlab, Octave has
+always had a lot of appeal in fields in which Matlab is popular.
 
 As a simple illustration, consider the function below which converts two
 arguments `distance' (in miles) and `time' (in minutes and seconds) into a
@@ -97,20 +99,7 @@ outer product as the apostrophe invokes a tranposition. Common matrix
 functions such as \code{eig} or \code{det} are available as well.  For more
 complete example in provided in the next section.
 
-
-%% { \small
-%% %% by hand:  %% highlight --enclose-pre --no-doc --out-format=latex --syntax=Matlab --style=edit-emacs
-%% <<matrixEx, engine='highlight', engine.opts='-e edit-emacs -S octave -O latex', results='asis'>>=
-%% e = mean(D)';
-%% V = cov(D);
-%% i = ones(k,1);
-
-%% Vi = inv(V);
-%% a = i'*Vi*e;
-%% b = e'*Vi*e;
-%% c = i'*Vi*i;
-%% @
-%% }
+\renaud{TODO: A few words about RcppOctave, Design, Limitations, ...}
 
 \section{Example: Kalman Filter}
 
@@ -121,7 +110,7 @@ Matlab\footnote{See
   \url{http://www.mathworks.com/products/matlab-coder/demos.html?file=/products/demos/shipping/coder/coderdemo_kalman_filter.html}.},
 it can of course also be used with RcppOctave.
 
-TODO: Few words about the example
+\dirk{TODO: Few words about the example}
 
 { \small
 %% by hand:  %% highlight --enclose-pre --no-doc --out-format=latex --syntax=Matlab --style=edit-emacs
@@ -174,7 +163,7 @@ TODO: Few words about the example
 }
 
 This function, along with several R implementations, is provided in the
-\pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
+\pkg{RcppOctave} package as \code{demo(Kalman)}.
 Table~\ref{tab:benchmark} summaries the performance.
 
 %                 test replications elapsed relative
@@ -224,24 +213,22 @@ Table~\ref{tab:benchmark} summaries the performance.
   \end{center}
 \end{table}
 
-% TODO: We may want to skip one (pair) of the R variants...
-
-TODO: More about the example, performance comparison, knocking socks off R
+\dirk{TODO: More about the example, performance comparison, knocking socks off R}
 
 
-\section{Example: Gibbs Sampler}
+\section{Example: Reproducible Random Numbers}
 
-Wilkinson (TODO: Reference from his repeated blog posts) used a simple
-bivariate Gibbs Sampler as a basis for comparisons between different
-programming languages such as C, Java, Python and R. His example has been
-re-used in number of other presentations.
+\dirk{TODO: Reference from his repeated blog posts}
+Wilkinson used a simple bivariate Gibbs Sampler as a basis for comparisons
+between different programming languages such as C, Java, Python and R. His
+example has been re-used in number of other presentations.
 
 We can adapt this example here as it provides a suitable framework for
 showing how \pkg{RcppOctave} can interact with the random number generators
 in R.
 
 %DE: Super-useful feature, but shall we have that here or as part of the Gibbs sampler comparison
-TODO: Make true Gibbs sampler example
+\dirk{TODO: Make true Gibbs sampler example}
 {\small
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -278,25 +265,29 @@ ensure reproducibility.
 
 We can also define functions which draws from the Gamma distribution:
 {\small
+%## we have  'randg(a, N)/b' == rgamma(a,b)
+%## CORRECTION:  set.seed(42); .O$gam(2,3)
+%##         ==   set.seed(42); rgamma(1,2,1,3)
+%##         ==   set.seed(42); rgamma(1,2,1)*3
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcomment{## define a Gamma RNG draw function}
 \hlfunctioncall{o_source}(text="
-  function x = \hlfunctioncall{orngg}(n)
-    x = \hlfunctioncall{randg}(1, n);
+\hlcomment{  ## gamma(a,b) of dim. n by 1}
+  function x = \hlfunctioncall{orngg}(a, b, n)
+    x = b * \hlfunctioncall{randg}(a, n, 1);
   end
 ")
 \hlfunctioncall{set.seed}(42)
-\hlcomment{## 'flatten' 500x500 matrix into vector}
-\hlcomment{## we have  'randg(a, N)/b' == rgamma(a,b)}
-x1 <- \hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500), ncol=1))
-x2 <- \hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500), ncol=1))/2
-x3 <- \hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500), ncol=1))*2
-\hlfunctioncall{plot}(\hlfunctioncall{density}(x1),
-     ylim=\hlfunctioncall{c}(0,1.8), main=\hlstring{"Calling from Octave"})
-\hlfunctioncall{lines}(\hlfunctioncall{density}(x2), col=\hlstring{'lightblue'})
-\hlfunctioncall{lines}(\hlfunctioncall{density}(x3), col=\hlstring{'gray'})
+N <- 50000
+x1 <- \hlfunctioncall{c}(.O$\hlfunctioncall{orngg}(9,1,N))
+x2 <- \hlfunctioncall{c}(.O$\hlfunctioncall{orngg}(4,1,N))
+x3 <- \hlfunctioncall{c}(.O$\hlfunctioncall{orngg}(1,4,N))
+\hlfunctioncall{plot}(\hlfunctioncall{density}(x1), main=\hlstring{"Calling from Octave"},
+     col=\hlstring{"orange"}, ylim=\hlfunctioncall{c}(0,0.23), xlim=\hlfunctioncall{c}(-1,22))
+\hlfunctioncall{lines}(\hlfunctioncall{density}(x2), col=\hlstring{'mediumblue'})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(x3), col=\hlstring{'brown'})
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{/home/edd/svn/rcppoctave/pkg/vignettes/figure/RJwrapper-rngGamma} 
@@ -313,11 +304,11 @@ generator, we can generate the same chart directly from R:
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlfunctioncall{set.seed}(42)  \hlcomment{# reset RNG}
-N <- 25000
-\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,1)),
-     ylim=\hlfunctioncall{c}(0,1.8), main=\hlstring{"Calling rgamma from R"})
-\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,2)), col=\hlstring{'lightblue'})
-\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,1/2)), col=\hlstring{'gray'})
+N <- 50000
+\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,9,1)), main=\hlstring{"Calling rgamma from R"},
+     col=\hlstring{"orange"}, ylim=\hlfunctioncall{c}(0,0.23), xlim=\hlfunctioncall{c}(-1,22))
+\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,4,1)), col=\hlstring{'mediumblue'})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,1,4)), col=\hlstring{'brown'})
 \end{alltt}
 \end{kframe}
 \includegraphics[width=\maxwidth]{/home/edd/svn/rcppoctave/pkg/vignettes/figure/RJwrapper-rngGammaR} 
