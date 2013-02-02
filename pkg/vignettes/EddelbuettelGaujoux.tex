@@ -1,24 +1,24 @@
 
 
 
-\title{RcppOctave: Octave along with R}  %% just a draft title
+\title{RcppOctave: Running Octave from R}
 \author{by Dirk Eddelbuettel and Renaud Gaujoux}
 
 \maketitle
 
 \abstract{
-  The \pkg{RcppOctave} package connects Octave to R. TODO: Expand
+  The \pkg{RcppOctave} package connects Octave to R, allowing R user to
+  access another numerical computing language from within R.  TODO: Expand
 }
 
 \section{Introduction}
 
-Octave \citep{Eaton:2008} is a high-level interactive language which is
-primarily intended for numerical computations.  It has found widespread
-adoption across different disciplines as it is mostly compatible with Matlab
-\citep{MATLAB:2010}.  While Matlab has historically been pre-eminent in
-domains such as applied mathematics, electrical engineering and signal
-processing, it is also widely used in other fields such as machine
-learning, %% TODO/DE: Maybe ask Soren and the folks at MLOSS.org about Matlab numbers
+Octave \citep{Eaton:2008} is an interactive language that is primarily
+intended for numerical computations. It is mostly compatible with Matlab
+\citep{MATLAB:2010} and has found widespread adoption across different
+disciplines. This include domains in which Matlab has historically been
+pre-eminent such as applied mathematics, electrical engineering and signal
+processing, but also in other fields such as machine learning,
 bioinformatics, and finance.  Consequently, a large corpus of application
 programs are available as \code{.m}-files (named after the commonly-chose
 file extension) for which Octave provides an open source engine.
@@ -26,8 +26,7 @@ file extension) for which Octave provides an open source engine.
 R \citep{R:2012}, a language and environment for statistical
 computing and graphics, has become the dominant language for statistical
 research, and a widely-used environment for empirical work in a variety of
-fields. % DE: I don't want to single out BioC here, but maybe we could point
-        % to the CRAN Task Views? Or just leave it as this is for the R Journal..
+fields.
 
 While both languages share commonalities, their respective focus is different
 making a combination of both environments an even more compelling choice.
@@ -37,16 +36,86 @@ environments.
 
 \section{Octave}
 
-TODO: Two or three short paragraphs about Octave
+Octave \citep{Eaton:2008} is a powerful interactive language ``not unlike
+Matlab''. Octave can do arithmetic for real, complex or integer-valued
+scalars and matrices, solve sets of nonlinear algebraic equations, integrate
+functions over finite and infinite intervals, and integrate systems of
+ordinary differential and differential-algebraic equations.  Given the
+popularity of Matlab, Octave has always had a lot of appeal in fields in
+which Matlab is popular.
 
-\section{Example: Matrix Operations}  % or something else
+As a simple illustration, consider the function below which converts two
+arguments `distance' (in miles) and `time' (in minutes and seconds) into a
+pace expressed as minutes-per-mile:
 
-TODO: Show two or three simple call illustrating the variable arguments etc.
+{ \small
+%% by hand:  %% highlight --enclose-pre --no-doc --out-format=latex --syntax=Matlab --style=edit-emacs
+\noindent
+\ttfamily
+\hlstd{}\hlslc{\#\#\ usage:}\hlstd{\ \ }\hlslc{p\ =\ pace\ (dist,\ time)}\hspace*{\fill}\\
+\hlstd{}\hlkwa{function\ }\hlstd{p\ }\hlopt{=\ }\hlstd{}\hlkwd{pace\ }\hlstd{}\hlopt{(}\hlstd{dist}\hlopt{,\ }\hlstd{time}\hlopt{)}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwd{if\ }\hlstd{}\hlopt{(}\hlstd{nargin\ }\hlopt{$<$\ }\hlstd{}\hlnum{2}\hlstd{}\hlopt{)}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{usage}\hlstd{}\hlopt{(}\hlstd{}\hlstr{"Call\ as\ pace\ (dist,\ time)"}\hlstd{}\hlopt{)}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{end}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{}\hlslc{\#\#\ total\ seconds}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{a\ }\hlopt{=\ }\hlstd{}\hlkwc{floor}\hlstd{}\hlopt{(}\hlstd{time}\hlopt{){*}}\hlstd{}\hlnum{60\ }\hlstd{}\hlopt{+\ (}\hlstd{time}\hlopt{{-}}\hlstd{}\hlkwc{floor}\hlstd{}\hlopt{(}\hlstd{time}\hlopt{)){*}}\hlstd{}\hlnum{100}\hlstd{}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\#\#\ seconds\ per\ miles}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{b\ }\hlopt{=\ }\hlstd{a\ }\hlopt{/\ }\hlstd{dist}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\#\#\ minutes\ per\ mile}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{c\ }\hlopt{=\ }\hlstd{}\hlkwc{floor}\hlstd{}\hlopt{(}\hlstd{b}\hlopt{/}\hlstd{}\hlnum{60}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\#\#\ seconds\ per\ mile}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{d\ }\hlopt{=\ }\hlstd{b\ }\hlopt{{-}\ }\hlstd{c}\hlopt{{*}}\hlstd{}\hlnum{60}\hlstd{}\hlopt{;}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{p\ }\hlopt{=\ }\hlstd{c\ }\hlopt{+\ }\hlstd{d}\hlopt{/}\hlstd{}\hlnum{100}\hlstd{}\hlopt{;}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwd{printf}\hlstd{}\hlopt{(}\hlstd{}\hlstr{"\%.2f\ over\ \%.2f\ is\ \%d:\%d\ aka\ \%.2f}\hlesc{$\backslash$n}\hlstr{"}\hlstd{}\hlopt{,}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ }\hlstd{time}\hlopt{,\ }\hlstd{dist}\hlopt{,\ }\hlstd{c}\hlopt{,\ }\hlstd{d}\hlopt{,\ }\hlstd{p}\hlopt{);}\hspace*{\fill}\\
+\hlstd{}\hlkwa{endfunction}\hlstd{}\hspace*{\fill}\\
+\mbox{}
+\normalfont
+\normalsize
+
+
+}
+
+The example shows a few subtle difference between Octave and Matlab. Comments
+starts with hash sign. Default function help is provided before the function
+definition. The \code{endfunction} keyword ends a function.
+
+It also shows how the semicolon at the end of lines is used to suppress
+output; expression not ending in a semi-colon print their final result.
+
+%\section{Example: Matrix Operations}  % or something else
+
+%TODO: Show two or three simple call illustrating the variable arguments etc.
+
+Octave is particularly useful for linear algebra and calculations involving
+matrices and vectors.  For multiplication, the \code{*} symbol is
+overloaded. For example, for a row-vector $a$, the expressions \code{a * a'}
+amd \code{a' * a} compute, respectively the (scalar) inner product and matrix
+outer product as the apostrophe invokes a tranposition. Common matrix
+functions such as \code{eig} or \code{det} are available as well.  For more
+complete example in provided in the next section.
+
+
+%% { \small
+%% %% by hand:  %% highlight --enclose-pre --no-doc --out-format=latex --syntax=Matlab --style=edit-emacs
+%% <<matrixEx, engine='highlight', engine.opts='-e edit-emacs -S octave -O latex', results='asis'>>=
+%% e = mean(D)';
+%% V = cov(D);
+%% i = ones(k,1);
+
+%% Vi = inv(V);
+%% a = i'*Vi*e;
+%% b = e'*Vi*e;
+%% c = i'*Vi*i;
+%% @
+%% }
 
 \section{Example: Kalman Filter}
 
-\cite{Eddelbuettel+Sanderson:2012} motivate the \pkg{RcppArmadillo} package
-with an example comparing a Kalman Filter implementation in both R and
+\cite{Eddelbuettel+Sanderson:2013} introduce the \pkg{RcppArmadillo} package
+and illustrate it via an example comparing a Kalman filter implementation in both R and
 C++. As the code underlying this example was initially published for
 Matlab\footnote{See
   \url{http://www.mathworks.com/products/matlab-coder/demos.html?file=/products/demos/shipping/coder/coderdemo_kalman_filter.html}.},
@@ -54,24 +123,27 @@ it can of course also be used with RcppOctave.
 
 TODO: Few words about the example
 
-TODO: render code 'pretty' whith knitr which must have a Matlab filter too
-
+{ \small
+%% by hand:  %% highlight --enclose-pre --no-doc --out-format=latex --syntax=Matlab --style=edit-emacs
 \noindent
 \ttfamily
 \hlstd{}\hlkwa{function\ }\hlstd{Y\ }\hlopt{=\ }\hlstd{kalmanM}\hlopt{(}\hlstd{pos}\hlopt{)}\hspace*{\fill}\\
 \hlstd{}\hlstd{\ \ }\hlstd{dt}\hlopt{=}\hlstd{}\hlnum{1}\hlstd{}\hlopt{;}\hspace*{\fill}\\
 \hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\%\%\ Initialize\ state\ transition\ matrix}\hspace*{\fill}\\
 \hlstd{}\hlstd{\ \ }\hlstd{A}\hlopt{={[}\ }\hlstd{}\hlnum{1\ 0\ }\hlstd{dt\ }\hlnum{0\ 0\ 0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}x}\hlstd{\ \ }\hlslc{{]}}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 1\ 0\ }\hlstd{dt\ }\hlnum{0\ 0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}y}\hlstd{\ \ }\hlslc{{]}}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 1\ 0\ }\hlstd{dt\ }\hlnum{0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Vx{]}}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 1\ 0\ }\hlstd{dt}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Vy{]}}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 0\ 1\ 0\ }\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Ax{]}}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 0\ 0\ 1\ }\hlstd{}\hlopt{{]};}\hlstd{\ \ \ \ \ \ \ }\hlopt{}\hlstd{}\hlslc{\%\ {[}Ay{]}}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ }\hlstd{}\hlslc{\%\ Initialize\ measurement\ matrix}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ \ }\hlstd{}\hlnum{0\ 1\ 0\ }\hlstd{dt\ }\hlnum{0\ 0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}y}\hlstd{\ \ }\hlslc{{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 1\ 0\ }\hlstd{dt\ }\hlnum{0}\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Vx{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 1\ 0\ }\hlstd{dt}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Vy{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 0\ 1\ 0\ }\hlstd{}\hlopt{;}\hlstd{...}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ {[}Ax{]}}\hspace*{\fill}\\
+\hlstd{}\hlstd{\ \ \ \ \ \ }\hlstd{}\hlnum{0\ 0\ 0\ 0\ 0\ 1\ }\hlstd{}\hlopt{{]};}\hlstd{\ \ \ \ \ \ \ }\hlopt{}\hlstd{}\hlslc{\%\ {[}Ay{]}}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{}\hlslc{\%\ Initialize\ measurement\ matrix}\hspace*{\fill}\\
 \hlstd{}\hlstd{\ \ }\hlstd{H\ }\hlopt{=\ {[}\ }\hlstd{}\hlnum{1\ 0\ 0\ 0\ 0\ 0}\hlstd{}\hlopt{;\ }\hlstd{}\hlnum{0\ 1\ 0\ 0\ 0\ 0\ }\hlstd{}\hlopt{{]};}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ }\hlstd{Q\ }\hlopt{=\ }\hlstd{eye}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{Q\ }\hlopt{=\ }\hlstd{eye}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{);}\hspace*{\fill}\\
 \hlstd{}\hlstd{\ \ }\hlstd{R\ }\hlopt{=\ }\hlstd{}\hlnum{1000\ }\hlstd{}\hlopt{{*}\ }\hlstd{eye}\hlopt{(}\hlstd{}\hlnum{2}\hlstd{}\hlopt{);}\hspace*{\fill}\\
-\hlstd{}\hlstd{\ \ }\hlstd{x\textunderscore est\ }\hlopt{=\ }\hlstd{zeros}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{);}\hspace*{\fill}\\
+\hlstd{\hspace*{\fill}\\
+}\hlstd{\ \ }\hlstd{x\textunderscore est\ }\hlopt{=\ }\hlstd{zeros}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{);}\hspace*{\fill}\\
 \hlstd{}\hlstd{\ \ }\hlstd{p\textunderscore est\ }\hlopt{=\ }\hlstd{zeros}\hlopt{(}\hlstd{}\hlnum{6}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{6}\hlstd{}\hlopt{);}\hspace*{\fill}\\
 \hlstd{\hspace*{\fill}\\
 }\hlstd{\ \ }\hlstd{numPts\ }\hlopt{=\ }\hlstd{}\hlkwa{size}\hlstd{}\hlopt{(}\hlstd{pos}\hlopt{,}\hlstd{}\hlnum{1}\hlstd{}\hlopt{);}\hspace*{\fill}\\
@@ -99,6 +171,7 @@ TODO: render code 'pretty' whith knitr which must have a Matlab filter too
 \normalsize
 
 
+}
 
 This function, along with several R implementations, is provided in the
 \pkg{RcppOctave} package as \code{demo(Kalman)}. % TODO: just a suggestion
@@ -113,21 +186,29 @@ Table~\ref{tab:benchmark} summaries the performance.
 % 6 FirstKalmanRC(pos)          100   8.992  2.28050
 % 5  FirstKalmanR(pos)          100   9.405  2.38524
 
-\begin{table}[hbt]
+\begin{table}[tb]
   \begin{center}
     \begin{small}
       \begin{tabular}{lrr}
         \toprule
         {\bf Implementation \phantom{XX}} & {\bf Time in sec.} & {\bf Rel.~ to best} \\
         \cmidrule(r){1-3}
-         KalmanOctave  & 3.943 & 1.000 \\
-             KalmanRC  & 5.987 & 1.518 \\
-              KalmanR  & 6.047 & 1.534 \\
-          KalmanRfunC  & 6.262 & 1.588 \\
-           KalmanRfun  & 6.648 & 1.686 \\
-        FirstKalmanRC  & 8.992 & 2.281 \\
-         FirstKalmanR  & 9.405 & 2.385 \\
-        \bottomrule
+        %% original times, Summer 2012
+        %%  KalmanOctave  & 3.943 & 1.000 \\
+        %%      KalmanRC  & 5.987 & 1.518 \\
+        %%       KalmanR  & 6.047 & 1.534 \\
+        %%   KalmanRfunC  & 6.262 & 1.588 \\
+        %%    KalmanRfun  & 6.648 & 1.686 \\
+        %% FirstKalmanRC  & 8.992 & 2.281 \\
+        %%  FirstKalmanR  & 9.405 & 2.385 \\
+         KalmanOctave  & 1.93 & 1.00 \\
+          KalmanRfunC  & 4.99 & 2.59 \\
+             KalmanRC  & 5.13 & 2.66 \\
+           KalmanRfun  & 5.45 & 2.83 \\
+              KalmanR  & 5.46 & 2.83 \\
+        FirstKalmanRC  & 6.41 & 3.32 \\
+         FirstKalmanR  & 6.84 & 3.54 \\
+         \bottomrule
       \end{tabular}
       \caption{Performance comparison of various implementations of a Kalman filter.
         KalmanOctave is the \pkg{RcppOctave} based implementation shown above.
@@ -135,8 +216,8 @@ Table~\ref{tab:benchmark} summaries the performance.
         function; FirstKalmanR is a direct translation of the original Matlab
         implementation; versions ending in C are the byte-compiled variants of
         the respective version.  Timings are averaged over 100 replications.
-        The comparison was made using R version 2.15.1, Rcpp version 0.9.13 and
-        RcppOctave version 0.8.5 on Ubuntu 12.04 running in 64-bit mode on a
+        The comparison was made using R version 2.15.2, Rcpp version 0.10.2 and
+        RcppOctave version 0.8.14 on Ubuntu 12.10 running in 64-bit mode on a
         2.67 GHz Intel i7 processor.}
       \label{tab:benchmark}
     \end{small}
@@ -161,66 +242,94 @@ in R.
 
 %DE: Super-useful feature, but shall we have that here or as part of the Gibbs sampler comparison
 TODO: Make true Gibbs sampler example
+{\small
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.933, 0.933, 0.933}\color{fgcolor}\begin{kframe}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlfunctioncall{library}(RcppOctave)
-\end{alltt}
-
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: Rcpp}}
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: pkgmaker}}\begin{alltt}
-
-\hlcomment{# R runif}
-\hlfunctioncall{set.seed}(1)
+\hlfunctioncall{set.seed}(1)     \hlcomment{# reset the R RNG}
 a <- \hlfunctioncall{runif}(10)
 
 \hlcomment{# define octave function}
 \hlfunctioncall{o_source}(text="
-function [x] = \hlfunctioncall{orng}(n)
-	x = \hlfunctioncall{rand}(1, n);
-end
+   function [x] = \hlfunctioncall{orng}(n)
+      x = \hlfunctioncall{rand}(1, n);
+   end
 ")
-\hlfunctioncall{set.seed}(1)
+\hlfunctioncall{set.seed}(1)     \hlcomment{# reset the R RNG}
 \hlfunctioncall{identical}(.O$\hlfunctioncall{orng}(10), a)
 \end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+}
+
+In this example, we first draw ten random number distributed $U(0,1)$ using
+the default generator in R. We then define an Octave function from R. Similar
+to how the \pkg{inline} package \citep{CRAN:inline} handles C or C++ code, we
+simply define a character string which then passed the Octave interpreter via
+the \verb|o_source()| function.  We re-set the seed of the underlying RNG in
+R and call our Octave function. As it actually calls back into the RNG from
+R, our two vectors are the same.  This is a critically important feature to
+ensure reproducibility.
+
+We can also define functions which draws from the Gamma distribution:
+{\small
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-
-\hlcomment{## similarly for Gamma:}
-\hlfunctioncall{o_source}(text="function [x] = \hlfunctioncall{orngg}(n)
-     x = \hlfunctioncall{randg}(1, n);
-end
+\hlcomment{## define a Gamma RNG draw function}
+\hlfunctioncall{o_source}(text="
+  function x = \hlfunctioncall{orngg}(n)
+    x = \hlfunctioncall{randg}(1, n);
+  end
 ")
-\hlcomment{## returns a 500 x 500 matrix}
 \hlfunctioncall{set.seed}(42)
-\hlcomment{## same as 'lightblue' below so we have  'randg(a, N)/b' == rgamma(a,b)}
-\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500),ncol=1))/2))
+\hlcomment{## 'flatten' 500x500 matrix into vector}
+\hlcomment{## we have  'randg(a, N)/b' == rgamma(a,b)}
+x1 <- \hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500), ncol=1))
+x2 <- \hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500), ncol=1))/2
+x3 <- \hlfunctioncall{as.vector}(\hlfunctioncall{matrix}(.O$\hlfunctioncall{orngg}(500), ncol=1))*2
+\hlfunctioncall{plot}(\hlfunctioncall{density}(x1),
+     ylim=\hlfunctioncall{c}(0,1.8), main=\hlstring{"Calling from Octave"})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(x2), col=\hlstring{'lightblue'})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(x3), col=\hlstring{'gray'})
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng1} 
-\begin{kframe}\begin{alltt}
-
-\hlcomment{## about the same in R:}
-\hlfunctioncall{set.seed}(42)
-\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,1)), ylim=\hlfunctioncall{c}(0,1.8))
-\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,2)), col=\hlstring{'gray'})
-\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(25000,1,1/2)), col=\hlstring{'lightblue'})
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{/home/renaud/Documents/projects/RcppOctave/pkg/vignettes/figure/RJwrapper-rng2} 
+\includegraphics[width=\maxwidth]{/home/edd/svn/rcppoctave/pkg/vignettes/figure/RJwrapper-rngGamma} 
 
 \end{knitrout}
 
+}
 
+As \pkg{RcppOctave} ensures that Octave calls back into the R random-number
+generator, we can generate the same chart directly from R:
+
+{\small
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{set.seed}(42)  \hlcomment{# reset RNG}
+N <- 25000
+\hlfunctioncall{plot}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,1)),
+     ylim=\hlfunctioncall{c}(0,1.8), main=\hlstring{"Calling rgamma from R"})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,2)), col=\hlstring{'lightblue'})
+\hlfunctioncall{lines}(\hlfunctioncall{density}(\hlfunctioncall{rgamma}(N,1,1/2)), col=\hlstring{'gray'})
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{/home/edd/svn/rcppoctave/pkg/vignettes/figure/RJwrapper-rngGammaR} 
+
+\end{knitrout}
+
+}
 
 \bibliography{../inst/REFERENCES}
 
 \address{Dirk Eddelbuettel \\
-  %Affiliation\\
+  Debian Project \\
   River Forest, IL\\
   USA}\\
 \email{edd@debian.org}
