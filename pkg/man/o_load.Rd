@@ -17,7 +17,8 @@
   Loads variables from a file, a list or an environment.
 }
 \section{Octave Documentation for \emph{load}}{
-  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(load,rd=TRUE)}
+  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(load,
+  format='rd')}
 
   \emph{[Generated from
   Octave-\Sexpr{RcppOctave::o_version()} on

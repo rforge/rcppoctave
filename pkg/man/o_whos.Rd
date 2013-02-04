@@ -21,7 +21,8 @@
   of the variables defined in the current Octave session.
 }
 \section{Octave Documentation for \emph{whos}}{
-  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(whos,rd=TRUE)}
+  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(whos,
+  format='rd')}
 
   \emph{[Generated from
   Octave-\Sexpr{RcppOctave::o_version()} on

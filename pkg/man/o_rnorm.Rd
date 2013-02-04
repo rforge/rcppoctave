@@ -19,7 +19,8 @@
   \code{\link{o_runif}} for more details.
 }
 \section{Octave Documentation for \emph{randn}}{
-  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(randn,rd=TRUE)}
+  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(randn,
+  format='rd')}
 
   \emph{[Generated from
   Octave-\Sexpr{RcppOctave::o_version()} on

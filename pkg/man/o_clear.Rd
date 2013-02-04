@@ -27,7 +27,8 @@
   The function \code{o_rm} is an alias to \code{o_clear}.
 }
 \section{Octave Documentation for \emph{clear}}{
-  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(clear,rd=TRUE)}
+  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(clear,
+  format='rd')}
 
   \emph{[Generated from
   Octave-\Sexpr{RcppOctave::o_version()} on

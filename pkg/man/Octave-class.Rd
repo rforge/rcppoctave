@@ -10,6 +10,11 @@
 \section{Methods}{
   \describe{
 
+  \item{[[}{\code{signature(x = "Octave")}: The method
+  \code{[[} provides an alternative way of retrieving
+  Octave objects, and is equivalent to \code{o_get(name)}.
+  }
+
   \item{$}{\code{signature(x = "Octave")}: The method
   \code{$} provides a direct way of calling Octave
   functions or retrieving variables from Octave base

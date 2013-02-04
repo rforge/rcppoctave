@@ -29,7 +29,8 @@
   subsequent calls of \code{\link{.CallOctave}}.
 }
 \section{Octave Documentation for \emph{source}}{
-  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(source,rd=TRUE)}
+  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(source,
+  format='rd')}
 
   \emph{[Generated from
   Octave-\Sexpr{RcppOctave::o_version()} on
