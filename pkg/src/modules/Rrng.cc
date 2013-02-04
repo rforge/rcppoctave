@@ -220,7 +220,7 @@ RCPP_OCTAVE_HELP_NOTE)
 }
 
 DEFUN_DLD (randg, args, ,
-"USAGE: E = randg( n [, k, shape, scale])\n\n"
+"USAGE: E = randg(shape, [n, p, scale])\n\n"
 "Generates Gamma random variates as R function 'rgamma' -- using the current RNG from R."
 "\n\nPossible calls:\n"
 "randg(shape)				returns a single draw from G(shape, 1)\n"
