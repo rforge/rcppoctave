@@ -20,6 +20,18 @@ y1 <- rgamma(N,9,1)
 y2 <- rgamma(N,4,1)
 y3 <- rgamma(N,1,1,4)
 
+#NOTE: RcppOctave's Octave function randg already has a scale parameter:
+set.seed(42)
+z1 <- c(.O$randg(9,N,1,1))
+z2 <- c(.O$randg(4,N,1,1))
+z3 <- c(.O$randg(1,N,1,4))
+
+stopifnot(all.equal(x1,z1))
+stopifnot(all.equal(x2,z2))
+stopifnot(all.equal(x3,z3))
+# see also wrapper function ?o_rgamma, that is more similar to the other o_* RNG functions
+# in term of parameter order.
+
 stopifnot(all.equal(x1,y1))
 stopifnot(all.equal(x2,y2))
 stopifnot(all.equal(x3,y3))

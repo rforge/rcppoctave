@@ -33,7 +33,7 @@ Rgibbs <- function(N,thin) {
 ## We can also try the R compiler on this R function
 RCgibbs <- cmpfun(Rgibbs)
 
-o_source(text='
+Mgibbs <- OctaveFunction('
   function mat = Mgibbs(N, thin)
     mat = zeros(N, 2);
     x = 0;
@@ -62,7 +62,7 @@ o_source(text='
 set.seed(42)
 matR <- Rgibbs(1000,10)
 set.seed(42)
-matO <- .O$Mgibbs(1000,10)
+matO <- Mgibbs(1000,10)
 stopifnot(all.equal(matR, matO))
 
 ##print(summary(matR))
@@ -73,7 +73,7 @@ N <- 1000
 thn <- 100
 res <- benchmark(Rgibbs(N, thn),
                  RCgibbs(N, thn),
-                 .O$Mgibbs(N, thn),
+                 Mgibbs(N, thn),
                  columns=c("test", "replications", "elapsed",
                            "relative", "user.self", "sys.self"),
                  order="relative",
