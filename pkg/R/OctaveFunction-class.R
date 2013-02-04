@@ -16,7 +16,18 @@ setClass("OctaveFunction", contains="function"
 #' \code{OctaveFunction} objects, which wrap calls to Octave functions into 
 #' plain R functions.
 #' 
-#' @param name the name or definition of an Octave function.
+#' \code{OctaveFunction} objects can be created from existing Octave function
+#' using their name, or directly from their Octave implementation.
+#' In this case, the Octave code is parsed to extract and use the name of the first 
+#' function defined therein.
+#'  
+#' @param fun the name of an existing Octave function or, Octave code that 
+#' defines a function.
+#' @param check logical that indicates if the existence of the Octave function 
+#' should be checked.
+#' If function does not exist then, an error or a warning is thrown if \code{check=TRUE}
+#' or \code{check=FALSE} respectively.
+#' The existence check can be completly disabled with \code{check=NA}.   
 #'
 #' @rdname OctaveFunction-class
 #' @export
@@ -39,29 +50,37 @@ setClass("OctaveFunction", contains="function"
 #' myfun
 #' myfun(10)
 #' 
-OctaveFunction <- function(name){
+OctaveFunction <- function(fun, check=TRUE){
 	
 	e <- new.env()
-	# extract function name and save code in temporary file 
-	# if necessary
-	if( any(d <- is_mdef(name)) ){
-		o_source(text=name)
-		name <- names(d)[which(d)]
+	# use name as text if detected as an octave function defintion
+	if( any(d <- is_mdef(fun)) ){
+		o_source(text=fun)
+		fun <- names(d)[which(d)[1L]]
 	}
 	
+	if( !isNA(check) && !o_exist(fun) ){
+		if( isTRUE(check) ){
+			stop("Could not create OctaveFunction object: Octave function '", fun, "' does not exist")
+		}else if( isFALSE(check) ){
+			warning("Octave function '", fun, "' does not exist: calling the created OctaveFunction object might throw an error.")
+		}
+	}
+	
+	# define wrapper function
 	f <- evalq({
-		.NAME <- name
+		.NAME <- fun
 		function(...){
 			.CallOctave(.NAME, ...)		
 		}		
 	}, e)
-	new('OctaveFunction', f, name=name)
+	new('OctaveFunction', f, name=fun)
 }
 
 
 is_mdef <- function(x){
-	m <- str_match(x, "((^)|([\n;]))\\s*function\\s*(\\[[^]*]\\])?\\s*=\\s*([^(]+)")
-	setNames(!is.na(m[,1]), m[,6])
+	m <- str_match(x, "((^)|([\n;]))\\s*function\\s*(((\\[([^]]*)\\])|([^=( \t]*))\\s*=)?\\s*([^(]+)")
+	setNames(!is.na(m[,1]), m[,10])
 }
 
 #' @rdname OctaveFunction-class

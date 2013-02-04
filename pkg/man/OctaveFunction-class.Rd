@@ -5,23 +5,31 @@
 \alias{show,OctaveFunction-method}
 \title{Wrapping and Defining Octave Functions from R}
 \usage{
-  OctaveFunction(name)
+  OctaveFunction(fun, check = TRUE)
 
   \S4method{show}{OctaveFunction}(object)
 }
 \arguments{
-  \item{name}{the name or definition of an Octave
-  function.}
+  \item{fun}{the name of an existing Octave function or,
+  Octave code that defines a function.}
+
+  \item{check}{logical that indicates if the existence of
+  the Octave function should be checked. If function does
+  not exist then, an error or a warning is thrown if
+  \code{check=TRUE} or \code{check=FALSE} respectively. The
+  existence check can be completly disabled with
+  \code{check=NA}.}
 
   \item{object}{Any R object}
 }
 \description{
   Wrapping and Defining Octave Functions from R
 
-  The function \code{OctaveFunction} is a
-  constructor/factory method for \code{OctaveFunction}
-  objects, which wrap calls to Octave functions into plain
-  R functions.
+  \code{OctaveFunction} objects can be created from
+  existing Octave function using their name, or directly
+  from their Octave implementation. In this case, the
+  Octave code is parsed to extract and use the name of the
+  first function defined therein.
 }
 \section{Slots}{
   \describe{
