@@ -22,7 +22,7 @@ OctaveModule:
 	cd modules;\
 	make; \
 	mkdir -p $(OCT_MODULES_PATH); \
-	echo "Moving Octave modules to '$(OCT_MODULES_PATH)'"; \
+	echo "Copying Octave modules to '$(OCT_MODULES_PATH)'"; \
 	cp -f PKG_ADD *.oct $(OCT_MODULES_PATH);
 
 clean:
