@@ -69,6 +69,10 @@ test.o_get <- function(){
 	checkIdentical(o_get(X='b', Y='c'), list(X=l$b, Y=l$c), "Two named arguments: returns renamed variables")
 	checkIdentical(o_get(X='b', 'c', 'd'), list(X=l$b, c=l$c, d=l$d), "Mix of named/unnamed arguments: returns renamed/named variable list")
 	
+	# check using $ and [[
+	checkIdentical(o_get('b'), .O$b, 'Binding of .O$ to o_get works')
+	checkIdentical(o_get('b'), .O[['b']], 'Binding of [[ to o_get works')
+	
 	f <- o_get('svd')
 	checkTrue( is(f, 'OctaveFunction'), "Get of a function returns an OctaveFunction object")
 	checkIdentical( f@name, 'svd', "Get of a function returns the correct OctaveFunction object")
