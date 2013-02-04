@@ -103,6 +103,17 @@ setMethod('.DollarNames', 'Octave', .DollarNames.Octave)
 #' @export
 setMethod('$', 'Octave', function(x, name)	o_get(name))
 
+#' The method \code{[[} provides an alternative way of retrieving Octave objects,
+#' and is equivalent to \code{o_get(name)}.
+#' 
+#' @param exact logical not used.
+#'  
+#' @rdname OctaveInterface
+#' @seealso \code{\link{o_get}}
+#' @export
+setMethod('[[', 'Octave', function(x, i, exact=TRUE)	o_get(i))
+
+
 #' The method \code{$<-} allow to directly assign/set Octave variables via e.g.
 #' \code{.O$a <- 10}. 
 #' 
