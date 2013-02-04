@@ -76,6 +76,16 @@ OctaveConfig <- local({
 			
 			# add a configuration variable for the module path
 			conf$modules <- packagePath('modules')
+			if( pkgmaker::isDevNamespace() ){ # fix module path due changes in devtools compilation step
+				conf$modules <- file.path(tempdir(), packageName(), 'modules')
+				# create module directory
+				if( !file.exists(conf$modules) ){
+					message("Faking devtools compilation directory '", conf$modules, "'")					
+					dir.create(conf$modules, recursive=TRUE)
+					src <- packagePath('src/modules')
+					file.copy(file.path(src, c('PKG_ADD', list.files(src, pattern="*.oct$"))), conf$modules)
+				}				
+			} 
 			
 			.OctaveConfig <<- conf
 		}
