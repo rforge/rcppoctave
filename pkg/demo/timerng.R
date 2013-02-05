@@ -26,6 +26,7 @@ stopifnot(all.equal(x1, y1))
 
 res <- benchmark(.O$orndg(9,1,N),
                  rgamma(N,9,1),
+                 o_rgamma(9,N,1),
                  columns = c("test", "replications", "elapsed", "relative"),
                  order="relative",
                  replications=1000)
@@ -39,6 +40,7 @@ stopifnot(all.equal(x1, y1))
 
 res <- benchmark(.O$orndn(N),
                  rnorm(N),
+                 o_rnorm(N,1),
                  columns = c("test", "replications", "elapsed", "relative"),
                  order="relative",
                  replications=1000)
