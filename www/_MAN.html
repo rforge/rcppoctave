@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>. RcppOctave 0.8.12</title>
+<title>. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,12 +24,13 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href=""><i class="icon-home icon-white"></i> Index</a></li>
        <li><a href="_MAN.html">Documentation</a></li>
        <li><a href="_DEMOS.html">Demos</a></li>
+       <li><a href="_PAGE-FAQ.html">FAQ</a></li>
        <li><a href="_REFERENCES.html">References</a></li>
        </ul>
    	  </div>
@@ -58,7 +63,7 @@
     <code><a href="mfiles.html">mfiles</a></code><br />M Files</li>
 
   <li>
-    <code><a href="OctaveInterface.html">.O</a></code>($&lt;-,Octave-method, $,Octave-method)<br />Direct Interface to Octave</li>
+    <code><a href="OctaveInterface.html">.O</a></code>([[,Octave-method, $&lt;-,Octave-method, $,Octave-method)<br />Direct Interface to Octave</li>
 
   <li>
     <code><a href="o_addpath.html">o_addpath</a></code>(o_inpath)<br />Manipulating Octave Search Path</li>
@@ -74,6 +79,9 @@
 
   <li>
     <code><a href="o_eval.html">o_eval</a></code><br />Evaluate an Octave Expression</li>
+
+  <li>
+    <code><a href="o_exist.html">o_exist</a></code><br />Checking Octave Variables</li>
 
   <li>
     <code><a href="o_help.html">o_help</a></code>(o_doc)<br />Accessing Octave Help and Documentation Pages</li>

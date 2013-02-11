@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>OctaveConfig. RcppOctave 0.8.12</title>
+<title>OctaveConfig. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -66,7 +70,30 @@
       <p>Cached RcppOctave Configuration Paths</p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>OctaveConfig()
+</div>
+<div class='output'>$lib
+                                LIBDIR                              OCTLIBDIR 
+             "/usr/lib/i386-linux-gnu" "/usr/lib/i386-linux-gnu/octave/3.6.2" 
+
+$include
+                        INCLUDEDIR                      OCTINCLUDEDIR 
+                    "/usr/include" "/usr/include/octave-3.6.2/octave" 
+
+$modules
+[1] "/tmp/RtmpLmnbom/filed637ce4483/RcppOctave/modules"
+
+</div><div class='input'>OctaveConfig('lib')
+</div>
+<div class='output'>[1] "/usr/lib/i386-linux-gnu"             
+[2] "/usr/lib/i386-linux-gnu/octave/3.6.2"
+</div><div class='input'>OctaveConfig('include')
+</div>
+<div class='output'>[1] "/usr/include"                     "/usr/include/octave-3.6.2/octave"
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>OctaveConfig</li>

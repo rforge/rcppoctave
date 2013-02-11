@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>o_help. RcppOctave 0.8.12</title>
+<title>o_help. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -40,7 +44,8 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre>o_help(NAME, character.only = FALSE, show = interactive(), rd = FALSE)
+    <pre>o_help(NAME, character.only = FALSE, show = interactive(), format = c("plain", "rd", 
+  "txt", "latex", "HTML"))
 
 o_doc(FUNCTION_NAME)</pre>
     
@@ -61,11 +66,16 @@ o_doc(FUNCTION_NAME)</pre>
   (default), e.g. using a pager, or only returned as a
   single string. Note that when <code>show=TRUE</code>, the
   string is still returned but invisibly.</dd>
-      <dt>rd</dt>
-      <dd>a logical that specifies if the result should
-  be returned in a suitable way for including in Rd files.
-  If <code>TRUE</code>, it wraps the Octave documentation string
-  in Rd code that is rendered as in the Octave console.</dd>
+      <dt>format</dt>
+      <dd>a specification of the output format. If
+  <code>TRUE</code> or <code>'rd'</code>, the result is Rd code that
+  wraps the Octave documentation string and is suitable for
+  inclusion into Rd files. If one of the strings
+  <code>'txt', 'latex'</code> or <code>'HTML'</code>, then the result
+  is formated using the corresponding Rd conversion
+  function from the <span class = "pkg">tools</span> package
+  <code>Rd2txt</code>, <code>Rd2latex</code> or
+  <code>Rd2HTML</code>.</dd>
       <dt>FUNCTION_NAME</dt>
       <dd>the name of the function from which
   to show the documentation. See the relevant <em>Octave
@@ -127,9 +137,9 @@ o_doc(FUNCTION_NAME)</pre>
       <p></p>
   
       <p><em>[Generated from
-  Octave-3.6.1
+  Octave-3.6.2
  on
-  2012-12-17 16:56:34
+  2013-02-11 02:04:23
 ]</em></p>
   
     </div>
@@ -159,13 +169,26 @@ o_doc(FUNCTION_NAME)</pre>
       <p></p>
   
       <p><em>[Generated from
-  Octave-3.6.1
+  Octave-3.6.2
  on
-  2012-12-17 16:56:34
+  2013-02-11 02:04:23
 ]</em></p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'></div><div class='input'></div><div class='input'>o_help(print)
+</div><div class='input'>o_help(rand)
+</div><div class='input'># or equivalently</div><div class='input'>o_help('rand')
+</div><div class='input'></div><div class='input'># to include in Rd files, use argument rd=TRUE in an \Sexpr:</div><div class='input'>## <strong>Not run</strong>: </div><div class='input'>#  \Sexpr[results=rd,stage=render]{RcppOctave::o_help(rand, format='rd')}</div><div class='input'># ## <strong>End(Not run)</strong></div><div class='input'></div><div class='input'># to see the included Rd code</div><div class='input'>o_help(rand, format=TRUE)
+</div>
+<div class='output'>[1] "\\if{html}{\\out{<pre>USAGE: U = rand( n [, k])\n\nGenerates uniform random variates as R function 'runif' -- using the current RNG from R.\n\nPossible calls:\nrand(n, k)   returns a n*k matrix with uncorrelated U(0, 1) deviates drawn in columns\nrand(n)      returns a n*n matrix with uncorrelated U(0, 1) deviates drawn in columns\n\n\nNOTE:\nThis function substitutes Octave original function in calls from RcppOctave\n\n</pre>}}\n\\if{text}{\\preformatted{USAGE: U = rand( n [, k])\n\nGenerates uniform random variates as R function 'runif' -- using the current RNG from R.\n\nPossible calls:\nrand(n, k)   returns a n*k matrix with uncorrelated U(0, 1) deviates drawn in columns\nrand(n)      returns a n*n matrix with uncorrelated U(0, 1) deviates drawn in columns\n\n\nNOTE:\nThis function substitutes Octave original function in calls from RcppOctave\n\n}}\n\\if{latex}{\\out{\\begin{verbatim}USAGE: U = rand( n [, k])\n\nGenerates uniform random variates as R function 'runif' -- using the current RNG from R.\n\nPossible calls:\nrand(n, k)   returns a n*k matrix with uncorrelated U(0, 1) deviates drawn in columns\nrand(n)      returns a n*n matrix with uncorrelated U(0, 1) deviates drawn in columns\n\n\nNOTE:\nThis function substitutes Octave original function in calls from RcppOctave\n\n\\end{verbatim}}}\n"
+</div><div class='input'>o_help(rand, format='HTML')
+</div><div class='input'>o_help(rand, format='latex')
+</div><div class='input'>o_doc(text)
+</div><div class='input'># or equivalently</div><div class='input'>o_doc('text')
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>o_doc</li><li>o_help</li>

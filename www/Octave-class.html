@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>Octave-class. RcppOctave 0.8.12</title>
+<title>Octave-class. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -52,25 +56,35 @@
     <div class="Methods">
       <h2>Methods</h2>
       
-      <p><span class='describe'></p>
+      <p><ol>
+<li>[[<code>signature(x = "Octave")</code>: The method
+  <code>[[</code> provides an alternative way of retrieving
+  Octave objects, and is equivalent to <code>o_get(name)</code>.</p>
   
-      <p>$<code>signature(x = "Octave")</code>: The method
+      <p></li>
+<li>$<code>signature(x = "Octave")</code>: The method
   <code>$</code> provides a direct way of calling Octave
   functions or retrieving variables from Octave base
   context, via e.g. <code>.O$svd(x)</code> or <code>.O$a</code>. It is
   equivalent to <code>o_get(name)</code>.</p>
   
-      <p>$<-<code>signature(x = "Octave")</code>: The method
+      <p></li>
+<li>$<-<code>signature(x = "Octave")</code>: The method
   <code>$<-</code> allow to directly assign/set Octave variables
   via e.g. <code>.O$a <- 10</code>.</p>
   
-      <p>.DollarNames<code>signature(x = "Octave")</code>:
+      <p></li>
+<li>.DollarNames<code>signature(x = "Octave")</code>:
   Auto-completion for <code><a href='Octave-class.html'>Octave-class</a></code> objects</p>
   
-      <p>show<code>signature(object = "Octave")</code>: Show
+      <p></li>
+<li>show<code>signature(object = "Octave")</code>: Show
   method for <code><a href='Octave-class.html'>Octave-class</a></code> objects</p>
   
-      <p></span></p>
+      <p></li>
+</ol></p>
+  
+      <p></p>
   
     </div>
       </div>

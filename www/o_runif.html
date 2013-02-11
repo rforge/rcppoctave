@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>o_runif. RcppOctave 0.8.12</title>
+<title>o_runif. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -125,13 +129,43 @@ This function substitutes Octave original function in calls from RcppOctave
       <p></p>
   
       <p><em>[Generated from
-  Octave-3.6.1
+  Octave-3.6.2
  on
-  2012-12-17 16:56:35
+  2013-02-11 02:04:27
 ]</em></p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Draw random uniform values (in vector form)</div><div class='input'>set.seed(123)
+</div><div class='input'>o_runif(1)
+</div>
+<div class='output'>[1] 0.2875775
+</div><div class='input'>o_runif(1, 10)
+</div>
+<div class='output'> [1] 0.7883051 0.4089769 0.8830174 0.9404673 0.0455565 0.5281055 0.8924190
+ [8] 0.5514350 0.4566147 0.9568333
+</div><div class='input'># The result is identical as calling runif</div><div class='input'>set.seed(123)
+</div><div class='input'>runif(1)
+</div>
+<div class='output'>[1] 0.2875775
+</div><div class='input'>runif(10)
+</div>
+<div class='output'> [1] 0.7883051 0.4089769 0.8830174 0.9404673 0.0455565 0.5281055 0.8924190
+ [8] 0.5514350 0.4566147 0.9568333
+</div><div class='input'></div><div class='input'># Draw random uniform values (in matrix form)</div><div class='input'>set.seed(123)
+</div><div class='input'>o_runif(2)
+</div>
+<div class='output'>          [,1]      [,2]
+[1,] 0.2875775 0.4089769
+[2,] 0.7883051 0.8830174
+</div><div class='input'>o_runif(2, 5)
+</div>
+<div class='output'>          [,1]      [,2]      [,3]      [,4]      [,5]
+[1,] 0.9404673 0.5281055 0.5514350 0.9568333 0.6775706
+[2,] 0.0455565 0.8924190 0.4566147 0.4533342 0.5726334
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>o_runif</li>

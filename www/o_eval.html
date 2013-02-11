@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>o_eval. RcppOctave 0.8.12</title>
+<title>o_eval. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -91,13 +95,82 @@
       <p></p>
   
       <p><em>[Generated from
-  Octave-3.6.1
+  Octave-3.6.2
  on
-  2012-12-17 16:56:34
+  2013-02-11 02:02:21
 ]</em></p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># assign some variable</div><div class='input'>o_eval("a=10")
+</div>
+<div class='output'>[1] 10
+</div><div class='input'></div><div class='input'># retrieve its value in a subsequent call</div><div class='input'>o_eval("a")
+</div>
+<div class='output'>[1] 10
+</div><div class='input'></div><div class='input'>o_get('a')
+</div>
+<div class='output'>[1] 10
+</div><div class='input'></div><div class='input'># use its value</div><div class='input'>o_eval("b = a^2")
+</div>
+<div class='output'>[1] 100
+</div><div class='input'></div><div class='input'></div><div class='input'># multiple expression can be evaluated</div><div class='input'>o_eval(a="10^3", singular="svd(rand(4,4))", random="rand(10, 1)")
+</div>
+<div class='output'>$a
+[1] 1000
+
+$singular
+           [,1]
+[1,] 1.67489786
+[2,] 0.47403439
+[3,] 0.17974037
+[4,] 0.06272575
+
+$random
+            [,1]
+ [1,] 0.71300042
+ [2,] 0.07968877
+ [3,] 0.93250886
+ [4,] 0.72271243
+ [5,] 0.71118387
+ [6,] 0.28691387
+ [7,] 0.87805502
+ [8,] 0.71363452
+ [9,] 0.75717921
+[10,] 0.13562139
+
+</div><div class='input'># or from a list</div><div class='input'>l <- list(a="10^3", singular="svd(rand(4,4))", random="rand(10, 1)")
+</div><div class='input'>o_eval(l)
+</div>
+<div class='output'>$a
+[1] 1000
+
+$singular
+          [,1]
+[1,] 1.8794878
+[2,] 0.5986542
+[3,] 0.3427839
+[4,] 0.1251858
+
+$random
+            [,1]
+ [1,] 0.58189911
+ [2,] 0.06955042
+ [3,] 0.93331713
+ [4,] 0.96913021
+ [5,] 0.87567968
+ [6,] 0.02318190
+ [7,] 0.58640874
+ [8,] 0.11178659
+ [9,] 0.50934943
+[10,] 0.24885688
+
+</div><div class='input'></div><div class='input'># if the evaluation fails then an error is thrown</div><div class='input'>## <strong>Not run</strong>:  o_eval("a=svd()") </div><div class='input'></div><div class='input'># except if argument CATCH is provided</div><div class='input'>o_eval("a=svd()", CATCH="a=2")
+</div>
+<div class='output'>[1] 2
+</div><div class='input'></div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>o_eval</li>

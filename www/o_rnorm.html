@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>o_rnorm. RcppOctave 0.8.12</title>
+<title>o_rnorm. RcppOctave 0.8.16</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -10,6 +10,10 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="css/highlight.css" rel="stylesheet">
 <link href="css/staticdocs.css" rel="stylesheet">
+
+<!-- d3 word cloud -->
+<script src="js/d3.v2.min.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
 
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.12</a>
+      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -85,13 +89,35 @@ This function substitutes Octave original function in calls from RcppOctave
       <p></p>
   
       <p><em>[Generated from
-  Octave-3.6.1
+  Octave-3.6.2
  on
-  2012-12-17 16:56:35
+  2013-02-11 02:04:27
 ]</em></p>
   
     </div>
-      </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Draw random normal values (in vector form)</div><div class='input'>set.seed(123)
+</div><div class='input'>o_rnorm(1)
+</div>
+<div class='output'>[1] -0.5604756
+</div><div class='input'>o_rnorm(1, 10)
+</div>
+<div class='output'> [1] -0.23017749  1.55870831  0.07050839  0.12928774  1.71506499  0.46091621
+ [7] -1.26506123 -0.68685285 -0.44566197  1.22408180
+</div><div class='input'></div><div class='input'># Draw random normal values (in matrix form)</div><div class='input'>set.seed(123)
+</div><div class='input'>o_rnorm(2)
+</div>
+<div class='output'>           [,1]       [,2]
+[1,] -0.5604756 1.55870831
+[2,] -0.2301775 0.07050839
+</div><div class='input'>o_rnorm(2, 5)
+</div>
+<div class='output'>          [,1]       [,2]       [,3]      [,4]      [,5]
+[1,] 0.1292877  0.4609162 -0.6868529 1.2240818 0.4007715
+[2,] 1.7150650 -1.2650612 -0.4456620 0.3598138 0.1106827
+</div></pre>
+  </div>
   <div class="span4">
     <!-- <ul>
       <li>o_rnorm</li>
