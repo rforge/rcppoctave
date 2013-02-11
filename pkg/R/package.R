@@ -31,10 +31,11 @@
 #' .CallOctave('svd', matrix(1:9, 3))
 #' o_help('svd')
 #' 
-#' @useDynLib RcppOctave
 #' @import pkgmaker
 #' @seealso See \code{\link{.CallOctave}}, \code{\link{o_source}}, \code{\link{o_help}}
 NULL
+
+## #' @useDynLib RcppOctave
 
 #inlineCxxPlugin <- function (...) 
 #{
