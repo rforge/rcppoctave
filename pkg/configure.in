@@ -9,7 +9,7 @@
 ## Copyright (C) 2011 Renaud Gaujoux
 
 # The version set here will propagate to other files from here
-AC_INIT([RcppOctave], 0.8.3)
+AC_INIT([RcppOctave], 0.9)
 
 # Checks for common programs using default macros
 AC_PROG_CC
@@ -96,7 +96,7 @@ else
         # install as usual in R
         install.packages('RcppOctave')
         
-      * For Octave 3.2.4 (requires extra step)
+      * For Octave 3.2.4 (might require extra command)
         sudo apt-get install octave3.2 octave3.2-headers
         # requires to ecplicitly export Octave lib directory 
         export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:`octave-config -p OCTLIBDIR`

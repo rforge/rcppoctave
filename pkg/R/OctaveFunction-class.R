@@ -59,7 +59,7 @@ OctaveFunction <- function(fun, check=TRUE){
 		fun <- names(d)[which(d)[1L]]
 	}
 	
-	if( !isNA(check) && !o_exist(fun) ){
+	if( !is_NA(check) && !o_exist(fun) ){
 		if( isTRUE(check) ){
 			stop("Could not create OctaveFunction object: Octave function '", fun, "' does not exist")
 		}else if( isFALSE(check) ){
