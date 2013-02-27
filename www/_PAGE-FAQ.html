@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>. RcppOctave 0.8.16</title>
+<title>. RcppOctave 0.9</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -24,7 +24,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.8.16</a>
+      <a class="brand" href="index.html">RcppOctave 0.9</a>
       <div class="nav">
         <ul class="nav">
         <li><a href=""><i class="icon-home icon-white"></i> Index</a></li>
@@ -234,11 +234,20 @@ hljs.initHighlightingOnLoad();
 <p>Versions later than 3.2.4 should be supported, however, we recommend to use version 3.6.2 or later.
 See question about the installation error due to library liboctinterp in Octave 3.2.4.</p>
 
+<p>Octave 3.6.2 is on the official Ubuntu Quantal (12.11) repository, but can be installed on Ubuntu Precise LTS (12.04) and older from the ppa <strong>ppa:octave/stable</strong> :</p>
+
+<pre><code> sudo add-apt-repository ppa:octave/stable
+ sudo apt-get update
+ sudo apt-get install octave liboctave-dev
+</code></pre>
+
+<p>More info: <a href="https://launchpad.net/%7Eoctave">https://launchpad.net/~octave</a></p>
+
 <h2>Why RcppOctave does not install correctly with Octave 3.2.4 due to liboctinterp.so?</h2>
 
 <p>We don&#39;t really know what suddenly caused this issue, which comes from the fact that liboctinterp.so is not found when loading RcppOctave&#39;s own library.</p>
 
-<p>The following work around seem to work for most users: </p>
+<p>The following work around seems to work for most users: </p>
 
 <pre><code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`octave-config -p OCTLIBDIR`
 Rscript -e &quot;install.packages(&#39;RcppOctave&#39;)&quot;
@@ -246,7 +255,7 @@ Rscript -e &quot;install.packages(&#39;RcppOctave&#39;)&quot;
 
 <p><small>Thanks to Cheng Zhang: <a href="http://jchain.github.com/blog/2013/01/28/install-rcppoctave-if-octave/">http://jchain.github.com/blog/2013/01/28/install-rcppoctave-if-octave/</a></small></p>
 
-<p>Otherwise the version on R-forge should work out of the box in Octave 3.2.4:</p>
+<p>Otherwise the latest version on R-forge (&gt;= 0.8.17) should work out of the box in Octave 3.2.4:</p>
 
 <pre><code class="r">install.pacakges(&quot;RcppOctave&quot;, repos = c(getOption(&quot;repos&quot;), &quot;http://r-forge.r-project.org&quot;))
 </code></pre>
