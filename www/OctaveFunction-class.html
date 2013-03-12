@@ -6,11 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
+<!-- bootstrap css -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
+<!-- highlighting css -->
 <link href="css/highlight.css" rel="stylesheet">
+<!-- custom css -->
 <link href="css/staticdocs.css" rel="stylesheet">
 
+<!-- bootstrap javascript -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <!-- d3 word cloud -->
 <script src="js/d3.v2.min.js"></script>
 <script src="js/d3.layout.cloud.js"></script>
@@ -101,21 +107,21 @@
 <div class='output'>             [,1]
 [1,] 1.684810e+01
 [2,] 1.068370e+00
-[3,] 6.859989e-17
+[3,] 3.356916e-16
 </div><div class='input'></div><div class='input'>orand <- OctaveFunction('rand')
 </div><div class='input'>orand()
 </div>
-<div class='output'>[1] 0.5501456
+<div class='output'>[1] 0.9675808
 </div><div class='input'>orand(2)
 </div>
 <div class='output'>          [,1]      [,2]
-[1,] 0.0919399 0.7144326
-[2,] 0.1132103 0.1313129
+[1,] 0.5026096 0.9117872
+[2,] 0.5601476 0.4895135
 </div><div class='input'>orand(2, 3)
 </div>
-<div class='output'>          [,1]      [,2]       [,3]
-[1,] 0.4081837 0.1164442 0.09807306
-[2,] 0.9837736 0.3593966 0.69351607
+<div class='output'>           [,1]      [,2]       [,3]
+[1,] 0.09362107 0.8426890 0.09203605
+[2,] 0.24246013 0.3434615 0.13587622
 </div><div class='input'></div><div class='input'># From source code</div><div class='input'>myfun <- OctaveFunction('function [Y] = somefun(x)
 	Y = x * x;
 	end

@@ -6,11 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
+<!-- bootstrap css -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
+<!-- highlighting css -->
 <link href="css/highlight.css" rel="stylesheet">
+<!-- custom css -->
 <link href="css/staticdocs.css" rel="stylesheet">
 
+<!-- bootstrap javascript -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <!-- d3 word cloud -->
 <script src="js/d3.v2.min.js"></script>
 <script src="js/d3.layout.cloud.js"></script>
@@ -95,9 +101,9 @@
       <p></p>
   
       <p><em>[Generated from
-  Octave-3.6.3
+  Octave-3.6.4
  on
-  2013-02-27 16:55:23
+  2013-03-12 17:09:32
 ]</em></p>
   
     </div>
@@ -121,24 +127,24 @@
 [1] 1000
 
 $singular
-            [,1]
-[1,] 2.262159655
-[2,] 1.046915879
-[3,] 0.566184277
-[4,] 0.006278344
+           [,1]
+[1,] 1.30690799
+[2,] 0.82106316
+[3,] 0.51645669
+[4,] 0.05857077
 
 $random
-            [,1]
- [1,] 0.36168980
- [2,] 0.49996948
- [3,] 0.63760668
- [4,] 0.52123586
- [5,] 0.85306649
- [6,] 0.05431032
- [7,] 0.12064885
- [8,] 0.12624154
- [9,] 0.62060567
-[10,] 0.10619883
+           [,1]
+ [1,] 0.6805941
+ [2,] 0.4900781
+ [3,] 0.3764110
+ [4,] 0.3034592
+ [5,] 0.7145506
+ [6,] 0.5222933
+ [7,] 0.8964526
+ [8,] 0.6818294
+ [9,] 0.7868580
+[10,] 0.6680580
 
 </div><div class='input'># or from a list</div><div class='input'>l <- list(a="10^3", singular="svd(rand(4,4))", random="rand(10, 1)")
 </div><div class='input'>o_eval(l)
@@ -148,23 +154,23 @@ $random
 
 $singular
           [,1]
-[1,] 2.1878538
-[2,] 0.8375964
-[3,] 0.2006956
-[4,] 0.0608589
+[1,] 2.4325621
+[2,] 0.8145109
+[3,] 0.2588234
+[4,] 0.1113678
 
 $random
-            [,1]
- [1,] 0.32481050
- [2,] 0.39780887
- [3,] 0.87417932
- [4,] 0.06817240
- [5,] 0.01264059
- [6,] 0.84522231
- [7,] 0.59779072
- [8,] 0.21334689
- [9,] 0.72734366
-[10,] 0.01135726
+           [,1]
+ [1,] 0.4787060
+ [2,] 0.8137252
+ [3,] 0.1161302
+ [4,] 0.9453823
+ [5,] 0.4964320
+ [6,] 0.3391577
+ [7,] 0.2166773
+ [8,] 0.8076725
+ [9,] 0.1061391
+[10,] 0.4241141
 
 </div><div class='input'></div><div class='input'># if the evaluation fails then an error is thrown</div><div class='input'>## <strong>Not run</strong>:  o_eval("a=svd()") </div><div class='input'></div><div class='input'># except if argument CATCH is provided</div><div class='input'>o_eval("a=svd()", CATCH="a=2")
 </div>
