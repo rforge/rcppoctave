@@ -121,7 +121,7 @@ omodules <- function(verbose=getOption('verbose')){
 	
 	path <- OctaveConfig('modules')
 	if( verbose )
-		message("Loading Octave modules for ", packageName()
+		message("Loading Octave modules for ", utils::packageName()
 				, " from '", path, "'");
 	o_addpath(path)
 }

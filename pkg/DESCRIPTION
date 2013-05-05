@@ -1,7 +1,7 @@
 Package: RcppOctave
 Type: Package
 Title: Seamless Interface to Octave -- and Matlab
-Version: 0.9
+Version: 0.9.1
 Date: 2011-06-07
 Author: Renaud Gaujoux
 Maintainer: Renaud Gaujoux <renaud@mancala.cbio.uct.ac.za>
@@ -19,7 +19,7 @@ Depends:
     methods,
     stats,
     Rcpp (>= 0.10.1),
-    pkgmaker (>= 0.12)
+    pkgmaker (>= 0.16)
 Imports:
     digest,
     stringr,

@@ -78,7 +78,7 @@ OctaveConfig <- local({
 			# add a configuration variable for the module path
 			conf$modules <- packagePath('modules')
 			if( pkgmaker::isDevNamespace() ){ # fix module path due changes in devtools compilation step
-				conf$modules <- file.path(tempdir(), packageName(), 'modules')
+				conf$modules <- file.path(tempdir(), utils::packageName(), 'modules')
 				# create module directory
 				if( !file.exists(conf$modules) ){
 					message("Faking devtools compilation directory '", conf$modules, "'")					
@@ -130,7 +130,8 @@ OctaveConfig <- local({
 	.OctaveLibs()
 	
 	# load compiled library normally or in devmode
-	if( !missing(libname) ) library.dynam(packageName(), pkgname, libname)
+	if( !isDevNamespace() ) library.dynam(utils::packageName(), pkgname, libname)
+	else dyn.load(packagePath('src', paste0(utils::packageName(), .Platform$dynlib.ext)))
 #	else compile_src() # compile source files and load
 
 	# start Octave session
@@ -143,7 +144,7 @@ OctaveConfig <- local({
 	
 	# unload compiled library normally or in devmode
 	dlls <- base::getLoadedDLLs()
-	pname <- packageName()
+	pname <- utils::packageName()
 	if ( pname %in%  names(dlls) ){
 		if( !missing(libpath) )	library.dynam.unload(pname, libpath)
 		else dyn.unload(dlls[[pname]][['path']])
