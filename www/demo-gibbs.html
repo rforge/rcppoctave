@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>Simple Gibbs sampler study following Darren Wilkinson. RcppOctave 0.9</title>
+<title>Simple Gibbs sampler study following Darren Wilkinson. RcppOctave 0.9.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -30,7 +30,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.9</a>
+      <a class="brand" href="index.html">RcppOctave 0.9.1</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_DEMOS.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -51,7 +51,8 @@
   <pre>
   <div class='input'></div><div class='input'>## Gibbs sampler in R and Octave</div><div class='input'>##</div><div class='input'>## Compare with RcppGibbs/ example in Rcpp package</div><div class='input'></div><div class='input'>## Simple Gibbs Sampler Example</div><div class='input'>## Adapted from Darren Wilkinson's post at</div><div class='input'>## http://darrenjw.wordpress.com/2010/04/28/mcmc-programming-in-r-python-java-and-c/</div><div class='input'>##</div><div class='input'>## Sanjog Misra and Dirk Eddelbuettel, June-July 2011</div><div class='input'></div><div class='input'>suppressMessages(library(compiler))
 </div><div class='input'>suppressMessages(library(rbenchmark))
-</div><div class='input'>suppressMessages(library(RcppOctave))
+</div>
+<strong class='error'>Error in library(rbenchmark): there is no package called ‘rbenchmark’</strong><div class='input'>suppressMessages(library(RcppOctave))
 </div><div class='input'></div><div class='input'>## This is Darren Wilkinsons R code (with the corrected variance)</div><div class='input'>## But we are returning only his columns 2 and 3 as the 1:N sequence</div><div class='input'>## is never used below</div><div class='input'>Rgibbs <- function(N,thin) {
     mat <- matrix(0,ncol=2,nrow=N)
     x <- 0
@@ -94,13 +95,10 @@
                            "relative", "user.self", "sys.self"),
                  order="relative",
                  replications=10)
-</div><div class='input'>print(res)
 </div>
-<div class='output'>             test replications elapsed relative user.self sys.self
-2 RCgibbs(N, thn)           10   7.703    1.000     7.685    0.004
-1  Rgibbs(N, thn)           10  11.131    1.445    11.105    0.004
-3  Mgibbs(N, thn)           10  26.456    3.435    26.389    0.024
+<strong class='error'>Error in eval(expr, envir, enclos): could not find function "benchmark"</strong><div class='input'>print(res)
 </div>
+<strong class='error'>Error in print(res): object 'res' not found</strong>
   </pre>
 </div></div>
       

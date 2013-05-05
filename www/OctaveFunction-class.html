@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>OctaveFunction-class. RcppOctave 0.9</title>
+<title>OctaveFunction-class. RcppOctave 0.9.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -30,7 +30,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.9</a>
+      <a class="brand" href="index.html">RcppOctave 0.9.1</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -107,21 +107,21 @@
 <div class='output'>             [,1]
 [1,] 1.684810e+01
 [2,] 1.068370e+00
-[3,] 3.356916e-16
+[3,] 6.859989e-17
 </div><div class='input'></div><div class='input'>orand <- OctaveFunction('rand')
 </div><div class='input'>orand()
 </div>
-<div class='output'>[1] 0.9675808
+<div class='output'>[1] 0.08322828
 </div><div class='input'>orand(2)
 </div>
 <div class='output'>          [,1]      [,2]
-[1,] 0.5026096 0.9117872
-[2,] 0.5601476 0.4895135
+[1,] 0.5513811 0.8653187
+[2,] 0.2879493 0.9437343
 </div><div class='input'>orand(2, 3)
 </div>
-<div class='output'>           [,1]      [,2]       [,3]
-[1,] 0.09362107 0.8426890 0.09203605
-[2,] 0.24246013 0.3434615 0.13587622
+<div class='output'>          [,1]      [,2]       [,3]
+[1,] 0.9568597 0.2571396 0.33820330
+[2,] 0.6568402 0.4388643 0.02043351
 </div><div class='input'></div><div class='input'># From source code</div><div class='input'>myfun <- OctaveFunction('function [Y] = somefun(x)
 	Y = x * x;
 	end

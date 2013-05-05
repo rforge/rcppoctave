@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>o_assign. RcppOctave 0.9</title>
+<title>o_assign. RcppOctave 0.9.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -30,7 +30,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.9</a>
+      <a class="brand" href="index.html">RcppOctave 0.9.1</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -147,7 +147,7 @@ o_get(..., unlist = TRUE, rm.ans = TRUE, pattern)</pre>
       <p><em>[Generated from
   Octave-3.6.4
  on
-  2013-03-12 17:09:29
+  2013-05-05 11:51:45
 ]</em></p>
   
     </div>
@@ -228,10 +228,10 @@ $env_c
 
 </div><div class='input'></div><div class='input'># by default, the automatic variable `ans` is not returned but might be there</div><div class='input'># from unstored previous computation</div><div class='input'>o_eval('svd(rand(3,3))')
 </div>
-<div class='output'>          [,1]
-[1,] 2.0688909
-[2,] 0.2046870
-[3,] 0.1440671
+<div class='output'>            [,1]
+[1,] 1.559143523
+[2,] 0.887491794
+[3,] 0.003767002
 </div><div class='input'>o_get()
 </div>
 <div class='output'>$a
@@ -264,10 +264,10 @@ $env_c
 [1] 10
 
 $ans
-          [,1]
-[1,] 2.0688909
-[2,] 0.2046870
-[3,] 0.1440671
+            [,1]
+[1,] 1.559143523
+[2,] 0.887491794
+[3,] 0.003767002
 
 $b
 [1] 20
@@ -425,13 +425,13 @@ $test_3
         [,1]    [,2]         [,3]
 [1,] 16.8481 0.00000 0.000000e+00
 [2,]  0.0000 1.06837 0.000000e+00
-[3,]  0.0000 0.00000 6.859989e-17
+[3,]  0.0000 0.00000 3.356916e-16
 
 [[3]]
            [,1]       [,2]       [,3]
-[1,] -0.2148372 -0.8872307  0.4082483
-[2,] -0.5205874 -0.2496440 -0.8164966
-[3,] -0.8263375  0.3879428  0.4082483
+[1,] -0.2148372 -0.8872307 -0.4082483
+[2,] -0.5205874 -0.2496440  0.8164966
+[3,] -0.8263375  0.3879428 -0.4082483
 
 </div><div class='input'></div><div class='input'># an error is thrown in the case of multiple matches (the alternatives are shown)</div><div class='input'>o_clear()
 </div><div class='input'>o_assign(aaa=1, ab=2)

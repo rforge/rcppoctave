@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>o_eval. RcppOctave 0.9</title>
+<title>o_eval. RcppOctave 0.9.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -30,7 +30,7 @@
     <div class="navbar">
   <div class="navbar-inner">
     <div class = "container">
-      <a class="brand" href="index.html">RcppOctave 0.9</a>
+      <a class="brand" href="index.html">RcppOctave 0.9.1</a>
       <div class="nav">
         <ul class="nav">
         <li><a href="_MAN.html"><i class="icon-home icon-white"></i> Index</a></li>
@@ -103,7 +103,7 @@
       <p><em>[Generated from
   Octave-3.6.4
  on
-  2013-03-12 17:09:32
+  2013-05-05 11:51:47
 ]</em></p>
   
     </div>
@@ -127,24 +127,24 @@
 [1] 1000
 
 $singular
-           [,1]
-[1,] 1.30690799
-[2,] 0.82106316
-[3,] 0.51645669
-[4,] 0.05857077
+          [,1]
+[1,] 1.8573396
+[2,] 0.7936596
+[3,] 0.2706670
+[4,] 0.1251386
 
 $random
            [,1]
- [1,] 0.6805941
- [2,] 0.4900781
- [3,] 0.3764110
- [4,] 0.3034592
- [5,] 0.7145506
- [6,] 0.5222933
- [7,] 0.8964526
- [8,] 0.6818294
- [9,] 0.7868580
-[10,] 0.6680580
+ [1,] 0.9694034
+ [2,] 0.1816732
+ [3,] 0.6170109
+ [4,] 0.5484386
+ [5,] 0.9591760
+ [6,] 0.4062065
+ [7,] 0.1675229
+ [8,] 0.3502891
+ [9,] 0.5532194
+[10,] 0.3521757
 
 </div><div class='input'># or from a list</div><div class='input'>l <- list(a="10^3", singular="svd(rand(4,4))", random="rand(10, 1)")
 </div><div class='input'>o_eval(l)
@@ -153,24 +153,24 @@ $random
 [1] 1000
 
 $singular
-          [,1]
-[1,] 2.4325621
-[2,] 0.8145109
-[3,] 0.2588234
-[4,] 0.1113678
+            [,1]
+[1,] 1.201493296
+[2,] 0.791173015
+[3,] 0.607953595
+[4,] 0.009160272
 
 $random
-           [,1]
- [1,] 0.4787060
- [2,] 0.8137252
- [3,] 0.1161302
- [4,] 0.9453823
- [5,] 0.4964320
- [6,] 0.3391577
- [7,] 0.2166773
- [8,] 0.8076725
- [9,] 0.1061391
-[10,] 0.4241141
+            [,1]
+ [1,] 0.46000486
+ [2,] 0.53193728
+ [3,] 0.94226401
+ [4,] 0.76783567
+ [5,] 0.65050581
+ [6,] 0.58148021
+ [7,] 0.24443935
+ [8,] 0.49374022
+ [9,] 0.45909267
+[10,] 0.09249128
 
 </div><div class='input'></div><div class='input'># if the evaluation fails then an error is thrown</div><div class='input'>## <strong>Not run</strong>:  o_eval("a=svd()") </div><div class='input'></div><div class='input'># except if argument CATCH is provided</div><div class='input'>o_eval("a=svd()", CATCH="a=2")
 </div>
