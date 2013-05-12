@@ -8,8 +8,8 @@ Maintainer: Renaud Gaujoux <renaud@mancala.cbio.uct.ac.za>
 Description: Direct interface to Octave. The primary goal is to facilitate the
     port of Matlab/Octave scripts to R. The package enables to call any Octave
     functions from R and as well as browsing their documentation, passing
-    variables between R and Octave, using R core RNGs in Octave, which ensure
-    stochastic computations are also reproducible.
+    variables between R and Octave, using R core RNGs in Octave, which ensures
+    that stochastic computations are also reproducible.
 License: GPL (>=2)
 URL: http://r-forge.r-project.org/projects/rcppoctave/
 LazyLoad: yes
