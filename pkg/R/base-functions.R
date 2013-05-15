@@ -111,7 +111,6 @@ o_addpath <- function(DIR1, ..., OPTION='-begin'){
 #' \code{\link[utils]{compareVersion}} if argument \code{version} is provided.
 #' 
 #' @export
-#' @importFrom utils compareVersion
 #' @examples
 #' 
 #' o_version()
@@ -120,7 +119,7 @@ o_addpath <- function(DIR1, ..., OPTION='-begin'){
 #' 
 o_version <- function(version){
 	v <- .CallOctave('version')
-	if( !missing(version) ) compareVersion(v, version)
+	if( !missing(version) ) utils::compareVersion(v, version)
 	else v
 }
 

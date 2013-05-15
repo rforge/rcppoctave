@@ -87,3 +87,4 @@ check.equal <- function(x, y, msg){
 	invisible()
 }
 
+packageName <- if( pkgmaker::testRversion("2.15.3", 1L) ) utils::packageName else pkgmaker:::packageName

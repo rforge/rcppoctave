@@ -4,6 +4,8 @@
 # Creation: 26 Oct 2011
 ###############################################################################
 
+#' @include utils.R
+NULL
 
 #' Calling an Octave Function
 #' 
@@ -121,7 +123,7 @@ omodules <- function(verbose=getOption('verbose')){
 	
 	path <- OctaveConfig('modules')
 	if( verbose )
-		message("Loading Octave modules for ", utils::packageName()
+		message("Loading Octave modules for ", packageName()
 				, " from '", path, "'");
 	o_addpath(path)
 }
