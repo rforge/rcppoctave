@@ -1,8 +1,8 @@
 Package: RcppOctave
 Type: Package
 Title: Seamless Interface to Octave -- and Matlab
-Version: 0.9.2
-Date: 2011-06-07
+Version: 0.9.3
+Date: 2013-05-30
 Author: Renaud Gaujoux
 Maintainer: Renaud Gaujoux <renaud@mancala.cbio.uct.ac.za>
 Description: Direct interface to Octave. The primary goal is to facilitate the
