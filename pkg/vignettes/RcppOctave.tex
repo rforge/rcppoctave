@@ -49,7 +49,7 @@
 
 \usepackage{alltt}
 %\VignetteIndexEntry{RcppOctave}
-%\VignetteDepends{knitr,bibtex}
+%\VignetteDepends{RcppOctave,knitr,bibtex}
 %\VignetteCompiler{knitr}
 %\VignetteEngine{knitr::knitr}
 
@@ -129,7 +129,7 @@
 \usepackage[minnames=1,maxnames=2]{biblatex}
 \AtEveryCitekey{\clearfield{url}}
 \bibliography{Rpackages}
-\bibliography{/tmp/Rpkglib_6622784310f0/RcppOctave/REFERENCES}
+\bibliography{/tmp/Rpkglib_732865c28f17/RcppOctave/REFERENCES}
 
 
 \newcommand{\citet}[1]{\citeauthor{#1}~\cite{#1}}
@@ -416,7 +416,7 @@ functionalities:
 \hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun1"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.4186 0.2950 0.7979 0.9207
+## [1] 0.28878 0.52073 0.09071 0.23170
 \end{verbatim}
 \begin{alltt}
 \hlcom{# 3 output values}
@@ -424,12 +424,12 @@ functionalities:
 \end{alltt}
 \begin{verbatim}
 ## $a
-## [1] 0.37366 0.70621 0.02157 0.21155
+## [1] 0.7932 0.3571 0.8387 0.8632
 ## 
 ## $b
 ##         [,1]   [,2]   [,3]
-## [1,] 0.01981 0.5135 0.2950
-## [2,] 0.24087 0.6212 0.8464
+## [1,] 0.09281 0.7825 0.1538
+## [2,] 0.02850 0.5139 0.1380
 ## 
 ## $c
 ## [1] "some text"
@@ -484,7 +484,7 @@ The other types of computations can be obtained using argument \code{argout}:
 \end{verbatim}
 \begin{alltt}
 \hlcom{# this should throw an error}
-\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargout"}\hlstd{,} \hlkwc{argout} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{try}\hlstd{(}\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargout"}\hlstd{,} \hlkwc{argout} \hlstd{=} \hlnum{2}\hlstd{))}
 \end{alltt}
 
 
@@ -653,7 +653,7 @@ embedded session:
 \hlcom{# remove}
 \hlstd{.O}\hlopt{$}\hlstd{myvar} \hlkwb{<-} \hlkwa{NULL}
 \hlcom{# this should now throw an error since 'myvar' does not exist anymore}
-\hlstd{.O}\hlopt{$}\hlstd{myvar}
+\hlkwd{try}\hlstd{(.O}\hlopt{$}\hlstd{myvar)}
 \end{alltt}
 
 
@@ -789,13 +789,13 @@ Variables may be assigned or retrieved individually in separate calls to
 \end{verbatim}
 \begin{alltt}
 \hlcom{# o_get throw an error for objects that do not exist}
-\hlkwd{o_get}\hlstd{(}\hlstr{"xxxxx"}\hlstd{)}
+\hlkwd{try}\hlstd{(}\hlkwd{o_get}\hlstd{(}\hlstr{"xxxxx"}\hlstd{))}
 \end{alltt}
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'xxxxx'.}}\begin{alltt}
 \hlcom{# but suggests potential matches}
-\hlkwd{o_get}\hlstd{(}\hlstr{"aa"}\hlstd{)}
+\hlkwd{try}\hlstd{(}\hlkwd{o_get}\hlstd{(}\hlstr{"aa"}\hlstd{))}
 \end{alltt}
 
 
@@ -835,19 +835,19 @@ can also evaluate a list of statements sequentially:
 \hlkwd{o_eval}\hlstd{(}\hlstr{"a=svd(rand(3))"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-##         [,1]
-## [1,] 1.87746
-## [2,] 0.56471
-## [3,] 0.07779
+##        [,1]
+## [1,] 1.8030
+## [2,] 0.6315
+## [3,] 0.2875
 \end{verbatim}
 \begin{alltt}
 \hlstd{.O}\hlopt{$}\hlstd{a}
 \end{alltt}
 \begin{verbatim}
-##         [,1]
-## [1,] 1.87746
-## [2,] 0.56471
-## [3,] 0.07779
+##        [,1]
+## [1,] 1.8030
+## [2,] 0.6315
+## [3,] 0.2875
 \end{verbatim}
 \begin{alltt}
 \hlcom{# eval a list of statements}
@@ -856,13 +856,13 @@ can also evaluate a list of statements sequentially:
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.4211 0.4354
+## [1] 0.3458 0.7816
 ## 
 ## [[2]]
-## [1] -0.5184 -0.7761
+## [1] 1.0166 0.8777
 ## 
 ## [[3]]
-## [1] 0.1539 0.6942 0.2556
+## [1] 0.786980 0.007348 0.469505
 \end{verbatim}
 \begin{alltt}
 \hlcom{# variables 'a' and 'b' were assigned the new values}
@@ -873,7 +873,7 @@ can also evaluate a list of statements sequentially:
 \end{verbatim}
 \begin{alltt}
 \hlcom{# multiple statements are not supported by o_eval}
-\hlkwd{o_eval}\hlstd{(}\hlstr{"a=1; b=2"}\hlstd{)}
+\hlkwd{try}\hlstd{(}\hlkwd{o_eval}\hlstd{(}\hlstr{"a=1; b=2"}\hlstd{))}
 \end{alltt}
 
 
@@ -881,7 +881,7 @@ can also evaluate a list of statements sequentially:
 \hlstd{.O}\hlopt{$}\hlstd{a}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.4211 0.4354
+## [1] 0.3458 0.7816
 \end{verbatim}
 \begin{alltt}
 \hlcom{# argument CATCH allows for recovering from errors in statement}
@@ -894,7 +894,7 @@ can also evaluate a list of statements sequentially:
 \hlstd{.O}\hlopt{$}\hlstd{a}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.4211 0.4354
+## [1] 0.3458 0.7816
 \end{verbatim}
 \begin{alltt}
 \hlstd{.O}\hlopt{$}\hlstd{c}
@@ -1125,9 +1125,9 @@ following code, which defines a wrapper functions to format the output of
 \end{alltt}
 \begin{verbatim}
 ## List of 3
-##  $ d: num [1:5] 2.848 0.679 0.541 0.234 0.139
-##  $ u: num [1:5, 1:5] -0.346 -0.571 -0.58 -0.237 -0.402 ...
-##  $ v: num [1:5, 1:5] -0.508 -0.249 -0.546 -0.515 -0.341 ...
+##  $ d: num [1:5] 2.563 0.669 0.527 0.402 0.195
+##  $ u: num [1:5, 1:5] -0.254 -0.672 -0.408 -0.494 -0.273 ...
+##  $ v: num [1:5, 1:5] -0.388 -0.239 -0.519 -0.571 -0.444 ...
 \end{verbatim}
 \begin{alltt}
 \hlcom{# check results}
@@ -1141,8 +1141,8 @@ following code, which defines a wrapper functions to format the output of
 \hlkwd{all.equal}\hlstd{(svd.R, svd.O,} \hlkwc{tol} \hlstd{=} \hlnum{10}\hlopt{^-}\hlnum{16}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] "Component 2: Mean relative difference: 3.749e-16"
-## [2] "Component 3: Mean relative difference: 3.256e-16"
+## [1] "Component 2: Mean relative difference: 4.255e-16"
+## [2] "Component 3: Mean relative difference: 4.514e-16"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

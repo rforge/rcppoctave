@@ -1,15 +1,17 @@
 \documentclass[english,10pt,a4paper]{article}
 %\VignetteIndexEntry{RcppOctave}
-%\VignetteDepends{knitr,bibtex}
+%\VignetteDepends{RcppOctave,knitr,bibtex}
 %\VignetteCompiler{knitr}
 %\VignetteEngine{knitr::knitr}
 
-<<echo=FALSE, include=FALSE>>=
+<<setup, include=FALSE>>=
 pkg <- 'RcppOctave'
 require( pkg, character.only=TRUE )
 prettyVersion <- packageVersion(pkg)
 pkgtitle <- packageDescription(pkg)$Title
 prettyDate <- format(Sys.Date(), "%B %e, %Y")
+library(knitr)
+knit_hooks$set(try = pkgmaker::hook_try)
 @
 
 \usepackage{fancyvrb}
@@ -266,11 +268,11 @@ detectable and the default behaviour is then to call it asking for 3 output
 variables.
 The other types of computations can be obtained using argument \code{argout}:
 
-<<argout>>=
+<<argout, error = TRUE, try = TRUE>>=
 .CallOctave('fun_varargout')
 .CallOctave('fun_varargout', argout=1)
 # this should throw an error
-.CallOctave('fun_varargout', argout=2)
+try( .CallOctave('fun_varargout', argout=2) )
 @
 
 Argument \code{argout} may also be used to specify names for the output values.
@@ -317,7 +319,7 @@ variables, as it emulates an \proglang{R} environment-like object whose elements
 would be the objects available in the current \octave
 embedded session:
 
-<<O_object_variables>>=
+<<O_object_variables, try = TRUE>>=
 # define a variable
 .O$myvar <- 1:5
 # retrieve value
@@ -328,7 +330,7 @@ embedded session:
 # remove 
 .O$myvar <- NULL
 # this should now throw an error since 'myvar' does not exist anymore
-.O$myvar
+try( .O$myvar )
 @
 
 \subsubsection{Calling functions}
@@ -383,7 +385,7 @@ Variables may be assigned or retrieved individually in separate calls to
 \code{.O} object as described above}, or simultaneously in a variety of ways
 (see \code{?o\_get} for more details and examples):
 
-<<assign>>=
+<<assign, try = TRUE>>=
 ## ASSIGN
 o_assign(a=1)
 o_assign(a=10, b=20)
@@ -398,9 +400,9 @@ o_get('a', 'b')
 # rename on the fly
 o_get(c='a', d='b')
 # o_get throw an error for objects that do not exist
-o_get('xxxxx')
+try( o_get('xxxxx') )
 # but suggests potential matches
-o_get('aa')
+try( o_get('aa') )
 # get a function
 f <- o_get('svd')
 f
@@ -411,7 +413,7 @@ f
 To evaluate a single statement, one can use the \code{o\_eval} function, that
 can also evaluate a list of statements sequentially:
 
-<<o_eval>>=
+<<o_eval, try = TRUE>>=
 # assign variable 'a'
 o_eval("a=1")
 o_eval("a") # or .O$a
@@ -424,7 +426,7 @@ l
 identical(list(.O$a, .O$b), l[1:2])
 
 # multiple statements are not supported by o_eval
-o_eval("a=1; b=2")
+try( o_eval("a=1; b=2") )
 .O$a
 # argument CATCH allows for recovering from errors in statement
 o_eval("a=usage('ERROR: stop here')", CATCH="c=3")
