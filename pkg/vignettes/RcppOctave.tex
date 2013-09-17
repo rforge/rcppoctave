@@ -1,4 +1,4 @@
-\documentclass[english,10pt,a4paper]{article}\usepackage{graphicx, color}
+\documentclass[english,10pt,a4paper]{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -11,21 +11,16 @@
 }
 \makeatother
 
-\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
-\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
-\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
-\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
-\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
-\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
-\newcommand{\hlslot}[1]{\textit{#1}}%
-\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
 
 \usepackage{framed}
 \makeatletter
@@ -56,6 +51,7 @@
 %\VignetteIndexEntry{RcppOctave}
 %\VignetteDepends{knitr,bibtex}
 %\VignetteCompiler{knitr}
+%\VignetteEngine{knitr::knitr}
 
 
 
@@ -132,10 +128,10 @@
 % REFERENCES
 \usepackage[minnames=1,maxnames=2]{biblatex}
 \AtEveryCitekey{\clearfield{url}}
-\bibliography{/tmp/Rpkglib_55af6e74fb54/RcppOctave/REFERENCES}
-
-
 \bibliography{Rpackages}
+\bibliography{/tmp/Rpkglib_6622784310f0/RcppOctave/REFERENCES}
+
+
 \newcommand{\citet}[1]{\citeauthor{#1}~\cite{#1}}
 %%
 
@@ -151,8 +147,8 @@
 
 \author{Renaud Gaujoux}
 \title{\pkgname{RcppOctave}: Seamless Interface to Octave -- and Matlab}
-\date{\Rpkg{RcppOctave} -- Version 0.9.1
-[May  5, 2013]\footnote{This vignette was built using \octave
+\date{\Rpkg{RcppOctave} -- Version 0.9.3
+[September 17, 2013]\footnote{This vignette was built using \octave
 3.6.4}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
@@ -273,19 +269,19 @@ Calling any \octave function is then as simple as:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"version"})
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"version"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] "3.6.4"
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"sqrt"}, 10)
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"sqrt"}\hlstd{,} \hlnum{10}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 3.162
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"eye"}, 3)
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"eye"}\hlstd{,} \hlnum{3}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##      [,1] [,2] [,3]
@@ -294,7 +290,7 @@ Calling any \octave function is then as simple as:
 ## [3,]    0    0    1
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"eye"}, 3, 2)
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"eye"}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{2}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##      [,1] [,2]
@@ -394,10 +390,10 @@ These definitions can be loaded in the \octave session via the function
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# source example function definitions from RcppOctave installation}
-\hlfunctioncall{sourceExamples}(\hlstring{"ex_functions.m"})
-\hlcomment{# several functions are now defined}
-\hlfunctioncall{o_ls}()
+\hlcom{# source example function definitions from RcppOctave installation}
+\hlkwd{sourceExamples}\hlstd{(}\hlstr{"ex_functions.m"}\hlstd{)}
+\hlcom{# several functions are now defined}
+\hlkwd{o_ls}\hlstd{()}
 \end{alltt}
 \begin{verbatim}
 ## [1] "fun1"          "fun2"          "fun_noargout"  "fun_varargin" 
@@ -416,42 +412,40 @@ functionalities:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# single output value}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun1"})
+\hlcom{# single output value}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun1"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.7807 0.5124 0.4977 0.7154
+## [1] 0.4186 0.2950 0.7979 0.9207
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# 3 output values}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun2"})
+\hlcom{# 3 output values}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun2"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## $a
-## [1] 0.2827 0.9817 0.1443 0.9320
+## [1] 0.37366 0.70621 0.02157 0.21155
 ## 
 ## $b
-##         [,1]      [,2]   [,3]
-## [1,] 0.03616 0.5263455 0.6719
-## [2,] 0.38453 0.0007331 0.2394
+##         [,1]   [,2]   [,3]
+## [1,] 0.01981 0.5135 0.2950
+## [2,] 0.24087 0.6212 0.8464
 ## 
 ## $c
 ## [1] "some text"
 \end{verbatim}
 \begin{alltt}
-
-\hlcomment{# no output value}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_noargout"}, 1)
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_noargout"}, \hlstring{"abc"})
-
-\hlcomment{# variable number of arguments}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargin"})
+\hlcom{# no output value}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_noargout"}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_noargout"}\hlstd{,} \hlstr{"abc"}\hlstd{)}
+\hlcom{# variable number of arguments}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargin"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargin"}, 1, 2, 3)
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargin"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 6
@@ -470,7 +464,7 @@ The other types of computations can be obtained using argument \code{argout}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"})
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargout"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## $u
@@ -483,14 +477,14 @@ The other types of computations can be obtained using argument \code{argout}:
 ## [1] 30
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"}, argout = 1)
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargout"}\hlstd{,} \hlkwc{argout} \hlstd{=} \hlnum{1}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 1
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# this should throw an error}
-\hlfunctioncall{.CallOctave}(\hlstring{"fun_varargout"}, argout = 2)
+\hlcom{# this should throw an error}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"fun_varargout"}\hlstd{,} \hlkwc{argout} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 
 
@@ -508,8 +502,8 @@ defined for the complete output, as these may not be relevant anymore:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# single output variable: result is S}
-\hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2))
+\hlcom{# single output variable: result is S}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"svd"}\hlstd{,} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{2}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       [,1]
@@ -517,8 +511,8 @@ defined for the complete output, as these may not be relevant anymore:
 ## [2,] 0.366
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# 3 output variables: results is [U,S,V]}
-\hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2), argout = 3)
+\hlcom{# 3 output variables: results is [U,S,V]}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"svd"}\hlstd{,} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{argout} \hlstd{=} \hlnum{3}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
@@ -537,8 +531,8 @@ defined for the complete output, as these may not be relevant anymore:
 ## [2,] -0.9145 -0.4046
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# specify output names (and therefore number of output variables)}
-\hlfunctioncall{.CallOctave}(\hlstring{"svd"}, \hlfunctioncall{matrix}(1:4, 2), argout = \hlfunctioncall{c}(\hlstring{"U"}, \hlstring{"S"}, \hlstring{"V"}))
+\hlcom{# specify output names (and therefore number of output variables)}
+\hlkwd{.CallOctave}\hlstd{(}\hlstr{"svd"}\hlstd{,} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{argout} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"U"}\hlstd{,} \hlstr{"S"}\hlstd{,} \hlstr{"V"}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ## $U
@@ -576,7 +570,7 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-.O
+\hlstd{.O}
 \end{alltt}
 \begin{verbatim}
 ##  <Octave Interface>
@@ -584,13 +578,13 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 ##  - Use `$x <- val` to assign a value val to the Octave variable x.
 \end{verbatim}
 \begin{alltt}
-.O$\hlfunctioncall{version}()
+\hlstd{.O}\hlopt{$}\hlkwd{version}\hlstd{()}
 \end{alltt}
 \begin{verbatim}
 ## [1] "3.6.4"
 \end{verbatim}
 \begin{alltt}
-.O$\hlfunctioncall{eye}(3)
+\hlstd{.O}\hlopt{$}\hlkwd{eye}\hlstd{(}\hlnum{3}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##      [,1] [,2] [,3]
@@ -599,7 +593,7 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 ## [3,]    0    0    1
 \end{verbatim}
 \begin{alltt}
-.O$\hlfunctioncall{svd}(\hlfunctioncall{matrix}(1:4, 2))
+\hlstd{.O}\hlopt{$}\hlkwd{svd}\hlstd{(}\hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{2}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       [,1]
@@ -607,8 +601,8 @@ Using the \code{.O} object, calls to \octave functions are more compact:
 ## [2,] 0.366
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# argout can still be specified}
-.O$\hlfunctioncall{svd}(\hlfunctioncall{matrix}(1:4, 2), argout = 3)
+\hlcom{# argout can still be specified}
+\hlstd{.O}\hlopt{$}\hlkwd{svd}\hlstd{(}\hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{argout} \hlstd{=} \hlnum{3}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
@@ -639,27 +633,27 @@ embedded session:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# define a variable}
-.O$myvar <- 1:5
-\hlcomment{# retrieve value}
-.O$myvar
+\hlcom{# define a variable}
+\hlstd{.O}\hlopt{$}\hlstd{myvar} \hlkwb{<-} \hlnum{1}\hlopt{:}\hlnum{5}
+\hlcom{# retrieve value}
+\hlstd{.O}\hlopt{$}\hlstd{myvar}
 \end{alltt}
 \begin{verbatim}
 ## [1] 1 2 3 4 5
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# assign and retrieve new value}
-.O$myvar <- 10
-.O$myvar
+\hlcom{# assign and retrieve new value}
+\hlstd{.O}\hlopt{$}\hlstd{myvar} \hlkwb{<-} \hlnum{10}
+\hlstd{.O}\hlopt{$}\hlstd{myvar}
 \end{alltt}
 \begin{verbatim}
 ## [1] 10
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# remove}
-.O$myvar <- NULL
-\hlcomment{# this should now throw an error since 'myvar' does not exist anymore}
-.O$myvar
+\hlcom{# remove}
+\hlstd{.O}\hlopt{$}\hlstd{myvar} \hlkwb{<-} \hlkwa{NULL}
+\hlcom{# this should now throw an error since 'myvar' does not exist anymore}
+\hlstd{.O}\hlopt{$}\hlstd{myvar}
 \end{alltt}
 
 
@@ -673,15 +667,15 @@ As illustrated above, \octave functions can be called through the
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# density of x=5 for Poisson(2)}
-.O$\hlfunctioncall{poisspdf}(5, 2)
+\hlcom{# density of x=5 for Poisson(2)}
+\hlstd{.O}\hlopt{$}\hlkwd{poisspdf}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{2}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.03609
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# E.g. compare with R own function}
-\hlfunctioncall{dpois}(5, 2)
+\hlcom{# E.g. compare with R own function}
+\hlkwd{dpois}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{2}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.03609
@@ -696,16 +690,16 @@ variables, and called in subsequent statements:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# retrieve Octave function}
-f <- .O$poisspdf
-f
+\hlcom{# retrieve Octave function}
+\hlstd{f} \hlkwb{<-} \hlstd{.O}\hlopt{$}\hlstd{poisspdf}
+\hlstd{f}
 \end{alltt}
 \begin{verbatim}
 ## <OctaveFunction::`poisspdf`>
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# call (in Octave)}
-\hlfunctioncall{f}(5, 2)
+\hlcom{# call (in Octave)}
+\hlkwd{f}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{2}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.03609
@@ -748,13 +742,12 @@ Variables may be assigned or retrieved individually in separate calls to
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{## ASSIGN}
-\hlfunctioncall{o_assign}(a = 1)
-\hlfunctioncall{o_assign}(a = 10, b = 20)
-\hlfunctioncall{o_assign}(\hlfunctioncall{list}(a = 5, b = 6, aaa = 7, aab = \hlfunctioncall{list}(1, 2, 3)))
-
-\hlcomment{## GET get all variables}
-\hlfunctioncall{str}(\hlfunctioncall{o_get}())
+\hlcom{## ASSIGN}
+\hlkwd{o_assign}\hlstd{(}\hlkwc{a} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlkwd{o_assign}\hlstd{(}\hlkwc{a} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{b} \hlstd{=} \hlnum{20}\hlstd{)}
+\hlkwd{o_assign}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{a} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{b} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{aaa} \hlstd{=} \hlnum{7}\hlstd{,} \hlkwc{aab} \hlstd{=} \hlkwd{list}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{)))}
+\hlcom{## GET get all variables}
+\hlkwd{str}\hlstd{(}\hlkwd{o_get}\hlstd{())}
 \end{alltt}
 \begin{verbatim}
 ## List of 4
@@ -767,14 +760,14 @@ Variables may be assigned or retrieved individually in separate calls to
 ##  $ b  : num 6
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# selected variables}
-\hlfunctioncall{o_get}(\hlstring{"a"})
+\hlcom{# selected variables}
+\hlkwd{o_get}\hlstd{(}\hlstr{"a"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 5
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{o_get}(\hlstring{"a"}, \hlstring{"b"})
+\hlkwd{o_get}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## $a
@@ -784,8 +777,8 @@ Variables may be assigned or retrieved individually in separate calls to
 ## [1] 6
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# rename on the fly}
-\hlfunctioncall{o_get}(c = \hlstring{"a"}, d = \hlstring{"b"})
+\hlcom{# rename on the fly}
+\hlkwd{o_get}\hlstd{(}\hlkwc{c} \hlstd{=} \hlstr{"a"}\hlstd{,} \hlkwc{d} \hlstd{=} \hlstr{"b"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## $c
@@ -795,21 +788,21 @@ Variables may be assigned or retrieved individually in separate calls to
 ## [1] 6
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# o_get throw an error for objects that do not exist}
-\hlfunctioncall{o_get}(\hlstring{"xxxxx"})
+\hlcom{# o_get throw an error for objects that do not exist}
+\hlkwd{o_get}\hlstd{(}\hlstr{"xxxxx"}\hlstd{)}
 \end{alltt}
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'xxxxx'.}}\begin{alltt}
-\hlcomment{# but suggests potential matches}
-\hlfunctioncall{o_get}(\hlstring{"aa"})
+\hlcom{# but suggests potential matches}
+\hlkwd{o_get}\hlstd{(}\hlstr{"aa"}\hlstd{)}
 \end{alltt}
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave::o\_get - Could not find an Octave object named 'aa'.\\\#\#\ \ \ \ \ \ \ \ Match(es): aaa aab}}\begin{alltt}
-\hlcomment{# get a function}
-f <- \hlfunctioncall{o_get}(\hlstring{"svd"})
-f
+\hlcom{# get a function}
+\hlstd{f} \hlkwb{<-} \hlkwd{o_get}\hlstd{(}\hlstr{"svd"}\hlstd{)}
+\hlstd{f}
 \end{alltt}
 \begin{verbatim}
 ## <OctaveFunction::`svd`>
@@ -826,86 +819,85 @@ can also evaluate a list of statements sequentially:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# assign variable 'a'}
-\hlfunctioncall{o_eval}(\hlstring{"a=1"})
+\hlcom{# assign variable 'a'}
+\hlkwd{o_eval}\hlstd{(}\hlstr{"a=1"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 1
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{o_eval}(\hlstring{"a"})  # or .O$a
+\hlkwd{o_eval}\hlstd{(}\hlstr{"a"}\hlstd{)}  \hlcom{# or .O$a}
 \end{alltt}
 \begin{verbatim}
 ## [1] 1
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{o_eval}(\hlstring{"a=\hlfunctioncall{svd}(\hlfunctioncall{rand}(3))"})
+\hlkwd{o_eval}\hlstd{(}\hlstr{"a=svd(rand(3))"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-##        [,1]
-## [1,] 1.2561
-## [2,] 0.4789
-## [3,] 0.0674
+##         [,1]
+## [1,] 1.87746
+## [2,] 0.56471
+## [3,] 0.07779
 \end{verbatim}
 \begin{alltt}
-.O$a
+\hlstd{.O}\hlopt{$}\hlstd{a}
 \end{alltt}
 \begin{verbatim}
-##        [,1]
-## [1,] 1.2561
-## [2,] 0.4789
-## [3,] 0.0674
+##         [,1]
+## [1,] 1.87746
+## [2,] 0.56471
+## [3,] 0.07779
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# eval a list of statements}
-l <- \hlfunctioncall{o_eval}(\hlstring{"a=\hlfunctioncall{rand}(1, 2)"}, \hlstring{"b=\hlfunctioncall{randn}(1, 2)"}, \hlstring{"\hlfunctioncall{rand}(1, 3)"})
-l
+\hlcom{# eval a list of statements}
+\hlstd{l} \hlkwb{<-} \hlkwd{o_eval}\hlstd{(}\hlstr{"a=rand(1, 2)"}\hlstd{,} \hlstr{"b=randn(1, 2)"}\hlstd{,} \hlstr{"rand(1, 3)"}\hlstd{)}
+\hlstd{l}
 \end{alltt}
 \begin{verbatim}
 ## [[1]]
-## [1] 0.8449 0.8425
+## [1] 0.4211 0.4354
 ## 
 ## [[2]]
-## [1]  1.636 -1.150
+## [1] -0.5184 -0.7761
 ## 
 ## [[3]]
-## [1] 0.738854 0.001305 0.746149
+## [1] 0.1539 0.6942 0.2556
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# variables 'a' and 'b' were assigned the new values}
-\hlfunctioncall{identical}(\hlfunctioncall{list}(.O$a, .O$b), l[1:2])
+\hlcom{# variables 'a' and 'b' were assigned the new values}
+\hlkwd{identical}\hlstd{(}\hlkwd{list}\hlstd{(.O}\hlopt{$}\hlstd{a, .O}\hlopt{$}\hlstd{b), l[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
 \begin{alltt}
-
-\hlcomment{# multiple statements are not supported by o_eval}
-\hlfunctioncall{o_eval}(\hlstring{"a=1; b=2"})
+\hlcom{# multiple statements are not supported by o_eval}
+\hlkwd{o_eval}\hlstd{(}\hlstr{"a=1; b=2"}\hlstd{)}
 \end{alltt}
 
 
 {\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: RcppOctave - error in Octave function `eval`.}}\begin{alltt}
-.O$a
+\hlstd{.O}\hlopt{$}\hlstd{a}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.8449 0.8425
+## [1] 0.4211 0.4354
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# argument CATCH allows for recovering from errors in statement}
-\hlfunctioncall{o_eval}(\hlstring{"a=\hlfunctioncall{usage}(\hlstring{'ERROR: stop here'})"}, CATCH = \hlstring{"c=3"})
+\hlcom{# argument CATCH allows for recovering from errors in statement}
+\hlkwd{o_eval}\hlstd{(}\hlstr{"a=usage('ERROR: stop here')"}\hlstd{,} \hlkwc{CATCH} \hlstd{=} \hlstr{"c=3"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 3
 \end{verbatim}
 \begin{alltt}
-.O$a
+\hlstd{.O}\hlopt{$}\hlstd{a}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.8449 0.8425
+## [1] 0.4211 0.4354
 \end{verbatim}
 \begin{alltt}
-.O$c
+\hlstd{.O}\hlopt{$}\hlstd{c}
 \end{alltt}
 \begin{verbatim}
 ## [1] 3
@@ -935,18 +927,17 @@ of its installation:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# clear all session}
-\hlfunctioncall{o_clear}(all = TRUE)
-\hlfunctioncall{o_ls}()
+\hlcom{# clear all session}
+\hlkwd{o_clear}\hlstd{(}\hlkwc{all} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{o_ls}\hlstd{()}
 \end{alltt}
 \begin{verbatim}
 ## character(0)
 \end{verbatim}
 \begin{alltt}
-
-\hlcomment{# source example file from RcppOctave installation}
-mfile <- \hlfunctioncall{system.file}(\hlstring{"scripts/ex_source.m"}, package = \hlstring{"RcppOctave"})
-\hlfunctioncall{cat}(\hlfunctioncall{readLines}(mfile), sep = \hlstring{"\textbackslash{}n"})
+\hlcom{# source example file from RcppOctave installation}
+\hlstd{mfile} \hlkwb{<-} \hlkwd{system.file}\hlstd{(}\hlstr{"scripts/ex_source.m"}\hlstd{,} \hlkwc{package} \hlstd{=} \hlstr{"RcppOctave"}\hlstd{)}
+\hlkwd{cat}\hlstd{(}\hlkwd{readLines}\hlstd{(mfile),} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}n"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## % Example m-file to illustrate the usage of the function o_source
@@ -964,10 +955,10 @@ mfile <- \hlfunctioncall{system.file}(\hlstring{"scripts/ex_source.m"}, package 
 ## end
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{o_source}(mfile)
-\hlcomment{# Now objects 'a', 'b', and 'c' as well as the function 'abc' should be}
-\hlcomment{# defined:}
-\hlfunctioncall{o_ls}(long = TRUE)
+\hlkwd{o_source}\hlstd{(mfile)}
+\hlcom{# Now objects 'a', 'b', and 'c' as well as the function 'abc' should be}
+\hlcom{# defined:}
+\hlkwd{o_ls}\hlstd{(}\hlkwc{long} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##  <Octave session: 4 object(s)>
@@ -978,14 +969,14 @@ mfile <- \hlfunctioncall{system.file}(\hlstring{"scripts/ex_source.m"}, package 
 ##   abc   NA    NA function   TRUE     NA      NA       1         NA
 \end{verbatim}
 \begin{alltt}
-\hlcomment{#}
-\hlfunctioncall{o_eval}(\hlstring{"\hlfunctioncall{abc}(2, 4, 6)"})
+\hlcom{# }
+\hlkwd{o_eval}\hlstd{(}\hlstr{"abc(2, 4, 6)"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 12
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{o_eval}(\hlstring{"\hlfunctioncall{abc}(a, b, c)"})
+\hlkwd{o_eval}\hlstd{(}\hlstr{"abc(a, b, c)"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 6
@@ -1001,9 +992,9 @@ directly passed from the \R console as character strings via its argument
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{o_source}(text = \hlstring{"clear a b c; a=100; a*\hlfunctioncall{sin}(123)"})
-\hlcomment{# last statement is stored in automatic variable 'ans'}
-\hlfunctioncall{o_get}(\hlstring{"a"}, \hlstring{"ans"})
+\hlkwd{o_source}\hlstd{(}\hlkwc{text} \hlstd{=} \hlstr{"clear a b c; a=100; a*sin(123)"}\hlstd{)}
+\hlcom{# last statement is stored in automatic variable 'ans'}
+\hlkwd{o_get}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"ans"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## $a
@@ -1029,13 +1020,13 @@ in a similar way \code{whos} does (see \code{?o\_who}).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{o_ls}()
+\hlkwd{o_ls}\hlstd{()}
 \end{alltt}
 \begin{verbatim}
 ## [1] "a"   "abc"
 \end{verbatim}
 \begin{alltt}
-\hlfunctioncall{o_ls}(long = TRUE)
+\hlkwd{o_ls}\hlstd{(}\hlkwc{long} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##  <Octave session: 2 object(s)>
@@ -1044,10 +1035,9 @@ in a similar way \code{whos} does (see \code{?o\_who}).
 ##   abc   NA    NA function   TRUE     NA      NA       1         NA
 \end{verbatim}
 \begin{alltt}
-
-\hlcomment{# clear all (variables + functions)}
-\hlfunctioncall{o_clear}(all = TRUE)
-\hlfunctioncall{o_ls}()
+\hlcom{# clear all (variables + functions)}
+\hlkwd{o_clear}\hlstd{(}\hlkwc{all} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{o_ls}\hlstd{()}
 \end{alltt}
 \begin{verbatim}
 ## character(0)
@@ -1072,7 +1062,7 @@ following, which displays using the \R function \code{file.show}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{o_help}(std)
+\hlkwd{o_help}\hlstd{(std)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1084,7 +1074,7 @@ Linux machines.}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{o_doc}(poisson)
+\hlkwd{o_doc}\hlstd{(poisson)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1118,45 +1108,41 @@ following code, which defines a wrapper functions to format the output of
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-
-o_svd <- \hlfunctioncall{function}(x) \{
-\hlcomment{    # ask for the complete decomposition}
-    res <- .O$\hlfunctioncall{svd}(x, argout = \hlfunctioncall{c}(\hlstring{"u"}, \hlstring{"d"}, \hlstring{"v"}))
-\hlcomment{    # reformat/reorder result}
-    res$d <- \hlfunctioncall{diag}(res$d)
-    res[\hlfunctioncall{c}(2, 1, 3)]
-\}
-
-\hlcomment{# define random data}
-X <- \hlfunctioncall{matrix}(\hlfunctioncall{runif}(25), 5)
-
-\hlcomment{# run SVD in R}
-svd.R <- \hlfunctioncall{svd}(X)
-\hlcomment{# run SVD in Octave}
-svd.O <- \hlfunctioncall{o_svd}(X)
-\hlfunctioncall{str}(svd.O)
+\hlstd{o_svd} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{) \{}
+    \hlcom{# ask for the complete decomposition}
+    \hlstd{res} \hlkwb{<-} \hlstd{.O}\hlopt{$}\hlkwd{svd}\hlstd{(x,} \hlkwc{argout} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"u"}\hlstd{,} \hlstr{"d"}\hlstd{,} \hlstr{"v"}\hlstd{))}
+    \hlcom{# reformat/reorder result}
+    \hlstd{res}\hlopt{$}\hlstd{d} \hlkwb{<-} \hlkwd{diag}\hlstd{(res}\hlopt{$}\hlstd{d)}
+    \hlstd{res[}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{3}\hlstd{)]}
+\hlstd{\}}
+\hlcom{# define random data}
+\hlstd{X} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlkwd{runif}\hlstd{(}\hlnum{25}\hlstd{),} \hlnum{5}\hlstd{)}
+\hlcom{# run SVD in R}
+\hlstd{svd.R} \hlkwb{<-} \hlkwd{svd}\hlstd{(X)}
+\hlcom{# run SVD in Octave}
+\hlstd{svd.O} \hlkwb{<-} \hlkwd{o_svd}\hlstd{(X)}
+\hlkwd{str}\hlstd{(svd.O)}
 \end{alltt}
 \begin{verbatim}
 ## List of 3
-##  $ d: num [1:5] 2.8861 0.6957 0.4471 0.3277 0.0185
-##  $ u: num [1:5, 1:5] -0.379 -0.447 -0.529 -0.373 -0.488 ...
-##  $ v: num [1:5, 1:5] -0.31 -0.485 -0.369 -0.668 -0.294 ...
+##  $ d: num [1:5] 2.848 0.679 0.541 0.234 0.139
+##  $ u: num [1:5, 1:5] -0.346 -0.571 -0.58 -0.237 -0.402 ...
+##  $ v: num [1:5, 1:5] -0.508 -0.249 -0.546 -0.515 -0.341 ...
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# check results}
-\hlfunctioncall{all.equal}(svd.R, svd.O)
+\hlcom{# check results}
+\hlkwd{all.equal}\hlstd{(svd.R, svd.O)}
 \end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
 \begin{alltt}
-\hlcomment{# but not exactly identical}
-\hlfunctioncall{all.equal}(svd.R, svd.O, tol = 10^-16)
+\hlcom{# but not exactly identical}
+\hlkwd{all.equal}\hlstd{(svd.R, svd.O,} \hlkwc{tol} \hlstd{=} \hlnum{10}\hlopt{^-}\hlnum{16}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] "Component 1: Mean relative difference: 2.141e-16"
-## [2] "Component 2: Mean relative difference: 7.406e-16"
-## [3] "Component 3: Mean relative difference: 7.816e-16"
+## [1] "Component 2: Mean relative difference: 3.749e-16"
+## [2] "Component 3: Mean relative difference: 3.256e-16"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1179,40 +1165,36 @@ algorithms (e.g. simulations, MCMC-based estimations):
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-
-Rf <- \hlfunctioncall{function}()\{
-	x <- \hlfunctioncall{matrix}(\hlfunctioncall{runif}(100), 10)
-	y <- \hlfunctioncall{matrix}(\hlfunctioncall{rnorm}(100), 10)
-	(x * y) %*% (x / y)
-\}
-
-Of <- \{
-\hlcomment{# define Octave function}
-\hlfunctioncall{o_source}(text="
-function [res] = \hlfunctioncall{test}()
-x = \hlfunctioncall{rand}(10);
-y = \hlfunctioncall{randn}(10);
+\hlstd{Rf} \hlkwb{<-} \hlkwa{function}\hlstd{()\{}
+        \hlstd{x} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlkwd{runif}\hlstd{(}\hlnum{100}\hlstd{),} \hlnum{10}\hlstd{)}
+        \hlstd{y} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlkwd{rnorm}\hlstd{(}\hlnum{100}\hlstd{),} \hlnum{10}\hlstd{)}
+        \hlstd{(x} \hlopt{*} \hlstd{y)} \hlopt{%*%} \hlstd{(x} \hlopt{/} \hlstd{y)}
+\hlstd{\}}
+\hlstd{Of} \hlkwb{<-} \hlstd{\{}
+\hlcom{# define Octave function}
+\hlkwd{o_source}\hlstd{(}\hlkwc{text}\hlstd{=}\hlstr{"
+function [res] = test()
+x = rand(10);
+y = randn(10);
 res = (x .* y) * (x ./ y);
 end
-")
-\hlcomment{# return the function}
-.O$test
-\}
-
-\hlcomment{# run both computations with a common seed  }
-\hlfunctioncall{set.seed}(1234); res.R <- \hlfunctioncall{Rf}()
-\hlfunctioncall{set.seed}(1234); res.O <- \hlfunctioncall{Of}()
-\hlcomment{# compare results}
-\hlfunctioncall{identical}(res.R, res.O)
+"}\hlstd{)}
+\hlcom{# return the function}
+\hlstd{.O}\hlopt{$}\hlstd{test}
+\hlstd{\}}
+\hlcom{# run both computations with a common seed  }
+\hlkwd{set.seed}\hlstd{(}\hlnum{1234}\hlstd{); res.R} \hlkwb{<-} \hlkwd{Rf}\hlstd{()}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1234}\hlstd{); res.O} \hlkwb{<-} \hlkwd{Of}\hlstd{()}
+\hlcom{# compare results}
+\hlkwd{identical}\hlstd{(res.R, res.O)}
 \end{alltt}
 \begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
 \begin{alltt}
-
-\hlcomment{# not seeding the second computation would give different results}
-\hlfunctioncall{set.seed}(1234);
-\hlfunctioncall{identical}(\hlfunctioncall{Rf}(), \hlfunctioncall{Of}())
+\hlcom{# not seeding the second computation would give different results}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1234}\hlstd{);}
+\hlkwd{identical}\hlstd{(}\hlkwd{Rf}\hlstd{(),} \hlkwd{Of}\hlstd{())}
 \end{alltt}
 \begin{verbatim}
 ## [1] FALSE
@@ -1245,8 +1227,8 @@ end
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-R version 3.0.0 (2013-04-03)
-Platform: i686-pc-linux-gnu (32-bit)
+R version 3.0.1 (2013-05-16)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -1260,12 +1242,12 @@ attached base packages:
 [1] methods   stats     graphics  grDevices utils     datasets  base     
 
 other attached packages:
-[1] RcppOctave_0.9.1 pkgmaker_0.16    registry_0.2     Rcpp_0.10.3     
-[5] knitr_1.2       
+[1] RcppOctave_0.9.3 pkgmaker_0.17    registry_0.2     Rcpp_0.10.4     
+[5] knitr_1.4.9     
 
 loaded via a namespace (and not attached):
-[1] codetools_0.2-8 digest_0.6.3    evaluate_0.4.3  formatR_0.7    
-[5] stringr_0.6.2   tools_3.0.0     xtable_1.7-1   
+[1] codetools_0.2-8 digest_0.6.3    evaluate_0.4.7  formatR_0.9    
+[5] highr_0.2.1     stringr_0.6.2   tools_3.0.1     xtable_1.7-1   
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
