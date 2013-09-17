@@ -22,11 +22,11 @@ OCT_OBJECTS = $(OCT_SOURCES:.cc=.oct)
 all: ${OCT_OBJECTS}
 
 %.oct: %.cc
-	@OCTAVE_MKOCTFILE@ -v -c ${R_CPPFLAGS} $(PKG_CPPFLAGS) $*.cc 
-	@OCTAVE_MKOCTFILE@ $*.o  ${R_LDFLAGS} $(PKG_LIBS) --output $@
+	@OCTAVE_MKOCTFILE@ -g -v -c ${R_CPPFLAGS} $(PKG_CPPFLAGS) $*.cc 
+	@OCTAVE_MKOCTFILE@ -g $*.o  ${R_LDFLAGS} $(PKG_LIBS) --output $@
 
 utils.oct: utils.cc
-	@OCTAVE_MKOCTFILE@ $<
+	@OCTAVE_MKOCTFILE@ -g $<
 	
 clean:
 	rm -vf *.o *~
