@@ -1,10 +1,10 @@
 % Rrng functions
-autoload('rand', 'Rrng.oct');
-autoload('randn', 'Rrng.oct');
-autoload('rande', 'Rrng.oct');
-autoload('randg', 'Rrng.oct');
-autoload('setseed', 'Rrng.oct');
-autoload('getseed', 'Rrng.oct');
+autoload('rand', which('Rrng.oct'));
+autoload('randn', which('Rrng.oct'));
+autoload('rande', which('Rrng.oct'));
+autoload('randg', which('Rrng.oct'));
+autoload('setseed', which('Rrng.oct'));
+autoload('getseed', which('Rrng.oct'));
 
 % utility functions
-autoload('identity', 'utils.oct');
+autoload('identity', which('utils.oct'));
