@@ -102,6 +102,10 @@ o_addpath <- function(DIR1, ..., OPTION='-begin'){
 	invisible(.CallOctave('addpath', DIR1, ..., OPTION))
 }
 
+o_rmpath <- function(DIR1, ...){
+	invisible(.CallOctave('rmpath', DIR1, ...))
+}
+
 #' Get Octave Version
 #' 
 #' Returns the version of Octave currently used by \code{RcppOctave}.
