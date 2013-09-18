@@ -132,3 +132,11 @@ test.assign <- function(){
 	o_assign(e)
 	checkIdentical(o_get(), x, "Assign with from an environment")
 }
+
+test.redirection <- function(){
+    
+    checkWarning(.CallOctave('warning', 'aaaa'), "warning: aaa", "Default call buffer warnings")
+    checkWarning(.CallOctave('warning', 'aaaa', buffer.stderr=FALSE)
+                                               , FALSE, "No warning buffering if buffer_stderr=FALSE")
+    
+}
