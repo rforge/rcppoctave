@@ -15,3 +15,5 @@ vignettes/\.install_extras$
 RJwrapper
 Rpackages.bib
 ^modules$
+man-roxygen
+staticdocs
