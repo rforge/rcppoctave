@@ -9,24 +9,25 @@
 # Released under the GNU General Public License just like Octave
 
 CC = @CC@
-CFLAGS = @CFLAGS@ -fPIC -Wall -O6 -std=gnu99
-CXXFLAGS = @CXXFLAGS@ -fPIC -Wall -O6
+CFLAGS = @CFLAGS@ -fPIC -Wportability -O6 -std=gnu99
+CXXFLAGS = @CXXFLAGS@ -fPIC -Wportability -O6
 
 # Get flags for R
 R_CPPFLAGS = @R_CPPFLAGS@
 R_LDFLAGS = @R_LDFLAGS@
 
-OCT_SOURCES = $(wildcard ./*.cc)
-OCT_OBJECTS = $(OCT_SOURCES:.cc=.oct)
+OCT_SOURCES = Rrng.cc
+OCT_OBJECTS = utils.oct $(OCT_SOURCES:.cc=.oct)
 
-all: ${OCT_OBJECTS}
+.SUFFIXES: .cc .oct
 
-%.oct: %.cc
-	@OCTAVE_MKOCTFILE@ -g -v -c ${R_CPPFLAGS} $(PKG_CPPFLAGS) $*.cc 
-	@OCTAVE_MKOCTFILE@ -g $*.o  ${R_LDFLAGS} $(PKG_LIBS) --output $@
+all: $(OCT_OBJECTS)
 
 utils.oct: utils.cc
-	@OCTAVE_MKOCTFILE@ -g $<
+	@OCTAVE_MKOCTFILE@ -v utils.cc
+
+.cc.oct:
+	@OCTAVE_MKOCTFILE@ -v ${R_CPPFLAGS} $(PKG_CPPFLAGS) ${R_LDFLAGS} $(PKG_LIBS) $<
 	
 clean:
 	rm -vf *.o *~
