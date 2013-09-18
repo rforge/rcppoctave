@@ -3,7 +3,7 @@
 \title{Calling an Octave Function}
 \usage{
   .CallOctave(.NAME, ..., argout = -1,
-    unlist = !is.character(argout))
+    unlist = !is.character(argout), buffer.stderr = TRUE)
 }
 \arguments{
   \item{.NAME}{an Octave function name. The function must
@@ -28,6 +28,11 @@
   of length one should be simplified and returned as a
   single value or kept as a list. The default is to unlist
   unless output names were passed in \code{argout}.}
+
+  \item{buffer.stderr}{logical that indicates if messages
+  sent to stderr should be buffered and displayed at the
+  end of the computation (\code{TRUE}) or as they come
+  (\code{FALSE}).}
 }
 \value{
   the value returned by the Octave function -- converted

@@ -6,7 +6,7 @@
 \alias{overbose}
 \title{Low-level Function Interfacing with Octave}
 \usage{
-  ostart(verbose = FALSE)
+  ostart(verbose = FALSE, warnings = FALSE)
 
   oend()
 
@@ -19,6 +19,9 @@
 \arguments{
   \item{verbose}{logical value used as the inital verbosity
   status.}
+
+  \item{warnings}{logical that indicates if Octave startup
+  warnings should be shown.}
 
   \item{value}{logical value to toggle verbosity}
 
