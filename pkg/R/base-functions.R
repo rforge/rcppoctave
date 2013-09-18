@@ -123,7 +123,7 @@ o_rmpath <- function(DIR1, ...){
 #' 
 o_version <- function(version){
 	v <- .CallOctave('version')
-	if( !missing(version) ) utils::compareVersion(v, version)
+	if( !missing(version) ) compareVersion(v, version)
 	else v
 }
 

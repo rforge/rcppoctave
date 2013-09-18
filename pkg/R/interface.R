@@ -27,7 +27,9 @@ NULL
 #' }
 #' @param unlist a logical that specifies if an output list of length one 
 #' should be simplified and returned as a single value or kept as a list.
-#' The default is to unlist unless output names were passed in \code{argout}.  
+#' The default is to unlist unless output names were passed in \code{argout}.
+#' @param buffer.stderr logical that indicates if messages sent to stderr should be buffered and
+#' displayed at the end of the computation (\code{TRUE}) or as they come (\code{FALSE}).
 #' 
 #' @return the value returned by the Octave function -- converted into standard 
 #' R objects.
@@ -47,9 +49,9 @@ NULL
 #' # call Octave function 'svd' asking for 3 named output values: [U, S, V] = svd(x)
 #' .CallOctave('svd', x, argout=c('U', 'S', 'V'))
 #' 
-.CallOctave <- function(.NAME, ..., argout=-1, unlist=!is.character(argout)){
+.CallOctave <- function(.NAME, ..., argout=-1, unlist=!is.character(argout), buffer.stderr = TRUE){
 	
-	res <- .Call("octave_feval", .NAME, list(...), argout, unlist, PACKAGE='RcppOctave')
+	res <- .Call("octave_feval", .NAME, list(...), argout, unlist, buffer.stderr, PACKAGE='RcppOctave')
 	if( identical(argout, 0) || identical(argout, 0L) )	invisible()
 	else if( is.null(res) && argout <= 1L ) invisible()
 	else res
@@ -60,11 +62,13 @@ NULL
 #' \code{ostart} Initialize an Octave session.
 #' 
 #' @param verbose logical value used as the inital verbosity status.
+#' @param warnings logical that indicates if Octave startup warnings 
+#' should be shown.
 #' 
 #' @rdname octave-ll
 #' @export
-ostart <- function(verbose=FALSE){
-	.Call("octave_start", verbose, PACKAGE='RcppOctave')
+ostart <- function(verbose=FALSE, warnings = FALSE){
+	.Call("octave_start", verbose, warnings, PACKAGE='RcppOctave')
 }
 
 #' \code{oend} clears and terminates the current Octave session.

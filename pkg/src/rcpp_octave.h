@@ -65,24 +65,26 @@ namespace Rcpp {
 RcppExport SEXP octave_verbose(SEXP value);
 
 /*
- * note : RcppExport is an alias to `extern "C"` defined by Rcpp.
+ * Evaluate an Octave function
  *
- * It gives C calling convention to the rcpp_hello_world function so that 
- * it can be called from .Call in R. Otherwise, the C++ compiler mangles the 
- * name of the function and .Call can't find it.
+ * @param fname function name as a character string.
+ * @param args list of arguments that will be converted to native Octave types and
+ * passed to the function.
+ * @param output specifies the output values to extract: it can be a single integer giving the
+ * number of output values, or a character vector that specifies the output names.
+ * @param unlit logical that indicates if the output should be unlisted it consists in a single value
+ * @param buffer_stderr logical that indicates if messages sent to stderr should be buffered and
+ * displayed at the end of the computation (TRUE) or as they come (FALSE).
  *
- * It is only useful to use RcppExport when the function is intended to be called
- * by .Call. See the thread http://thread.gmane.org/gmane.comp.lang.r.rcpp/649/focus=672
- * on Rcpp-devel for a misuse of RcppExport
  */
-RcppExport SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist);
+RcppExport SEXP octave_feval(SEXP fname, SEXP args, SEXP output, SEXP unlist, SEXP buffer_stderr);
 
 /**
  * Start an Octave session from R.
  *
  * @param verbose Logical to toggle verbosity.
  */
-RcppExport SEXP octave_start(SEXP verbose);
+RcppExport SEXP octave_start(SEXP verbose, SEXP with_warnings);
 
 /**
  * Terminate an Octave session from R.
