@@ -91,7 +91,7 @@ setMethod('show', 'OctaveFunction', function(object){
 
 #' M Files
 #' 
-#' \code{mfiles} converts source code or .m filenames into real paths to .m files
+#' \code{as.mfile} converts source code or .m filenames into real paths to .m files
 #' that can be sourced with \code{\link[RcppOctave]{o_source}}.
 #' 
 #' @param ... specification of a .m files as character arguments.
@@ -103,21 +103,26 @@ setMethod('show', 'OctaveFunction', function(object){
 #' the plain code elements of \var{x}.
 #' 
 #' @export
+#' @rdname mfiles
 #' @examples 
 #' 
-#' cat('', file='test.m')
-#' f <- mfiles('test.m')
-#' f <- mfiles('test.m', '')
+#' f <- as.mfile('test.m')
+#' f
+#' 
+#' # detected code elements are written into temporary files
+#' f <- as.mfile('test.m', "function [y] = myfun()
+#' y = 1;
+#' end
+#' ")
+#' 
+#' \dontrun{
+#' file.show(f[2])
+#' }
+#' 
 #' # remove all files
 #' unlink(f)
 #' 
-mfiles <- function(..., pattern='mfile_', dir=tempdir()){
-	
-	in_package <- FALSE
-	if( missing(dir) && !is.null(ns <- getLoadingNamespace()) ){
-		in_package <- TRUE
-		dir <- packagePath('matlab', package=ns)
-	}
+as.mfile <- function(..., pattern='mfile_', dir=tempdir()){
 	
 	# get args
 	x <- unlist(list(...))
@@ -131,6 +136,13 @@ mfiles <- function(..., pattern='mfile_', dir=tempdir()){
 	
 	code <- x[!isfile]
 	if( length(code) ){
+        
+        in_package <- FALSE
+        if( missing(dir) && !is.null(ns <- getLoadingNamespace()) ){
+	            in_package <- TRUE
+	            dir <- packagePath('m-files', package=ns)
+        }
+        
 		x[!isfile] <- mapply(function(f, x){
 					
 			# create directory if it does not exist
@@ -149,4 +161,21 @@ mfiles <- function(..., pattern='mfile_', dir=tempdir()){
 		}, names(code), code)
 	}
 	x
+}
+
+#' \code{system.mfile} returns paths to .m files installed with packages.
+#' 
+#' \code{system.mfile} is a shortcut for:
+#' \samp{system.file('m-files', ..., package = package)}
+#' As such it returns empty strings if the requested file does not exist.
+#' If no arguments besides \code{package} are passed, it returns the full 
+#' path to the package's sub-directory \emph{m-files/} -- if it exists.
+#' 
+#' @inheritParams base::system.file
+#' @param ... arguments passed to \code{\link{system.file}}.
+#'  
+#' @export
+#' @rdname mfiles
+system.mfile <- function(..., package = 'base'){
+    system.file('m-files', ..., package = package)
 }
