@@ -309,7 +309,8 @@ o_identity <- function(...){
 #'  
 o_inpath <- function(...){
 	p <- RcppOctave::.CallOctave('path')
-	p <- strsplit(p, ':')[[1]]
+    sep <- RcppOctave::.CallOctave('pathsep')
+	p <- strsplit(p, sep)[[1]]
 	f <- file.path(...)
 	sapply(f, function(x){ any(sapply(file.path(p, x), file.exists)) | is.element(x, p)}) 
 }
