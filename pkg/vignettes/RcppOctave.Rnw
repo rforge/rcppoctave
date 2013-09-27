@@ -319,7 +319,7 @@ variables, as it emulates an \proglang{R} environment-like object whose elements
 would be the objects available in the current \octave
 embedded session:
 
-<<O_object_variables, try = TRUE>>=
+<<O_object_variables, try = TRUE, error = TRUE>>=
 # define a variable
 .O$myvar <- 1:5
 # retrieve value
@@ -385,7 +385,7 @@ Variables may be assigned or retrieved individually in separate calls to
 \code{.O} object as described above}, or simultaneously in a variety of ways
 (see \code{?o\_get} for more details and examples):
 
-<<assign, try = TRUE>>=
+<<assign, error = TRUE, try = TRUE>>=
 ## ASSIGN
 o_assign(a=1)
 o_assign(a=10, b=20)
@@ -413,7 +413,7 @@ f
 To evaluate a single statement, one can use the \code{o\_eval} function, that
 can also evaluate a list of statements sequentially:
 
-<<o_eval, try = TRUE>>=
+<<o_eval, error = TRUE, try = TRUE>>=
 # assign variable 'a'
 o_eval("a=1")
 o_eval("a") # or .O$a
