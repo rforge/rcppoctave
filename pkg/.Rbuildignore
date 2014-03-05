@@ -17,3 +17,8 @@ Rpackages.bib
 ^modules$
 man-roxygen
 staticdocs
+^.*\.Rproj$
+^\.Rproj\.user$
+^README.md$
+^pkg/
+

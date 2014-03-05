@@ -42,6 +42,13 @@
   \Sexpr{Sys.time()}]}
 }
 \examples{
+\dontshow{# roxygen generated flag
+options(R_CHECK_RUNNING_EXAMPLES_=TRUE)
+}
+
+#----------
+# o_addpath
+#----------
 # call an undefined function
 try(.CallOctave('fun1'))
 
@@ -52,6 +59,10 @@ o_addpath(system.file('scripts', package='RcppOctave'))
 #.CallOctave('fun1')
 
 # change the .oct file
+
+#----------
+# o_inpath
+#----------
 o_addpath(tempdir())
 o_inpath(tempdir())
 o_inpath(tempfile())

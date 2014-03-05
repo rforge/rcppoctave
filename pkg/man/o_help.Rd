@@ -75,6 +75,13 @@
   \Sexpr{Sys.time()}]}
 }
 \examples{
+\dontshow{# roxygen generated flag
+options(R_CHECK_RUNNING_EXAMPLES_=TRUE)
+}
+
+#----------
+# o_help
+#----------
 \dontshow{
 	if( interactive() ){
 		o_help <- function(..., show=FALSE){
@@ -97,8 +104,16 @@ o_help('rand')
 o_help(rand, format=TRUE)
 o_help(rand, format='HTML')
 o_help(rand, format='latex')
+
+#----------
+# o_doc
+#----------
+try({ # may throw an error if Octave documentation is not installed
+
 o_doc(text)
 # or equivalently
 o_doc('text')
+
+})
 }
 

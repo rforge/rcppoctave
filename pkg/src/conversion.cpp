@@ -1,5 +1,12 @@
 #include "rcpp_octave.h"
 
+#define R_NO_REMAP
+#include <Rdefines.h>
+#define getAttrib Rf_getAttrib
+
+#include <octave/ov-base.h>
+#include <octave/ov-scalar.h>
+#include <octave/ov-struct.h>
 #include <octave/ov-null-mat.h>
 
 #include <string.h>
@@ -13,7 +20,7 @@ extern bool RCPP_OCTAVE_VERBOSE;
 		, val.is_int32_type(), val.is_int64_type() \
 		, val.is_integer_type());
 
-#define WRAP_ERROR(err) RcppOctave_error("as", err);
+#define WRAP_ERROR(err) RcppOctave_error("wrap", err);
 
 /**
 * Converts an Octave Array into an R matrix or vector.
@@ -438,11 +445,12 @@ template <> octave_value Rcpp::as( SEXP x ){
 
 		if ( na == 0) {
 
-			VERBOSE_LOG("(List) -> octave_value_list\n");
-			return octave_value(as<octave_value_list>(x));
+			VERBOSE_LOG("(un-named List) -> Cell\n");
+			const octave_value& ol = as<octave_value_list>(x);
+			return Cell(ol);
 
 		}else{ // store as an Octave map
-			VERBOSE_LOG("(NamedList[%i]) -> Octave map:\n", Rf_length(x));
+			VERBOSE_LOG("(named List[%i]) -> Octave map:\n", Rf_length(x));
 			CharacterVector names(rnames);
 			Rcpp::List xl(x);
 			int n = xl.length();
