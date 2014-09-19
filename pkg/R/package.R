@@ -134,7 +134,10 @@ NULL
     }
     
     .load_dep <- function( libdir = Octave.config[['libdir']] ){
-        dlibs <- file.path(libdir, paste0(Octave.config[['libs']], .Platform$dynlib.ext))
+        if( is.Mac() && !file.exists(dlibs <- file.path(libdir, paste0(Octave.config[['libs']], .Platform$dynlib.ext))) ){
+            # on Mac look for .dylib if default .so does not exist
+            dlibs <- file.path(libdir, paste0(Octave.config[['libs']], ".dylib"))
+        }
         sapply(dlibs, dyn.load)
     }
     
@@ -143,7 +146,7 @@ NULL
     
     
     # custom installation
-    if( Octave.config[['customed']] ){
+    if( isTRUE(Octave.config[['customed']]) ){
         .load_dep()
         .load()
         return(TRUE)
@@ -193,7 +196,7 @@ NULL
     	if( !.OctaveLibs(pkgname, libname) ) return()
         
     	# start Octave session
-    	octave_start()
+    	octave_start(NULL)
         
     	# load Octave modules
     	octave_modules()
